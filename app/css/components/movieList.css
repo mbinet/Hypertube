@@ -1,0 +1,11 @@
+@import '../settings';
+@import '../common/colors';
+@import '../common/typography';
+
+.movieList {
+    width: 800px;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    border: 1px, solid, red;
+}
