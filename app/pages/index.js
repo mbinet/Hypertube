@@ -4,5 +4,6 @@ export { default as Dashboard } from 'pages/Dashboard';
 export { default as LoginOrRegister } from 'pages/LoginOrRegister';
 export { default as About } from 'pages/About';
 export { default as Test } from 'pages/Test';
+export { default as Search } from 'pages/Search';
 export { default as Film } from 'pages/Film';
 
