@@ -40,13 +40,13 @@ class Film extends Component {
     componentWillMount() {
         var that = this
         axios.get('/api/getSubs/jrigole')
-            .then(function (response) {
-                that.setState({
-                    subFr: response.data.subFr,
-                    subEn: response.data.subEn,
-                    message: response.data.message
-                })
-                console.log(response.data)
+            .then((response) => {
+              that.setState({
+                subFr: '/api/sub/' + response.data.subFr,
+                subEn: '/api/sub/' + response.data.subEn,
+                message: response.data.message
+              })
+              console.log(this.state.subFr);
             });
     }
 
@@ -61,4 +61,3 @@ class Film extends Component {
 }
 
 export default Film;
-
