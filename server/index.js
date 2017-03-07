@@ -128,7 +128,7 @@ app.get('/api/getSubs/:name', function (req, res, next) {
                 console.log(subtitles);
                 getSubs(subtitles).then(function (str) {
                     console.log(str);
-                    res.json({message: 'CA A MARCHE LOL', subFr: "./app/images/big_hero_6.fr.vtt", subEn: "./app/images/big_hero_6.en.vtt"});
+                    res.json({message: 'CA A MARCHE LOL', subFr: "big_hero_6.fr.vtt", subEn: "big_hero_6.en.vtt"});
                 });
             })
         })
@@ -136,6 +136,15 @@ app.get('/api/getSubs/:name', function (req, res, next) {
             console.log(err);
         });
     // next()
+});
+
+app.get('/api/sub/:filename', function (req, res, next) {
+  fs.readFile('./app/images/' + req.params.filename, 'utf8', function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    res.send(data);
+  });
 });
 
 app.get('/api/film/*', function (req, res, next) {
