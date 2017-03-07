@@ -52,10 +52,21 @@ initRoutes(app);
  */
 
 var fs = require('fs');
-var srt2vtt = require('srt-to-vtt');
+var srt2vtt = require('srt2vtt');
 var torrentStream = require('torrent-stream');
 const path = require('path');
 const parseRange = require('range-parser');
+var https = require('https');
+var Promise = require("bluebird");
+const OS = require('opensubtitles-api');
+const OpenSubtitles = new OS({
+    useragent:'OSTestUserAgentTemp',
+    username: 'Hypertube',
+    password: 'dotef',
+    ssl: true
+});
+
+
 const engine = torrentStream('magnet:?xt=urn:btih:BB43CF1DC5B200BA37679DB96375A8190D933C2E&dn=Big+Hero+6+%282014%29+%5B720p%5D+%5BYTS.AG%5D&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337', {
     path: '/tmp/film'
 });
@@ -71,15 +82,61 @@ const getTorrentFile = new Promise(function (resolve, reject) {
     });
 });
 
+const getSubs = function(subtitles) {
+    return new Promise(function (resolve, reject) {
+        var fileEn = fs.createWriteStream("./app/images/" + "big_hero_6" + ".en.srt");
+        var requestEn = https.get(subtitles.en.url, function (response) {
+            var srt = response.pipe(fileEn);
+            srt.on('finish', function () {
+                var srtData = fs.readFileSync('./app/images/big_hero_6.en.srt');
+                srt2vtt(srtData, function(err, vttData) {
+                    if (err) throw new Error(err);
+                    fs.writeFileSync('./app/images/big_hero_6.en.vtt', vttData);
+                });
+            })
+        });
+        var fileFr = fs.createWriteStream("./app/images/" + "big_hero_6" + ".fr.srt");
+        var requestFr = https.get(subtitles.fr.url, function (response) {
+            var srt = response.pipe(fileFr);
+            srt.on('finish', function () {
+                var srtData = fs.readFileSync('./app/images/big_hero_6.fr.srt');
+                srt2vtt(srtData, function(err, vttData) {
+                    if (err) throw new Error(err);
+                    fs.writeFileSync('./app/images/big_hero_6.fr.vtt', vttData);
+                });
+            })
+        });
+        resolve("dowloaded");
+    });
+};
 
 app.get('/api/getSubs/:name', function (req, res, next) {
-    console.log("PTDRRRRRRRRRRRRRR")
-    fs.createReadStream('./jelly.srt')
-        .pipe(srt2vtt())
-        .pipe(fs.createWriteStream('./' + req.params.name + '.vtt'))
-    res.json({message: 'CA A MARCHE LOL'})
+    OpenSubtitles.login()
+        .then(resu => {
+            OpenSubtitles.search({
+                sublanguageid: 'eng,fre',       // Can be an array.join, 'all', or be omitted.
+                // hash: rows[0].hash,   // Size + 64bit checksum of the first and last 64k
+                //path: rows[0].path,        // Complete path to the video file, it allows
+                //   to automatically calculate 'hash'.
+                //filename: rows[0].path.substring(rows[0].path.lastIndexOf("/" + 1)),        // The video file name. Better if extension
+                extensions: 'srt', // Accepted extensions, defaults to 'srt'.
+                limit: 'best',  // Can be 'best', 'all' or an
+                                // arbitrary nb. Defaults to 'best'
+                imdbid: "tt2245084",   // Text-based query, this is not recommended.
+                query: "big hero 6"
+            }).then(subtitles => {
+                console.log(subtitles);
+                getSubs(subtitles).then(function (str) {
+                    console.log(str);
+                    res.json({message: 'CA A MARCHE LOL', subFr: "./app/images/big_hero_6.fr.vtt", subEn: "./app/images/big_hero_6.en.vtt"});
+                });
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        });
     // next()
-})
+});
 
 app.get('/api/film/*', function (req, res, next) {
   res.setHeader('Accept-Ranges', 'bytes');
@@ -109,7 +166,7 @@ app.get('/api/film/*', function (req, res, next) {
         res.end(e);
     });
   // next()
-})
+});
 
 app.get('*', renderMiddleware);
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Page from '../pages/Page';
 import SearchContainer from '../containers/Search';
 import DashboardContainer from '../containers/Dashboard';
+import SearchForm from '../components/searchform';
 
 class Search extends Component {
   getMetaData() {

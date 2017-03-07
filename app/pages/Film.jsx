@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import Page from '../pages/Page';
 import FilmContainer from '../containers/Film';
+import MovieBox from '../components/MovieBox';
 import axios from 'axios';
 
 class Film extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            subFr: "",
+            subEn: "",
+            message: ""
+        }
+    }
+
     getMetaData() {
         return {
             title: this.pageTitle(),
@@ -27,24 +38,23 @@ class Film extends Component {
     }
 
     componentWillMount() {
-
+        var that = this
         axios.get('/api/getSubs/jrigole')
             .then(function (response) {
+                that.setState({
+                    subFr: response.data.subFr,
+                    subEn: response.data.subEn,
+                    message: response.data.message
+                })
                 console.log(response.data)
-            })
-
-        // var fs = New fs;
-        // var srt2vtt = require('srt-to-vtt');
-        // fs.createReadStream('/jelly.srt')
-        //     .pipe(srt2vtt())
-        //     .pipe(fs.createWriteStream('/jellylol.vtt'))
-        // console.log("COUCOU")
+            });
     }
 
     render() {
         return (
             <Page {...this.getMetaData()}>
-                <FilmContainer {...this.props} />
+                {/*<FilmContainer {...this.props} message={'bonjour'} />*/}
+                <MovieBox message={this.state.message} subFr={this.state.subFr} subEn={this.state.subEn}r/>
             </Page>
         );
     }
