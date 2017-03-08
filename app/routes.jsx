@@ -39,6 +39,7 @@ export default (store) => {
 
 
       <Route path="dashboard" component={Dashboard} />
+      <Route path="search" component={Search} />
       <Route path="film" component={Film} />
       <Route path="about" component={About} />
     </Route>
