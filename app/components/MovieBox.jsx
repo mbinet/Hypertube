@@ -1,4 +1,5 @@
 import React from 'react';
+import Video from "react-h5-video";
 
 /**
  * A counter button: tap the button to increase the count.
@@ -24,12 +25,16 @@ class MovieBox extends React.Component {
                 {/*src="http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4">*/}
                 {/*<track src="./jrigole.vtt" kind="subtitle" label="English" />*/}
                 {/*</video>*/}
-                {/*<Video sources={[ "http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4"]}*/}
-                {/*poster="./video/poster.png"*/}
-                {/*>*/}
-                    {/*<h3 className="video-logo pull-right"><a href="http://glexe.com" target="_blank">LOGO</a></h3>*/}
-                    {/*<p>Any HTML content</p>*/}
-                {/*</Video>*/}
+                <Video sources={[ "http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4"]}
+                       poster="./video/poster.png"
+                       subtitles={[
+                           {src: this.props.subFr, label: 'Français', lang: 'fr'},
+                           {src: this.props.subEn, label: 'English', lang: 'en'}]}
+                       width="100%"
+                       height="100%"
+                       controlPanelStyle={'overlay'}
+                >
+                </Video>
 
                 <div>This is the film page ahah</div>
                 <h1>{this.props.message}</h1>
@@ -38,10 +43,8 @@ class MovieBox extends React.Component {
                 <video width='800' height='600' controls='controls' preload='auto'
                 src="http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4">
                     <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/>
-                    <track kind="subtitles" label="English" src={'/images/big_hero_6.en.vtt'} srcLang="en"/>
-                    {/*<track kind="subtitles" label="English" src={require(this.props.subEn)} srcLang="en"/>*/}
+                    <track kind="subtitles" label="English" src={this.props.subEn} srcLang="en"/>
                 </video>
-                <img src={require('images/favicon.png')}/>
 
             </div>
         );

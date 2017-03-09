@@ -34,7 +34,7 @@ class Film extends Component {
     }
 
     pageLink() {
-        return [];
+        return [ {rel: "apple-touch-icon", href: "node_modules/react-h5-video/lib/react-h5-video.css"} ];
     }
 
     componentWillMount() {
