@@ -17,7 +17,7 @@ class MovieVignet extends React.Component {
         var movieLink = "/film/" + this.props.movie.imdb_code
     return(
         <a href={movieLink} className={cx('cardLink')}><Card style={{ width: 240 }} bodyStyle={{ padding: 0 }}>
-        <div className=("custom-image")>
+        <div className="custom-image">
           <img alt={this.props.movie.title} width="100%" src={this.props.movie.large_cover_image }/>
         </div>
         <div className={cx('cardInfo')}>

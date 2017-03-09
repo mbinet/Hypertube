@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchVoteData } from './fetch-data';
-import { App, Vote, Dashboard, About, LoginOrRegister, Test, Search } from './pages';
+import { App, Vote, Dashboard, About, LoginOrRegister, Test, Film, Search } from './pages';
 
 /*
  * @param {Redux Store}
@@ -40,6 +40,7 @@ export default (store) => {
 
       <Route path="dashboard" component={Dashboard} />
       <Route path="search" component={Search} />
+      <Route path="film" component={Film} />
       <Route path="about" component={About} />
     </Route>
   );

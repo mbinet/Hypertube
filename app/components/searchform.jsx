@@ -1,6 +1,6 @@
 import React from 'react';
-import SelectInput from './selectinput'
-import SearchResults from './SearchResults'
+import SelectInput from './selectInput'
+import SearchResults from './searchResults'
 
 /**
  * A counter button: tap the button to increase the count.
