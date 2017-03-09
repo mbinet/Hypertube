@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames/bind';
 import styles from '../css/components/movieCard';
+import StarRatingComponent from 'react-star-rating-component';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +22,11 @@ class MovieVignet extends React.Component {
         <div className={cx('cardInfo')}>
           <h3>{this.props.movie.title}</h3>
           <p>{this.props.movie.year}</p>
+          <StarRatingComponent
+            value={this.props.movie.rating}
+            starCount={10}
+            editing={false}
+            />
         </div>
         </div>
       </a>
