@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios'
 import ResultList from './ResultList'
+import classNames from 'classnames/bind';
+import styles from '../css/components/movieList';
+
+const cx = classNames.bind(styles);
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -30,9 +34,9 @@ componentWillUnmount() {
 
   render() {
     return (
-    <div>
+    <div className={cx('resultsDiv')}>
     <h2> results: </h2>
-    <h2>{this.props.url}</h2>
+    <h3>{this.props.url}</h3>
     <ResultList result={this.state.res}/>
     </div>
   );

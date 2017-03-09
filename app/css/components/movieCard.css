@@ -23,3 +23,19 @@
     text-shadow: 0px 0px 5px black;
     font-size: 1.5em;
 }
+
+.cardInfo {
+    line-height: 1;
+    text-align: center;
+}
+
+.cardLink {
+    text-decoration:none;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.cardLink:hover {
+    box-shadow: 0px 0px 8px black;
+    color:black;
+}
