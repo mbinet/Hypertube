@@ -54,7 +54,7 @@ class SearchForm extends React.Component {
         else {
             var rtRatings = ""
         }
-        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings
+        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=50&page=0"
         this.setState({url:[url]})
         e.preventDefault()
     }

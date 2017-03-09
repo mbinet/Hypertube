@@ -3,9 +3,20 @@
 @import '../common/typography';
 
 .movieList {
-    width: 800px;
+    width: 100%;
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
-    border: 1px, solid, red;
+}
+
+.movieListDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.resultsDiv {
+    width:100%;
 }

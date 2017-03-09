@@ -11,7 +11,7 @@ function HasResult(props){
         return (<p> No movies </p>)
     }
     return (
-        <div> {Object.keys(props.list.movies).map(function(key){
+        <div className={cx('movieListDiv')}> {Object.keys(props.list.movies).map(function(key){
             return <MovieVignet movie={props.list.movies[key]}/>
         })}
         </div>
