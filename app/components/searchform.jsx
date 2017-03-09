@@ -1,9 +1,12 @@
 import React from 'react';
 import SelectInput from './selectInput'
 import SearchResults from './searchResults'
+import classNames from 'classnames/bind';
+import styles from '../css/components/searchForm';
 
+const cx = classNames.bind(styles);
 /**
- * A counter button: tap the button to increase the count.
+ * search bar
  */
 class SearchForm extends React.Component {
   constructor() {
@@ -66,14 +69,14 @@ class SearchForm extends React.Component {
   render() {
     return (
         <div>
-      <form id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
+      <form className={cx('searchForm')} id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
       <input onChange={this.handleChange.bind(this)} type="text" value={this.state.query_term} placeholder="keyword" name="query_term"/>
       <input onChange={this.handleChange.bind(this)} type="text" value={this.state.genre} placeholder="genre" name="genre"/>
-      <SelectInput onChange={this.handleChange.bind(this)} name="sortBy" values={['title', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'date']}/>
-      <SelectInput onChange={this.handleChange.bind(this)} name="orderBy" values={['desc', 'asc']}/>
-      <SelectInput onChange={this.handleChange.bind(this)} name="quality" values={['720p', '1080p', '3D']}/>
-      <SelectInput onChange={this.handleChange.bind(this)} name="minRating" values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
-      <SelectInput onChange={this.handleChange.bind(this)} name="rtRating" values={['no', 'yes']}/>
+      <SelectInput name="sortBy" editValue={this.handleChange.bind(this)} values={['date', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'title']}/>
+      <SelectInput name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
+      <SelectInput name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
+      <SelectInput name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
+      <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
       <SearchResults url={this.state.url} />

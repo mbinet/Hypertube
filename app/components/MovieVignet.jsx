@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames/bind';
 import styles from '../css/components/movieCard';
 import StarRatingComponent from 'react-star-rating-component';
+import { Link } from 'react-router';
 
 const cx = classNames.bind(styles);
 
@@ -14,10 +15,10 @@ class MovieVignet extends React.Component {
         console.log("comp didnt mount")
     }
     render(){
-        var movieLink = "api/film/" + this.props.movie.imdb_code
+        var movieLink = "/film/" + this.props.movie.imdb_code
         var backgroundImage = "url("+ this.props.movie.large_cover_image + ")"
     return(
-        <a href={movieLink} className={cx('cardLink')}>
+        <Link to={movieLink} className={cx('cardLink')}>
         <div className={cx('movieCard')} style={{backgroundImage: backgroundImage}}>
         <div className={cx('cardInfo')}>
           <h3>{this.props.movie.title}</h3>
@@ -26,10 +27,11 @@ class MovieVignet extends React.Component {
             value={this.props.movie.rating}
             starCount={10}
             editing={false}
+            emptyStarColor= {'#fff'}
             />
         </div>
         </div>
-      </a>
+      </Link>
     )
 }
 }

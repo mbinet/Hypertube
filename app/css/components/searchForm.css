@@ -1,0 +1,32 @@
+@import '../settings';
+@import '../common/colors';
+@import '../common/typography';
+
+form {
+    border-bottom: 1px solid #2196F3;
+}
+input {
+    border-radius: 4px;
+    border: 1px dotted #2196F3;
+    height: 30px;
+    margin: 10px 0px 10px 10px;
+}
+
+input[type=submit] {
+    background-color: #2196F3;
+    color:white;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+select {
+    border: 1px dotted #2196F3;
+    height: 30px;
+    background-color: white;
+    font-size: 0.8em;
+}
+
+label {
+    color:#2196F3;
+    margin-left:5px;
+}
