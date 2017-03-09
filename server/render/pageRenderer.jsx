@@ -20,7 +20,7 @@ const buildPage = ({ componentHTML, initialState, headAssets }) => {
     ${headAssets.meta.toString()}
     ${headAssets.link.toString()}
     ${createTrackingScript()}
-      <link rel="stylesheet" type="text/css" href="api/getVideoCss">
+      <link rel="stylesheet" type="text/css" href="/api/getVideoCss">
   </head>
   <body>
     <div id="app">${componentHTML}</div>

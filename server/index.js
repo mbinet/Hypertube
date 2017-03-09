@@ -147,6 +147,7 @@ app.get('/api/sub/:filename', function (req, res, next) {
 app.get('/api/getVideoCss', function (req, res, next) {
     fs.readFile('./node_modules/react-h5-video/lib/react-html5-video.css', function (err, data) {
         if (err) {
+            res.writeHead(500)
             console.log(err);
         }
         res.writeHead(200, {'Content-Type': 'text/css'});
@@ -155,7 +156,6 @@ app.get('/api/getVideoCss', function (req, res, next) {
 });
 
 app.get('/api/film/:idImdb', function (req, res, next) {
-    console.log("IDIDIDIDIDI", req.params)
     res.setHeader('Accept-Ranges', 'bytes');
     getMagnet(req.params.idImdb, function(data) {
         const engine = torrentStream(data, {
@@ -188,15 +188,25 @@ app.get('/api/film/:idImdb', function (req, res, next) {
         });
 
     })
-    // next()
 });
 
 function getMagnet(id, callback) {
-    var url = "https://yts.ag/api/v2/list_movies.json?query_term="+id
-    console.log("url=", url)
-    https.get(url, function (data) {
-        callback('magnet:?xt=urn:btih:749E77BBFEBD97E689C132E3B663BB89425476DC&dn=Moana+%282016%29+%5B720p%5D+%5BYTS.AG%5D&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337')
-    })
+    var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id
+
+    axios.get(url)
+        .then(function (response) {
+            var result = response.data.data;
+            var torrentHash = "";
+            for (var d of result.movies[0].torrents) {
+                if (d.quality == '720p')
+                    torrentHash = d.hash;
+            }
+            // var torrentHash = response.data.data.movies[0].torrents[0].hash
+            var name = encodeURI(response.data.data.movies[0].title)
+            var magnet="magnet:?xt=urn:btih:"+torrentHash+"&dn="+name+"&tr=http://track.one:1234/announce&tr=udp://track.two:80"
+            console.log(magnet)
+            callback(magnet)
+        })
 }
 
 app.get('*', renderMiddleware);

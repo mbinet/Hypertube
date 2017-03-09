@@ -10,16 +10,10 @@ class MovieBox extends React.Component {
         this.state = {
             query_term: "",
         };
-        console.warn("BLNSALDKAJSNDLASKJNDKJASNDKJANSLKJDNALSKJKLJASNDKJN")
-
-    }
-    componentWillMount() {
-        console.log('IDIMDB', this.props.idImdb)
     }
 
     render() {
         var url = 'http://localhost:3000/api/film/' + this.props.idImdb
-        console.warn(url)
         return (
             <div>
 
@@ -31,16 +25,18 @@ class MovieBox extends React.Component {
                 {/*src="http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4">*/}
                 {/*<track src="./jrigole.vtt" kind="subtitle" label="English" />*/}
                 {/*</video>*/}
-                <Video sources={[ 'bonjour' ]}
-                       poster="./video/poster.png"
-                       subtitles={[
-                           {src: this.props.subFr, label: 'Français', lang: 'fr'},
-                           {src: this.props.subEn, label: 'English', lang: 'en'}]}
-                       width="100%"
-                       height="100%"
-                       controlPanelStyle={'overlay'}
-                >
-                </Video>
+
+                {/*<Video sources={ ["http://localhost:3000/api/film/tt2245084"] }*/}
+                       {/*poster="./video/poster.png"*/}
+                       {/*subtitles={[*/}
+                           {/*{src: this.props.subFr, label: 'Français', lang: 'fr'},*/}
+                           {/*{src: this.props.subEn, label: 'English', lang: 'en'}]}*/}
+                       {/*width="100%"*/}
+                       {/*height="100%"*/}
+                       {/*controlPanelStyle={'overlay'}*/}
+                {/*>*/}
+                {/*</Video>*/}
+
                 <video width='800' height='600' controls='controls' preload='auto'
                 src={url}>
                     <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/>
