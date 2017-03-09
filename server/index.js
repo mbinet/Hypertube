@@ -155,9 +155,10 @@ app.get('/api/getVideoCss', function (req, res, next) {
 });
 
 app.get('/api/film/:idImdb', function (req, res, next) {
+    console.log("IDIDIDIDIDI", req.params)
     res.setHeader('Accept-Ranges', 'bytes');
-    getMagnet(req.params.idImdb, function(res) {
-        const engine = torrentStream(res, {
+    getMagnet(req.params.idImdb, function(data) {
+        const engine = torrentStream(data, {
             path: '/tmp/film'
         });
         getTorrentFile(engine).then(function (file) {
@@ -191,9 +192,10 @@ app.get('/api/film/:idImdb', function (req, res, next) {
 });
 
 function getMagnet(id, callback) {
-    https.get('https://yts.ag/api/v2/list_movies.json?query_term=tt0798817', function (res) {
-        console.log(res)
-        callback('bonjour')
+    var url = "https://yts.ag/api/v2/list_movies.json?query_term="+id
+    console.log("url=", url)
+    https.get(url, function (data) {
+        callback('magnet:?xt=urn:btih:749E77BBFEBD97E689C132E3B663BB89425476DC&dn=Moana+%282016%29+%5B720p%5D+%5BYTS.AG%5D&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337')
     })
 }
 

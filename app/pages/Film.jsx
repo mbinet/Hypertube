@@ -46,7 +46,6 @@ class Film extends Component {
                 subEn: '/api/sub/' + response.data.subEn,
                 message: response.data.message
               })
-              console.log(this.state.subFr);
             });
     }
 
@@ -54,7 +53,7 @@ class Film extends Component {
         return (
             <Page {...this.getMetaData()}>
                 {/*<FilmContainer {...this.props} message={'bonjour'} />*/}
-                <MovieBox message={this.state.message} subFr={this.state.subFr} subEn={this.state.subEn}r/>
+                <MovieBox message={this.state.message} subFr={this.state.subFr} subEn={this.state.subEn} idImdb={this.props.params.idImdb}/>
             </Page>
         );
     }

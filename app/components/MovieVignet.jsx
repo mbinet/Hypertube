@@ -1,7 +1,6 @@
 import React from 'react'
 import classNames from 'classnames/bind';
 import styles from '../css/components/movieCard';
-import { Card } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +13,7 @@ class MovieVignet extends React.Component {
         console.log("comp didnt mount")
     }
     render(){
-        var movieLink = "/film/" + this.props.movie.imdb_code
+        var movieLink = "api/film/" + this.props.movie.imdb_code
         var backgroundImage = "url("+ this.props.movie.large_cover_image + ")"
     return(
         <a href={movieLink} className={cx('cardLink')}>

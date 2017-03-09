@@ -10,10 +10,16 @@ class MovieBox extends React.Component {
         this.state = {
             query_term: "",
         };
-        console.warn(this)
+        console.warn("BLNSALDKAJSNDLASKJNDKJASNDKJANSLKJDNALSKJKLJASNDKJN")
+
+    }
+    componentWillMount() {
+        console.log('IDIMDB', this.props.idImdb)
     }
 
     render() {
+        var url = 'http://localhost:3000/api/film/' + this.props.idImdb
+        console.warn(url)
         return (
             <div>
 
@@ -25,7 +31,7 @@ class MovieBox extends React.Component {
                 {/*src="http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4">*/}
                 {/*<track src="./jrigole.vtt" kind="subtitle" label="English" />*/}
                 {/*</video>*/}
-                <Video sources={[ "http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4"]}
+                <Video sources={[ 'bonjour' ]}
                        poster="./video/poster.png"
                        subtitles={[
                            {src: this.props.subFr, label: 'Français', lang: 'fr'},
@@ -35,16 +41,12 @@ class MovieBox extends React.Component {
                        controlPanelStyle={'overlay'}
                 >
                 </Video>
-
-                <div>This is the film page ahah</div>
-                <h1>{this.props.message}</h1>
-                <h1>{this.props.subEn}</h1>
-                <h1>{this.props.subFr}</h1>
                 <video width='800' height='600' controls='controls' preload='auto'
-                src="http://localhost:3000/api/film/Guardians.of.the.Galaxy.2014.1080p.BluRay.x264.YIFY.mp4">
+                src={url}>
                     <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/>
                     <track kind="subtitles" label="English" src={this.props.subEn} srcLang="en"/>
                 </video>
+
 
             </div>
         );
