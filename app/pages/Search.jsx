@@ -14,12 +14,12 @@ class Search extends Component {
   }
 
   pageTitle() {
-    return 'DASHBOARD | reactGo';
+    return 'HYPERTUBE | Search';
   }
 
   pageMeta() {
     return [
-      { name: 'description', content: 'A reactGo example of a dashboard page' }
+      { name: 'description', content: 'Search new movies o watch!' }
     ];
   }
 

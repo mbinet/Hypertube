@@ -10,7 +10,7 @@ class SelectInput extends React.Component {
     return (
         <label>
         {this.props.name}:
-        <select name={this.props.name}>
+        <select onChange={this.props.editValue} name={this.props.name}>
         {
             this.props.values.map(function(thisvalue) {
             return <option key={thisvalue}
