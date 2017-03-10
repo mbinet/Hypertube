@@ -21,6 +21,7 @@ const buildPage = ({ componentHTML, initialState, headAssets }) => {
     ${headAssets.link.toString()}
     ${createTrackingScript()}
       <link rel="stylesheet" type="text/css" href="/api/getVideoCss">
+      <link rel="stylesheet" type="text/css" href="/api/getAntdCss">
   </head>
   <body>
     <div id="app">${componentHTML}</div>

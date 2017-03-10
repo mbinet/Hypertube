@@ -161,6 +161,17 @@ app.get('/api/getVideoCss', function (req, res, next) {
     });
 });
 
+app.get('/api/getAntdCss', function (req, res, next) {
+    fs.readFile('./node_modules/antd/dist/antd.min.css', function (err, data) {
+        if (err) {
+            res.writeHead(500)
+            console.log(err);
+        }
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.end(data);
+    });
+});
+
 
 //***********//
 //   VIDEO   //
