@@ -203,7 +203,7 @@ function getMagnet(id, callback) {
             }
             // var torrentHash = response.data.data.movies[0].torrents[0].hash
             var name = encodeURI(response.data.data.movies[0].title)
-            var magnet="magnet:?xt=urn:btih:"+torrentHash+"&dn="+name+"&tr=http://track.one:1234/announce&tr=udp://track.two:80"
+            var magnet="magnet:?xt=urn:btih:"+torrentHash+"&dn="+name+"&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://glotorrents.pw:6969/announce"
             console.log(magnet)
             callback(magnet)
         })

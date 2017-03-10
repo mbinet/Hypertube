@@ -28,10 +28,6 @@ componentWillReceiveProps(nextProps) {
       })
 }
 
-componentWillUnmount() {
-   this.serverRequest.abort();
- }
-
   render() {
     return (
     <div className={cx('resultsDiv')}>

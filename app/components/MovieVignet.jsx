@@ -11,9 +11,6 @@ class MovieVignet extends React.Component {
         super(props)
         console.log("props=", props )
     }
-    omponentDidMount(){
-        console.log("comp didnt mount")
-    }
     render(){
         var movieLink = "/film/" + this.props.movie.imdb_code
         var backgroundImage = "url("+ this.props.movie.large_cover_image + ")"
