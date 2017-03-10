@@ -67,19 +67,38 @@ const OpenSubtitles = new OS({
     ssl: true
 });
 
-const getTorrentFile = function(engine) {
-    return new Promise(function (resolve, reject) {
-        engine.on('ready', function () {
-            engine.files.forEach(function (file, idx) {
-                const ext = path.extname(file.name).slice(1);
-                if (ext === 'mkv' || ext === 'mp4') {
-                    file.ext = ext;
-                    resolve(file);
-                }
-            });
+var useragent = require('express-useragent');
+app.use(useragent.express());
+
+//***********//
+// SUBTITLES //
+//***********//
+
+app.get('/api/getSubs/:name', function (req, res, next) {
+    OpenSubtitles.login()
+        .then(resu => {
+            OpenSubtitles.search({
+                sublanguageid: 'eng,fre',       // Can be an array.join, 'all', or be omitted.
+                // hash: rows[0].hash,   // Size + 64bit checksum of the first and last 64k
+                //path: rows[0].path,        // Complete path to the video file, it allows
+                //   to automatically calculate 'hash'.
+                //filename: rows[0].path.substring(rows[0].path.lastIndexOf("/" + 1)),        // The video file name. Better if extension
+                extensions: 'srt', // Accepted extensions, defaults to 'srt'.
+                limit: 'best',  // Can be 'best', 'all' or an
+                                // arbitrary nb. Defaults to 'best'
+                imdbid: "tt2245084",   // Text-based query, this is not recommended.
+                query: "big hero 6"
+            }).then(subtitles => {
+                getSubs(subtitles).then(function (str) {
+                    res.json({message: 'CA A MARCHE LOL', subFr: "big_hero_6.fr.vtt", subEn: "big_hero_6.en.vtt"});
+                });
+            })
+        })
+        .catch(err => {
+            console.log(err);
         });
-    });
-}
+    // next()
+});
 
 const getSubs = function(subtitles) {
     return new Promise(function (resolve, reject) {
@@ -109,31 +128,9 @@ const getSubs = function(subtitles) {
     });
 };
 
-app.get('/api/getSubs/:name', function (req, res, next) {
-    OpenSubtitles.login()
-        .then(resu => {
-            OpenSubtitles.search({
-                sublanguageid: 'eng,fre',       // Can be an array.join, 'all', or be omitted.
-                // hash: rows[0].hash,   // Size + 64bit checksum of the first and last 64k
-                //path: rows[0].path,        // Complete path to the video file, it allows
-                //   to automatically calculate 'hash'.
-                //filename: rows[0].path.substring(rows[0].path.lastIndexOf("/" + 1)),        // The video file name. Better if extension
-                extensions: 'srt', // Accepted extensions, defaults to 'srt'.
-                limit: 'best',  // Can be 'best', 'all' or an
-                                // arbitrary nb. Defaults to 'best'
-                imdbid: "tt2245084",   // Text-based query, this is not recommended.
-                query: "big hero 6"
-            }).then(subtitles => {
-                getSubs(subtitles).then(function (str) {
-                    res.json({message: 'CA A MARCHE LOL', subFr: "big_hero_6.fr.vtt", subEn: "big_hero_6.en.vtt"});
-                });
-            })
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    // next()
-});
+/*
+** returns the subtitle file asked
+ */
 
 app.get('/api/sub/:filename', function (req, res, next) {
     fs.readFile('./app/images/' + req.params.filename, 'utf8', function (err, data) {
@@ -143,6 +140,15 @@ app.get('/api/sub/:filename', function (req, res, next) {
         res.send(data);
     });
 });
+
+
+//***********//
+//    CSS    //
+//***********//
+
+/*
+** returns the css file for react-html5-video module
+ */
 
 app.get('/api/getVideoCss', function (req, res, next) {
     fs.readFile('./node_modules/react-h5-video/lib/react-html5-video.css', function (err, data) {
@@ -155,8 +161,18 @@ app.get('/api/getVideoCss', function (req, res, next) {
     });
 });
 
+
+//***********//
+//   VIDEO   //
+//***********//
+
+/*
+**  Get a film (download + stream) from IMDB id
+ */
+
 app.get('/api/film/:idImdb', function (req, res, next) {
     res.setHeader('Accept-Ranges', 'bytes');
+    console.log(req.useragent);
     getMagnet(req.params.idImdb, function(data) {
         const engine = torrentStream(data, {
             path: '/tmp/film'
@@ -208,6 +224,30 @@ function getMagnet(id, callback) {
             callback(magnet)
         })
 }
+
+const getTorrentFile = function(engine) {
+    return new Promise(function (resolve, reject) {
+        var tmp_len = 0;
+        var tmp_file = null;
+        engine.on('ready', function () {
+        console.log("PUTE")
+            engine.files.forEach(function (file, idx) {
+                console.log(file.length);
+                const ext = path.extname(file.name).slice(1);
+                if (ext === 'mkv' || ext === 'mp4') {
+                    if (file.length > tmp_len) {
+                        file.ext = ext;
+                        tmp_len = file.length;
+                        tmp_file = file;
+                    }
+                }
+            });
+            console.log('tmp_file');
+            console.log(tmp_file.length);
+            resolve(tmp_file);
+        });
+    });
+};
 
 app.get('*', renderMiddleware);
 
