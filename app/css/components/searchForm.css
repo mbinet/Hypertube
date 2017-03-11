@@ -4,6 +4,7 @@
 
 form {
     border-bottom: 1px solid #2196F3;
+    text-align: center;
 }
 input {
     border-radius: 4px;
@@ -17,6 +18,16 @@ input[type=submit] {
     color:white;
     font-weight: 700;
     font-size: 1em;
+    width:70px;
+    text-transform: uppercase;
+}
+
+input[type=submit]:hover {
+    background-color: orange;
+    border:none;
+}
+input[type=submit]:active {
+    box-shadow: 2px 2px 2px grey;
 }
 
 select {

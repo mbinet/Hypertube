@@ -28,7 +28,6 @@ class ResultList extends React.Component {
         }
     }
     render(){
-        console.log("queries in resultlist", this.state.queries)
         const result = this.props.result
         return(<div className={cx('movieList')}>
             <HasResult list={result}/>

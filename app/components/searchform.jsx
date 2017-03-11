@@ -3,6 +3,7 @@ import SelectInput from './selectInput'
 import SearchResults from './searchResults'
 import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const cx = classNames.bind(styles);
 /**
@@ -19,6 +20,7 @@ class SearchForm extends React.Component {
       sortBy: "date",
       orderBy:"desc",
       quality:"720p",
+      page:0,
       url:""
   };
 }
@@ -57,13 +59,22 @@ class SearchForm extends React.Component {
         else {
             var rtRatings = ""
         }
-        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=50&page=0"
+        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=50&page=" + this.state.page
         this.setState({url:[url]})
         e.preventDefault()
     }
 
    handleChange(event){
        this.setState({[event.target.name]: event.target.value})
+   }
+
+   loadMore(){
+       console.log("in load more",this.state)
+    var pageNum = this.state.page + 1
+    this.setState({
+        page: pageNum
+    })
+    this.YUrlGen()
    }
 
   render() {
@@ -79,7 +90,14 @@ class SearchForm extends React.Component {
       <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
-      <SearchResults url={this.state.url} queries={this.state}/>
+      <InfiniteScroll
+        pageStart={this.state.page}
+        loadMore={this.loadMore}
+        hasMore={true}
+        loader={<div className="loader">Loading ...</div>}
+        >
+        <SearchResults url={this.state.url} queries={this.state}/>
+        </InfiniteScroll>
       </div>
   );
   }

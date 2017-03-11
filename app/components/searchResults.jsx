@@ -22,7 +22,6 @@ componentWillReceiveProps(nextProps) {
     axios
       .get(_this.props.url)
       .then(function(result) {
-        console.log("result:",result.data.data)
         _this.setState({
           res: result.data.data
         });

@@ -21,6 +21,7 @@ class MovieVignet extends React.Component {
           <h3>{this.props.movie.title}</h3>
           <p>{this.props.movie.year}</p>
           <StarRatingComponent
+            name=""
             value={this.props.movie.rating}
             starCount={10}
             editing={false}
