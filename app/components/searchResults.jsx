@@ -10,7 +10,8 @@ class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-        res: []
+        res: [],
+        queries: this.props.queries
     }
 }
 
@@ -33,7 +34,7 @@ componentWillReceiveProps(nextProps) {
     <div className={cx('resultsDiv')}>
     <h2> results: </h2>
     <h3>{this.props.url}</h3>
-    <ResultList result={this.state.res}/>
+    <ResultList result={this.state.res} queries={this.state.queries}/>
     </div>
   );
   }

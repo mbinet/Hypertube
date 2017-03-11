@@ -26,6 +26,8 @@ class MovieVignet extends React.Component {
             editing={false}
             emptyStarColor= {'#fff'}
             />
+            <p><br/>peers / seeds:<br/>{this.props.movie.torrents[0].peers} / {this.props.movie.torrents[0].seeds}</p>
+            <p className={cx('shortSummary')}><br/>{this.props.movie.summary}</p>
         </div>
         </div>
       </Link>

@@ -79,7 +79,7 @@ class SearchForm extends React.Component {
       <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
-      <SearchResults url={this.state.url} />
+      <SearchResults url={this.state.url} queries={this.state}/>
       </div>
   );
   }

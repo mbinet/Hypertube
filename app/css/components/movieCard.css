@@ -26,7 +26,7 @@
     height: 100%;
     color: white;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     transition: 1s ease all;
     -webkit-transform: scaleY(0);
     transform: scaleY(0);
@@ -53,4 +53,15 @@
 .movieCard:hover .cardInfo {
     -webkit-transform: scaleY(1);
     transform: scaleY(1);
+}
+
+.shortSummary {
+    width:220px;
+    line-height: 1.2em;
+    height:6em;
+    overflow: hidden;
+}
+
+.cardInfo:after {
+    content: "(...)";
 }
