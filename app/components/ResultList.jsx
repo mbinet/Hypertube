@@ -2,7 +2,6 @@ import React from 'react';
 import MovieVignet from './MovieVignet'
 import classNames from 'classnames/bind';
 import styles from '../css/components/movieList';
-import ReactScrollPagination from 'react-scroll-pagination'
 
 const cx = classNames.bind(styles);
 

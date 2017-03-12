@@ -4,6 +4,7 @@ import ResultList from './ResultList'
 import classNames from 'classnames/bind';
 import styles from '../css/components/movieList';
 
+
 const cx = classNames.bind(styles);
 
 class SearchResults extends React.Component {
@@ -11,29 +12,27 @@ class SearchResults extends React.Component {
     super(props);
     this.state ={
         res: [],
-        queries: this.props.queries
+        queries: this.props.queries,
     }
 }
-
 componentWillReceiveProps(nextProps) {
-  var _this = this;
-  console.log("url", this.props.url)
-  this.serverRequest =
-    axios
-      .get(_this.props.url)
-      .then(function(result) {
-        _this.setState({
-          res: result.data.data
-        });
-      })
+    var _this = this;
+    this.serverRequest =
+      axios
+        .get(this.props.url)
+        .then(function(result) {
+          _this.setState({
+            res: result.data.data
+          });
+        })
 }
 
   render() {
     return (
     <div className={cx('resultsDiv')}>
-    <h2> results: </h2>
-    <h3>{this.props.url}</h3>
+
     <ResultList result={this.state.res} queries={this.state.queries}/>
+
     </div>
   );
   }

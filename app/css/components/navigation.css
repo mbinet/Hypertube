@@ -8,14 +8,35 @@
 .item {
   display: inline-block;
   text-decoration: none;
+  text-transform: capitalize;
   padding: 16px 32px;
   color: var(--colorBlack);
 }
 
+.item:hover {
+    color: var(--colorCrimson);
+    text-transform: uppercase;
+}
+
+.item::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--colorCrimson), orange);
+    transition: width .3s;
+}
+
+.item:hover::after {
+    width: 100%;
+    //transition: width .3s;
+}
+
 .logo {
   font-size: var(--fontHuge);
+  color:orange;
 }
 
 .active {
-  color: var(--colorDodgerBlue);
+  color: var(--colorCrimson);
 }

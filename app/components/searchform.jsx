@@ -59,7 +59,7 @@ class SearchForm extends React.Component {
         else {
             var rtRatings = ""
         }
-        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=50&page=" + this.state.page
+        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
         this.setState({url:[url]})
         e.preventDefault()
     }
@@ -69,12 +69,13 @@ class SearchForm extends React.Component {
    }
 
    loadMore(){
-       console.log("in load more",this.state)
-    var pageNum = this.state.page + 1
-    this.setState({
-        page: pageNum
-    })
-    this.YUrlGen()
+       var pageNum = this.state.page + 1;
+       console.log(pageNum);
+       this.setState({page:pageNum});
+       var url = this.state.url.toString();
+       var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
+       console.log('newUrl', newUrl);
+       this.setState({url: newUrl});
    }
 
   render() {
@@ -90,12 +91,16 @@ class SearchForm extends React.Component {
       <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
+      <h2> results: </h2>
+      <h3>{this.props.url}</h3>
       <InfiniteScroll
-        pageStart={this.state.page}
-        loadMore={this.loadMore}
-        hasMore={true}
-        loader={<div className="loader">Loading ...</div>}
-        >
+          pageStart={0}
+          loadMore={this.loadMore.bind(this)}
+          hasMore={true}
+          initialLoad={false}
+          treshold={300}
+          loader={<div className="loader">Loading ...</div>}
+      >
         <SearchResults url={this.state.url} queries={this.state}/>
         </InfiniteScroll>
       </div>
