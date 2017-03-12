@@ -98,7 +98,6 @@ class SearchForm extends React.Component {
           loadMore={this.loadMore.bind(this)}
           hasMore={true}
           initialLoad={false}
-          treshold={300}
           loader={<div className="loader">Loading ...</div>}
       >
         <SearchResults url={this.state.url} queries={this.state}/>

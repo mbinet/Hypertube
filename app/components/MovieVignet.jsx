@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 class MovieVignet extends React.Component {
     constructor(props){
         super(props)
-        console.log("props=", props )
     }
     render(){
         var movieLink = "/film/" + this.props.movie.imdb_code

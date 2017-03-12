@@ -11,7 +11,7 @@ class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-        res: [],
+        res: new Array(),
         queries: this.props.queries,
     }
 }
@@ -21,9 +21,27 @@ componentWillReceiveProps(nextProps) {
       axios
         .get(this.props.url)
         .then(function(result) {
-          _this.setState({
-            res: result.data.data
-          });
+            console.log("in will recieveprops", _this.state.res, typeof _this.state.res)
+        if (result.data.data.movies)
+        {
+            if (!_this.state.res || _this.state.res == null){
+                console.warn("nul this state res movies")
+              _this.setState({
+                res: result.data.data.movies
+                });}
+            else{
+                var newSet = _this.state.res
+                result.data.data.movies.forEach(function(oneMovie){
+                newSet.push(oneMovie)})
+                _this.setState({
+                    res:newSet
+                })
+            }}
+            else {
+                _this.setState({
+                    res:new Array()
+                })
+            }
         })
 }
 
@@ -31,7 +49,7 @@ componentWillReceiveProps(nextProps) {
     return (
     <div className={cx('resultsDiv')}>
 
-    <ResultList result={this.state.res} queries={this.state.queries}/>
+    <ResultList result={this.state.res}/>
 
     </div>
   );

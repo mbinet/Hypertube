@@ -6,13 +6,15 @@ import styles from '../css/components/movieList';
 const cx = classNames.bind(styles);
 
 function HasResult(props){
-    if (!props || !props.list || !props.list.movies)
+    console.log('in hasresult', props)
+    if (!props || !props.list || props.list.length == 0)
     {
         return (<p> No movies </p>)
     }
     return (
-        <div className={cx('movieListDiv')}> {Object.keys(props.list.movies).map(function(key){
-            return <MovieVignet movie={props.list.movies[key]}/>
+        <div className={cx('movieListDiv')}> {
+            props.list.map(function(oneMovie){
+            return <MovieVignet movie={oneMovie}/>
         })}
         </div>
     )
@@ -23,7 +25,6 @@ class ResultList extends React.Component {
         super(props)
         this.state = {
             result:this.props.result,
-            queries:this.props.queries
         }
     }
     render(){
