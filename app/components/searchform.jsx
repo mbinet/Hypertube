@@ -4,6 +4,7 @@ import SearchResults from './searchResults'
 import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
 import InfiniteScroll from 'react-infinite-scroller';
+import axios from 'axios'
 
 const cx = classNames.bind(styles);
 /**
@@ -20,6 +21,7 @@ class SearchForm extends React.Component {
       sortBy: "date",
       orderBy:"desc",
       quality:"720p",
+      maxPage:0,
       page:0,
       url:""
   };
@@ -61,13 +63,27 @@ class SearchForm extends React.Component {
         }
         var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
         this.setState({url:[url]})
+        this.maxPages()
         e.preventDefault()
     }
 
    handleChange(event){
        this.setState({[event.target.name]: event.target.value})
    }
-
+   maxPages(){
+       var _this = this
+       this.serverRequest =
+        axios
+            .get(this.state.url)
+            .then(function(result){
+                var nMovies = result.data.data.movie_count
+                var maxPage = Math.ceil(nMovies/20)
+                console.warn("maxpages=", maxPage)
+                _this.setState({
+                    maxPage: maxPage
+                })
+            })
+   }
    loadMore(){
        var pageNum = this.state.page + 1;
        console.log(pageNum);
@@ -79,6 +95,8 @@ class SearchForm extends React.Component {
    }
 
   render() {
+      var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
+      console.log("hasmore=",hasMoreBool)
     return (
         <div>
       <form className={cx('searchForm')} id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
@@ -96,7 +114,7 @@ class SearchForm extends React.Component {
       <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore.bind(this)}
-          hasMore={true}
+          hasMore={hasMoreBool}
           initialLoad={false}
           loader={<div className="loader">Loading ...</div>}
       >
