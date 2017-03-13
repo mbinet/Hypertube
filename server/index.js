@@ -75,7 +75,7 @@ app.use(useragent.express());
 // SUBTITLES //
 //***********//
 
-app.get('/api/getSubs/:name', function (req, res, next) {
+app.get('/api/getSubs/:idImdb', function (req, res, next) {
     OpenSubtitles.login()
         .then(resu => {
             OpenSubtitles.search({
@@ -283,9 +283,10 @@ function getMagnet(id, callback) {
             // var torrentHash = response.data.data.movies[0].torrents[0].hash
             var name = encodeURI(response.data.data.movies[0].title)
             var magnet="magnet:?xt=urn:btih:"+torrentHash+"&dn="+name+"&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://glotorrents.pw:6969/announce"
-            // console.log(magnet)
-            callback('magnet:?xt=urn:btih:7e1581f588474b7fa744ca4b4f37f4bf139af644&dn=Office.Christmas.Party.2016.1080p.WEB-DL.DD5.1.H264-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710')
-            //callback(magnet)
+
+            // this is a mkv
+            //callback('magnet:?xt=urn:btih:7e1581f588474b7fa744ca4b4f37f4bf139af644&dn=Office.Christmas.Party.2016.1080p.WEB-DL.DD5.1.H264-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710')
+            callback(magnet)
         })
 }
 
