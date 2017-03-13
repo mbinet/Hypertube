@@ -22,14 +22,14 @@ connect();
 initPassport();
 
 if (isDebug) {
-    // enable webpack hot module replacement
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-    const webpackConfig = require('../webpack/webpack.config');
-    const devBrowserConfig = webpackConfig('browser');
-    const compiler = webpack(devBrowserConfig);
-    app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: devBrowserConfig.output.publicPath }));
-    app.use(webpackHotMiddleware(compiler));
+  // enable webpack hot module replacement
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const webpackConfig = require('../webpack/webpack.config');
+  const devBrowserConfig = webpackConfig('browser');
+  const compiler = webpack(devBrowserConfig);
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: devBrowserConfig.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
 }
 
 /*
@@ -60,7 +60,6 @@ var https = require('https');
 var Promise = require("bluebird");
 const OS = require('opensubtitles-api');
 var axios = require('axios');
-var ffmpeg = require('fluent-ffmpeg');
 const OpenSubtitles = new OS({
     useragent:'OSTestUserAgentTemp',
     username: 'Hypertube',
@@ -130,7 +129,7 @@ const getSubs = function(subtitles) {
 };
 
 /*
- ** returns the subtitle file asked
+** returns the subtitle file asked
  */
 
 app.get('/api/sub/:filename', function (req, res, next) {
@@ -148,7 +147,7 @@ app.get('/api/sub/:filename', function (req, res, next) {
 //***********//
 
 /*
- ** returns the css file for react-html5-video module
+** returns the css file for react-html5-video module
  */
 
 app.get('/api/getVideoCss', function (req, res, next) {
@@ -179,7 +178,7 @@ app.get('/api/getAntdCss', function (req, res, next) {
 //***********//
 
 /*
- **  Get a film (download + stream) from IMDB id
+**  Get a film (download + stream) from IMDB id
  */
 
 var runningCommands = {};
@@ -306,8 +305,6 @@ const getTorrentFile = function(engine) {
                     }
                 }
             });
-            console.log(tmp_file);
-            // console.log(tmp_file.length);
             resolve(tmp_file);
         });
     });
