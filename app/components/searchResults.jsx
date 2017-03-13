@@ -16,24 +16,21 @@ class SearchResults extends React.Component {
         maxPage: this.props.maxPage
     }
 }
-componentDidMount(){
-    this.setState({res:new Array()})
-}
 
 componentWillReceiveProps(nextProps) {
     var _this = this;
     this.setState({page:nextProps.page, maxPage:nextProps.maxPage})
     console.warn("searchresult state", this.state.page, this.state.maxPage)
+    if (nextProps.newSearch == true)
+        this.setState({res:new Array(), page:nextProps.page, maxPage:nextProps.maxPage})
     if (this.props.url != nextProps.url){
     this.serverRequest =
       axios
         .get(this.props.url)
         .then(function(result) {
-            // console.log("in will recieveprops", result.data.data.movies)
         if (result.data.data.movies && _this.state.page <= _this.state.maxPage)
         {
             if (!_this.state.res || _this.state.res == null){
-                console.warn("nul this state res movies")
               _this.setState({
                 res: result.data.data.movies
                 });}

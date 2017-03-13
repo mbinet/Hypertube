@@ -23,7 +23,8 @@ class SearchForm extends React.Component {
       quality:"720p",
       maxPage:0,
       page:0,
-      url:""
+      url:"",
+      newSearch:true
   };
 }
     YUrlGen(e){
@@ -62,7 +63,7 @@ class SearchForm extends React.Component {
             var rtRatings = ""
         }
         var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
-        this.setState({url:[url]})
+        this.setState({url:[url], newSearch:true, page:0})
         this.maxPages()
         e.preventDefault()
     }
@@ -89,7 +90,7 @@ class SearchForm extends React.Component {
        var url = this.state.url.toString();
        var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
        console.log('newUrl', newUrl);
-       this.setState({url: newUrl, page:pageNum});
+       this.setState({url: newUrl, page:pageNum, newSearch:false});
    }
 
   render() {
@@ -114,9 +115,9 @@ class SearchForm extends React.Component {
           loadMore={this.loadMore.bind(this)}
           hasMore={hasMoreBool}
           initialLoad={false}
-          loader={<div className="loader">Loading ...</div>}
+          loader={<div className={cx('loader')}></div>}
       >
-        <SearchResults url={this.state.url} page={this.state.page} maxPage={this.state.maxPage}/>
+        <SearchResults url={this.state.url} page={this.state.page} maxPage={this.state.maxPage} newSearch={this.state.newSearch}/>
         </InfiniteScroll>
       </div>
   );
