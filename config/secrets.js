@@ -8,3 +8,8 @@ export const google = {
   callbackURL: process.env.GOOGLE_CALLBACK || '/auth/google/callback'
 };
 
+export const key42 = {
+  clientID: process.env.KEY42_CLIENTID || 'e73eff7829762477f0755d7ec890323ad34c9a831d53dd8cbee146c929398ab5',
+  clientSecret: process.env.KEY42_SECRET || 'dda4bc3561031497b1792fef4642b7475f7e4ccf4891106b4470e841a908845b',
+  callbackURL: process.env.KEY42_CALLBACK || '/auth/42/callback'
+};
