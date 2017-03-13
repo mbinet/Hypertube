@@ -40,7 +40,7 @@ class Film extends Component {
 
     componentWillMount() {
         var that = this
-        axios.get('/api/getSubs/jrigole')
+        axios.get('/api/getSubs/' + this.props.params.idImdb)
             .then((response) => {
               that.setState({
                 subFr: '/api/sub/' + response.data.subFr,
