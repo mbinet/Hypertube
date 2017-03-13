@@ -77,7 +77,7 @@ class SearchForm extends React.Component {
             .get(this.state.url)
             .then(function(result){
                 var nMovies = result.data.data.movie_count
-                var maxPage = Math.ceil(nMovies/20)
+                var maxPage = Math.ceil(nMovies/20) - 1
                 console.warn("maxpages=", maxPage)
                 _this.setState({
                     maxPage: maxPage
@@ -86,12 +86,10 @@ class SearchForm extends React.Component {
    }
    loadMore(){
        var pageNum = this.state.page + 1;
-       console.log(pageNum);
-       this.setState({page:pageNum});
        var url = this.state.url.toString();
        var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
        console.log('newUrl', newUrl);
-       this.setState({url: newUrl});
+       this.setState({url: newUrl, page:pageNum});
    }
 
   render() {
@@ -118,7 +116,7 @@ class SearchForm extends React.Component {
           initialLoad={false}
           loader={<div className="loader">Loading ...</div>}
       >
-        <SearchResults url={this.state.url} queries={this.state}/>
+        <SearchResults url={this.state.url} page={this.state.page} maxPage={this.state.maxPage}/>
         </InfiniteScroll>
       </div>
   );
