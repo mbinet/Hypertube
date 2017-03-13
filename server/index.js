@@ -75,6 +75,7 @@ app.use(useragent.express());
 //***********//
 
 app.get('/api/getSubs/:idImdb', function (req, res, next) {
+    console.log(req.params.idImdb);
     OpenSubtitles.login()
         .then(resu => {
             OpenSubtitles.search({
@@ -86,11 +87,11 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
                 extensions: 'srt', // Accepted extensions, defaults to 'srt'.
                 limit: 'best',  // Can be 'best', 'all' or an
                                 // arbitrary nb. Defaults to 'best'
-                imdbid: "tt2245084",   // Text-based query, this is not recommended.
-                query: "big hero 6"
+                imdbid: req.params.idImdb,   // Text-based query, this is not recommended.
+                // query: "big hero 6"
             }).then(subtitles => {
-                getSubs(subtitles).then(function (str) {
-                    res.json({message: 'CA A MARCHE LOL', subFr: "big_hero_6.fr.vtt", subEn: "big_hero_6.en.vtt"});
+                getSubs(subtitles, req.params.idImdb).then(function (str) {
+                    res.json({message: 'Ca a marché', subFr: req.params.idImdb + ".fr.vtt", subEn: req.params.idImdb + ".en.vtt"});
                 });
             })
         })
@@ -100,27 +101,29 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
     // next()
 });
 
-const getSubs = function(subtitles) {
+const getSubs = function(subtitles, idImdb) {
+    console.log(subtitles);
+    console.log(idImdb);
     return new Promise(function (resolve, reject) {
-        var fileEn = fs.createWriteStream("./app/images/" + "big_hero_6" + ".en.srt");
+        var fileEn = fs.createWriteStream("./app/sub/" + idImdb + ".en.srt");
         var requestEn = https.get(subtitles.en.url, function (response) {
             var srt = response.pipe(fileEn);
             srt.on('finish', function () {
-                var srtData = fs.readFileSync('./app/images/big_hero_6.en.srt');
+                var srtData = fs.readFileSync('./app/sub/' + idImdb + '.en.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     if (err) throw new Error(err);
-                    fs.writeFileSync('./app/images/big_hero_6.en.vtt', vttData);
+                    fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData);
                 });
             })
         });
-        var fileFr = fs.createWriteStream("./app/images/" + "big_hero_6" + ".fr.srt");
+        var fileFr = fs.createWriteStream("./app/sub/" + idImdb + ".fr.srt");
         var requestFr = https.get(subtitles.fr.url, function (response) {
             var srt = response.pipe(fileFr);
             srt.on('finish', function () {
-                var srtData = fs.readFileSync('./app/images/big_hero_6.fr.srt');
+                var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     if (err) throw new Error(err);
-                    fs.writeFileSync('./app/images/big_hero_6.fr.vtt', vttData);
+                    fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData);
                 });
             })
         });
@@ -133,7 +136,7 @@ const getSubs = function(subtitles) {
  */
 
 app.get('/api/sub/:filename', function (req, res, next) {
-    fs.readFile('./app/images/' + req.params.filename, 'utf8', function (err, data) {
+    fs.readFile('./app/sub/' + req.params.filename, 'utf8', function (err, data) {
         if (err) {
             console.log(err);
         }
@@ -295,7 +298,7 @@ const getTorrentFile = function(engine) {
         var tmp_file = null;
         engine.on('ready', function () {
             engine.files.forEach(function (file, idx) {
-                console.log(file.length);
+                // console.log(file.length);
                 const ext = path.extname(file.name).slice(1);
                 if (ext === 'mkv' || ext === 'mp4') {
                     if (file.length > tmp_len) {
