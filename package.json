@@ -85,6 +85,7 @@
     "mongoose": "^4.5.10",
     "opensubtitles-api": "^4.0.0-rc1",
     "passport": "^0.3.2",
+    "passport-42": "^1.2.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",

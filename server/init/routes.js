@@ -42,6 +42,25 @@ export default (app) => {
       })
     );
   }
+  if (passportConfig && passportConfig.key42) {
+    // google auth
+    // Redirect the user to Google for authentication. When complete, Google
+    // will redirect the user back to the application at
+    // /auth/google/return
+    // Authentication with google requires an additional scope param, for more info go
+    // here https://developers.google.com/identity/protocols/OpenIDConnect#scope-param
+    app.get('/auth/42', passport.authenticate('42'));
+
+    // Google will redirect the user to this URL after authentication. Finish the
+    // process by verifying the assertion. If valid, the user will be logged in.
+    // Otherwise, the authentication has failed.
+    app.get('/auth/42/callback',
+      passport.authenticate('42', {failureRedirect: '/login'}),
+      function(req, res) {
+    // Successful authentication, redirect home.
+      res.redirect('/');
+    });
+  }
 
   // topic routes
   if (topicsController) {

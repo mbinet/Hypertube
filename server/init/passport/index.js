@@ -2,6 +2,7 @@
 import passport from 'passport';
 import local from './local';
 import google from './google';
+import key42 from './42';
 import { passport as dbPassport } from '../../db';
 import unsupportedMessage from '../../db/unsupportedMessage';
 
@@ -27,4 +28,5 @@ export default () => {
   // use the following strategies
   local(passport);
   google(passport);
+  key42(passport);
 };

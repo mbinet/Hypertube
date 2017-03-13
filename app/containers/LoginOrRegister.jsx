@@ -110,6 +110,12 @@ class LoginOrRegister extends Component {
               className={cx('button')}
               href="/auth/google">Login with Google</a>
           </div>
+          <div className={cx('key42-container')}>
+            <h1 className={cx('heading')}>42 Login Demo</h1>
+            <a
+              className={cx('button')}
+              href="/auth/42">Login with 42</a>
+          </div>
         </div>
       </div>
     );
