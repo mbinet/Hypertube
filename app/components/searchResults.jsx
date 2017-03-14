@@ -13,39 +13,48 @@ class SearchResults extends React.Component {
     this.state ={
         res: new Array(),
         page: this.props.page,
-        maxPage: this.props.maxPage
+        maxPage: this.props.maxPage,
+        url:this.props.url
     }
 }
-componentDidMount(){
-    this.setState({res:new Array()})
-}
 
-componentWillReceiveProps(nextProps) {
+getResult(){
     var _this = this;
-    this.setState({page:nextProps.page, maxPage:nextProps.maxPage})
-    console.warn("searchresult state", this.state.page, this.state.maxPage)
-    if (this.props.url != nextProps.url){
     this.serverRequest =
-      axios
-        .get(this.props.url)
-        .then(function(result) {
-            // console.log("in will recieveprops", result.data.data.movies)
+    axios
+    .get(this.props.url)
+    .then(function(result) {
         if (result.data.data.movies && _this.state.page <= _this.state.maxPage)
         {
             if (!_this.state.res || _this.state.res == null){
-                console.warn("nul this state res movies")
-              _this.setState({
-                res: result.data.data.movies
-                });}
-            else{
-                var newSet = _this.state.res
-                result.data.data.movies.forEach(function(oneMovie){
-                newSet.push(oneMovie)})
+                console.log("searchRsults --- no previous result", _this.state.res)
+                console.log("searchRsults --- result to add :", result.data.data.movie_count)
                 _this.setState({
-                    res:newSet
+                    res: result.data.data.movies
+                });}
+                else{
+                    console.log("searchRsults --- previous result :", _this.state.res)
+                    console.log("searchRsults --- result to add :", result.data.data.movies.length)
+                    var newSet = _this.state.res
+                    result.data.data.movies.forEach(function(oneMovie){
+                        newSet.push(oneMovie)})
+                        _this.setState({
+                            res:newSet
+                        })
+                    }}
                 })
-            }}
-        })
+}
+
+componentWillReceiveProps(nextProps) {
+    this.setState({page:nextProps.page, maxPage:nextProps.maxPage})
+    console.log("searchResults --- willReceiveProps url to search", this.state.url)
+    if (nextProps.newSearch == true){
+        console.log("searcRresult --- newsearch")
+        this.setState({res:new Array(), page:nextProps.page, maxPage:nextProps.maxPage})
+    }
+    if (this.state.url != nextProps.url){
+        console.log("searchResults --- old", this.state.url, "new", nextProps.url)
+        this.getResult()
     }
 }
 
