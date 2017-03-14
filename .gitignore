@@ -8,3 +8,4 @@ compiled
 .vscode
 data
 app/images/*
+app/sub/*
