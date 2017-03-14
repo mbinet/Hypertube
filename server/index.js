@@ -118,7 +118,8 @@ const getSubs = function(subtitles, idImdb) {
             srt.on('finish', function () {
                 var srtData = fs.readFileSync('./app/sub/' + idImdb + '.en.srt');
                 srt2vtt(srtData, function(err, vttData) {
-                    if (err) throw new Error(err);
+                    // if (err) throw new Error(err);
+                    if (err) console.log("sous titre mal formatés");
                     fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData);
                 });
             })
@@ -129,7 +130,8 @@ const getSubs = function(subtitles, idImdb) {
             srt.on('finish', function () {
                 var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
                 srt2vtt(srtData, function(err, vttData) {
-                    if (err) throw new Error(err);
+                    // if (err) throw new Error(err);
+                    if (err) console.log("sous titre mal formatés");
                     fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData);
                 });
             })
