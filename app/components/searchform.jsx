@@ -27,6 +27,10 @@ class SearchForm extends React.Component {
       newSearch:true
   };
 }
+
+/**
+    Generate URl for API request
+**/
     YUrlGen(e){
         var url = "https://yts.ag/api/v2/list_movies.json?"
         var sortBy = ""
@@ -63,13 +67,15 @@ class SearchForm extends React.Component {
             var rtRatings = ""
         }
         var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
+        var _this = this
         this.setState({url:url, newSearch:true, page:0}, function(){
-            this.maxPages()
+            _this.maxPages()
         // this.maxPages()
         console.log("searchForm --- search hit",this.state)})
         e.preventDefault()
     }
 
+/** check max number of pages */
    maxPages(){
        var _this = this
        this.serverRequest =
@@ -78,12 +84,15 @@ class SearchForm extends React.Component {
             .then(function(result){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20) - 1
-                console.warn("searchForm --- maxpages=", maxPage)
+                console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
                     maxPage: maxPage
                 })
             })
    }
+
+ /** load next page **/
+
    loadMore(){
        var pageNum = this.state.page + 1;
        var url = this.state.url.toString();
@@ -92,13 +101,14 @@ class SearchForm extends React.Component {
        this.setState({url: newUrl, page:pageNum, newSearch:false});
    }
 
+/*listen to changes in inputs, put them in states */
+
    handleChange(event){
        this.setState({[event.target.name]: event.target.value})
    }
 
   render() {
       var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
-    //   console.log("hasmore=",hasMoreBool)
     return (
         <div>
       <form className={cx('searchForm')} id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
@@ -112,7 +122,6 @@ class SearchForm extends React.Component {
       <input type="submit" value="search"/>
       </form>
       <h2> results: </h2>
-      <h3>{this.props.url}</h3>
       <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore.bind(this)}
