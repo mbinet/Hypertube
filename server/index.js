@@ -70,6 +70,13 @@ const OpenSubtitles = new OS({
 var useragent = require('express-useragent');
 app.use(useragent.express());
 
+app.use(require('forest-express-mongoose').init({
+    modelsDir: './server/db/mongo/models', // Your models directory.
+    envSecret: process.env.FOREST_ENV_SECRET,
+    authSecret: process.env.FOREST_AUTH_SECRET,
+    mongoose: require('mongoose') // The mongoose database connection.
+}));
+
 //***********//
 // SUBTITLES //
 //***********//
