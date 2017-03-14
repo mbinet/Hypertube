@@ -29,7 +29,7 @@ class ResultList extends React.Component {
         }
     }
     render(){
-        const result = this.props.result
+        var result = this.props.result
         return(<div className={cx('movieList')}>
             <HasResult list={result}/>
             </div>

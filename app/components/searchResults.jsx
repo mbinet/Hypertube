@@ -18,6 +18,8 @@ class SearchResults extends React.Component {
     }
 }
 
+/** Get Movies data **/
+
 getResult(){
     var _this = this;
     this.serverRequest =
@@ -45,16 +47,18 @@ getResult(){
                 })
 }
 
+/** listen to changes in props */
+
 componentWillReceiveProps(nextProps) {
     this.setState({page:nextProps.page, maxPage:nextProps.maxPage})
-    console.log("searchResults --- willReceiveProps url to search", this.state.url)
     if (nextProps.newSearch == true){
         console.log("searcRresult --- newsearch")
-        this.setState({res:new Array(), page:nextProps.page, maxPage:nextProps.maxPage})
+        this.setState({res:new Array(), page:nextProps.page, maxPage:nextProps.maxPage, url:nextProps.url}, function(){this.getResult()})
     }
     if (this.state.url != nextProps.url){
+
         console.log("searchResults --- old", this.state.url, "new", nextProps.url)
-        this.getResult()
+        this.setState({url:nextProps.url}, function(){this.getResult()})
     }
 }
 
