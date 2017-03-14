@@ -6,11 +6,12 @@ import styles from '../css/components/movieList';
 const cx = classNames.bind(styles);
 
 function HasResult(props){
-    console.log('in hasresult', props)
     if (!props || !props.list || props.list.length == 0)
     {
+        console.log('resultList --- hasresult: no result')
         return (<p> No movies </p>)
     }
+    console.log('resultList --- hasresult', props.list.length)
     return (
         <div className={cx('movieListDiv')}> {
             props.list.map(function(oneMovie){

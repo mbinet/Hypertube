@@ -63,14 +63,13 @@ class SearchForm extends React.Component {
             var rtRatings = ""
         }
         var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
-        this.setState({url:[url], newSearch:true, page:0})
-        this.maxPages()
+        this.setState({url:url, newSearch:true, page:0}, function(){
+            this.maxPages()
+        // this.maxPages()
+        console.log("searchForm --- search hit",this.state)})
         e.preventDefault()
     }
 
-   handleChange(event){
-       this.setState({[event.target.name]: event.target.value})
-   }
    maxPages(){
        var _this = this
        this.serverRequest =
@@ -79,7 +78,7 @@ class SearchForm extends React.Component {
             .then(function(result){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20) - 1
-                console.warn("maxpages=", maxPage)
+                console.warn("searchForm --- maxpages=", maxPage)
                 _this.setState({
                     maxPage: maxPage
                 })
@@ -89,18 +88,22 @@ class SearchForm extends React.Component {
        var pageNum = this.state.page + 1;
        var url = this.state.url.toString();
        var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
-       console.log('newUrl', newUrl);
+       console.log('searcForm --- load page', pageNum);
        this.setState({url: newUrl, page:pageNum, newSearch:false});
+   }
+
+   handleChange(event){
+       this.setState({[event.target.name]: event.target.value})
    }
 
   render() {
       var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
-      console.log("hasmore=",hasMoreBool)
+    //   console.log("hasmore=",hasMoreBool)
     return (
         <div>
       <form className={cx('searchForm')} id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
-      <input onChange={this.handleChange.bind(this)} type="text" value={this.state.query_term} placeholder="keyword" name="query_term"/>
-      <input onChange={this.handleChange.bind(this)} type="text" value={this.state.genre} placeholder="genre" name="genre"/>
+      <input onChange={this.handleChange.bind(this)} value={this.state.query_term} type="text" placeholder="keyword" name="query_term"/>
+      <input onChange={this.handleChange.bind(this)} value={this.state.genre} type="text" placeholder="genre" name="genre"/>
       <SelectInput name="sortBy" editValue={this.handleChange.bind(this)} values={['date', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'title']}/>
       <SelectInput name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
       <SelectInput name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
