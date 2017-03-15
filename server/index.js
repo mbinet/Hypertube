@@ -115,7 +115,7 @@ const getSubs = function(subtitles, idImdb) {
     return new Promise(function (resolve, reject) {
         var ret = {};
         var fileEn = fs.createWriteStream("./app/sub/" + idImdb + ".en.srt");
-        var requestEn = https.get(subtitles.en.url, function (response) {
+        var requestEn = https.get(subtitles.en.url, function (response) { // Debut du telechargement des sous titres anglais
             var srt = response.pipe(fileEn);
             srt.on('finish', function () {
                 var srtData = fs.readFileSync('./app/sub/' + idImdb + '.en.srt');
@@ -127,28 +127,29 @@ const getSubs = function(subtitles, idImdb) {
                     }
                     else
                         ret.subEn = idImdb + ".en.vtt";
-                    fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData);
+                    fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData); // fin du telechargement des sous titres anglais
+
+                    var fileFr = fs.createWriteStream("./app/sub/" + idImdb + ".fr.srt"); // Asynchrone donc telechargement des sous titres francais dans le callback
+                    var requestFr = https.get(subtitles.fr.url, function (response) { // Debut du telechargement des sous titres francais
+                        var srt = response.pipe(fileFr);
+                        srt.on('finish', function () {
+                            var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
+                            srt2vtt(srtData, function(err, vttData) {
+                                // if (err) throw new Error(err);
+                                if (err) {
+                                    ret.subFr = 'false';
+                                    // console.log(ret);
+                                }
+                                else
+                                    ret.subFr = idImdb + ".fr.vtt";
+                                fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData); // fin du telechargement des sous titres francais
+                                resolve(ret); // resolve de ret qui est un objet avec le path ou false si pas de sous titre trouves.
+                            });
+                        })
+                    });
                 });
             })
         });
-        var fileFr = fs.createWriteStream("./app/sub/" + idImdb + ".fr.srt");
-        var requestFr = https.get(subtitles.fr.url, function (response) {
-            var srt = response.pipe(fileFr);
-            srt.on('finish', function () {
-                var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
-                srt2vtt(srtData, function(err, vttData) {
-                    // if (err) throw new Error(err);
-                    if (err) {
-                        ret.subFr = 'false';
-                        // console.log(ret);
-                    }
-                    else
-                        ret.subFr = idImdb + ".fr.vtt";
-                    fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData);
-                });
-            })
-        });
-        resolve(ret);
     });
 };
 
