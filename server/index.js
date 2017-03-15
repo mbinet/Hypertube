@@ -82,7 +82,7 @@ app.use(require('forest-express-mongoose').init({
 //***********//
 
 app.get('/api/getSubs/:idImdb', function (req, res, next) {
-    console.log(req.params.idImdb);
+    // console.log(req.params.idImdb);
     OpenSubtitles.login()
         .then(resu => {
             OpenSubtitles.search({
@@ -111,9 +111,9 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
 
 const getSubs = function(subtitles, idImdb) {
     console.log(subtitles);
-    console.log(idImdb);
+    // console.log(idImdb);
     return new Promise(function (resolve, reject) {
-        ret = {subFr: req.params.idImdb + ".fr.vtt", subEn: req.params.idImdb + ".en.vtt"};
+        var ret = {};
         var fileEn = fs.createWriteStream("./app/sub/" + idImdb + ".en.srt");
         var requestEn = https.get(subtitles.en.url, function (response) {
             var srt = response.pipe(fileEn);
@@ -121,7 +121,12 @@ const getSubs = function(subtitles, idImdb) {
                 var srtData = fs.readFileSync('./app/sub/' + idImdb + '.en.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     // if (err) throw new Error(err);
-                    if (err) ret.subEn = 'false';
+                    if (err) {
+                        ret.subEn = 'false';
+                        // console.log(ret);
+                    }
+                    else
+                        ret.subEn = idImdb + ".en.vtt";
                     fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData);
                 });
             })
@@ -133,7 +138,12 @@ const getSubs = function(subtitles, idImdb) {
                 var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     // if (err) throw new Error(err);
-                    if (err) ret.subFr = 'false';
+                    if (err) {
+                        ret.subFr = 'false';
+                        // console.log(ret);
+                    }
+                    else
+                        ret.subFr = idImdb + ".fr.vtt";
                     fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData);
                 });
             })
@@ -248,7 +258,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                             delete runningCommands[id];
                             console.log("runningCommands[id] is deleted from id " + id);
                         });
-                    console.log("oui je suis un mkv");
+                    // console.log("oui je suis un mkv");
                     runningCommands[id].pipe(res);
                 }
             }
@@ -270,7 +280,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                     res.setHeader('Content-Length', 1 + range.end - range.start);
                     res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
                     if (req.method !== 'GET') return res.end();
-                    console.log("oui je suis un mp4")
+                    // console.log("oui je suis un mp4");
                     return file.createReadStream(range).pipe(res);
                 }
             }
