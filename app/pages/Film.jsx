@@ -42,11 +42,11 @@ class Film extends Component {
         var that = this
         axios.get('/api/getSubs/' + this.props.params.idImdb)
             .then((response) => {
-              that.setState({
-                subFr: '/api/sub/' + response.data.subFr,
-                subEn: '/api/sub/' + response.data.subEn,
-                message: response.data.message
-              })
+                that.setState({
+                    subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
+                    subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
+                    message: response.data.message
+                })
             });
     }
 
