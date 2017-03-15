@@ -97,8 +97,9 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
                 imdbid: req.params.idImdb,   // Text-based query, this is not recommended.
                 // query: "big hero 6"
             }).then(subtitles => {
-                getSubs(subtitles, req.params.idImdb).then(function (str) {
-                    res.json({message: 'Ca a marché', subFr: req.params.idImdb + ".fr.vtt", subEn: req.params.idImdb + ".en.vtt"});
+                getSubs(subtitles, req.params.idImdb).then(function (ret) {
+                    console.log(ret);
+                    res.json(ret);
                 });
             })
         })
@@ -112,6 +113,7 @@ const getSubs = function(subtitles, idImdb) {
     console.log(subtitles);
     console.log(idImdb);
     return new Promise(function (resolve, reject) {
+        ret = {subFr: req.params.idImdb + ".fr.vtt", subEn: req.params.idImdb + ".en.vtt"};
         var fileEn = fs.createWriteStream("./app/sub/" + idImdb + ".en.srt");
         var requestEn = https.get(subtitles.en.url, function (response) {
             var srt = response.pipe(fileEn);
@@ -119,7 +121,7 @@ const getSubs = function(subtitles, idImdb) {
                 var srtData = fs.readFileSync('./app/sub/' + idImdb + '.en.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     // if (err) throw new Error(err);
-                    if (err) console.log("sous titre mal formatés");
+                    if (err) ret.subEn = 'false';
                     fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData);
                 });
             })
@@ -131,12 +133,12 @@ const getSubs = function(subtitles, idImdb) {
                 var srtData = fs.readFileSync('./app/sub/'+ idImdb + '.fr.srt');
                 srt2vtt(srtData, function(err, vttData) {
                     // if (err) throw new Error(err);
-                    if (err) console.log("sous titre mal formatés");
+                    if (err) ret.subFr = 'false';
                     fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData);
                 });
             })
         });
-        resolve("dowloaded");
+        resolve(ret);
     });
 };
 
