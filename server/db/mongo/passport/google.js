@@ -2,6 +2,7 @@ import User from '../models/user';
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
+    var split = profile._json.emails[0].value.split('@');
   if (req.user) {
     return User.findOne({ google: profile.id }, (findOneErr, existingUser) => {
       if (existingUser) {
@@ -10,9 +11,11 @@ export default (req, accessToken, refreshToken, profile, done) => {
       return User.findById(req.user.id, (findByIdErr, user) => {
         user.google = profile.id;
         user.tokens.push({ kind: 'google', accessToken });
-        user.profile.name = user.profile.name || profile.displayName;
-        user.profile.gender = user.profile.gender || profile._json.gender;
-        user.profile.picture = user.profile.picture || profile._json.picture;
+        user.profile.firstname = user.profile.firstname || profile._json.name.givenName;
+        user.profile.lastname = user.profile.lastname || profile._json.name.familyName;
+        user.profile.username = user.profile.username || split[0];
+        //user.profile.gender = user.profile.gender || profile._json.gender;
+        user.profile.picture = user.profile.picture || profile._json.image.url;
         user.save((err) => {
           done(err, user, { message: 'Google account has been linked.' });
         });
@@ -25,13 +28,16 @@ export default (req, accessToken, refreshToken, profile, done) => {
       if (existingEmailUser) {
         return done(null, false, { message: 'There is already an account using this email address. Sign in to that account and link it with Google manually from Account Settings.' });
       }
+      var split = profile._json.emails[0].value.split('@');
       const user = new User();
       user.email = profile._json.emails[0].value;
       user.google = profile.id;
       user.tokens.push({ kind: 'google', accessToken });
-      user.profile.name = profile.displayName;
-      user.profile.gender = profile._json.gender;
-      user.profile.picture = profile._json.picture;
+      user.profile.firstname = profile._json.name.givenName;
+      user.profile.lastname = profile._json.name.familyName;
+      user.profile.username = split[0];
+      //user.profile.gender = profile._json.gender;
+      user.profile.picture = profile._json.image.url;
       return user.save((err) => {
         done(err, user);
       });
