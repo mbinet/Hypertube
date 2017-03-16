@@ -98,7 +98,7 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
                 // query: "big hero 6"
             }).then(subtitles => {
                 getSubs(subtitles, req.params.idImdb).then(function (ret) {
-                    console.log(ret);
+                    // console.log(ret);
                     res.json(ret);
                 });
             })
@@ -124,7 +124,7 @@ const getSubs = function(subtitles, idImdb) {
                         // if (err) throw new Error(err);
                         if (err) {
                             ret.subEn = 'false';
-                            // console.log(ret);
+                            console.log(err);
                         }
                         else
                             ret.subEn = idImdb + ".en.vtt";
@@ -140,24 +140,29 @@ const getSubs = function(subtitles, idImdb) {
                                         // if (err) throw new Error(err);
                                         if (err) {
                                             ret.subFr = 'false';
-                                            // console.log(ret);
+                                            console.log(err);
                                         }
                                         else
                                             ret.subFr = idImdb + ".fr.vtt";
                                         fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData); // fin du telechargement des sous titres francais
+                                        console.log(ret);
                                         resolve(ret); // resolve de ret qui est un objet avec le path ou false si pas de sous titre trouves.
                                     });
                                 })
                             });
                         }
-                        else
+                        else {
+                            console.log('second');
                             resolve(ret);
+                        }
                     });
                 })
             });
         }
-        else
+        else {
+            console.log('first');
             resolve(ret);
+        }
     });
 };
 
@@ -204,6 +209,17 @@ app.get('/api/getAntdCss', function (req, res, next) {
         res.end(data);
     });
 });
+
+//*****************//
+//  FILMS DETAILS  //
+//*****************//
+
+
+app.get('/api/getDetails/:idImdb', function (req, res, next) {
+    console.log(req.params.idImdb);
+    res.json({title: "this is a title"});
+});
+
 
 
 //***********//

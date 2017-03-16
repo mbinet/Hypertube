@@ -12,7 +12,7 @@ class Film extends Component {
         this.state = {
             subFr: "",
             subEn: "",
-            message: ""
+            title: ""
         }
     }
 
@@ -45,10 +45,15 @@ class Film extends Component {
                 that.setState({
                     subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
                     subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
-                    message: response.data.message
                 })
             });
-        // faire la requete ici
+
+        axios.get('/api/getDetails/' + this.props.params.idImdb)
+            .then((response) => {
+                that.setState({
+                    title: response.data.title
+                })
+            });
     }
 
     render() {
@@ -60,7 +65,7 @@ class Film extends Component {
                                subFr={this.state.subFr}
                                subEn={this.state.subEn}
                                idImdb={this.props.params.idImdb}
-                               title={'This is a test'}
+                               title={this.state.title}
                 />
             </Page>
         );

@@ -8,7 +8,7 @@ class Film extends Component {
         return (
             <div>
                 <h1> {this.props.title} </h1>
-                <MovieBox subFr={this.props.params.subFr} subEn={this.props.params.subEn} idImdb={this.props.params.idImdb}/>
+                <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
             </div>
         )
     }
