@@ -4,14 +4,10 @@ import MovieBox from '../components/MovieBox';
 
 class Film extends Component {
 
-    componentWillMount() {
-        //faire la requete ici
-    }
-
     render() {
         return (
             <div>
-                <h1> jrigole</h1>
+                <h1> {this.props.title} </h1>
                 <MovieBox subFr={this.props.params.subFr} subEn={this.props.params.subEn} idImdb={this.props.params.idImdb}/>
             </div>
         )

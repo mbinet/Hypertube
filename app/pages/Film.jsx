@@ -48,13 +48,20 @@ class Film extends Component {
                     message: response.data.message
                 })
             });
+        // faire la requete ici
     }
 
     render() {
         return (
             <Page {...this.getMetaData()}>
                 {/*<DatePicker />*/}
-                <FilmContainer {...this.props} message={'bonjour'} subFr={this.state.subFr} subEn={this.state.subEn} idImdb={this.props.params.idImdb} />
+                <FilmContainer {...this.props}
+                               message={'bonjour'}
+                               subFr={this.state.subFr}
+                               subEn={this.state.subEn}
+                               idImdb={this.props.params.idImdb}
+                               title={'This is a test'}
+                />
             </Page>
         );
     }
