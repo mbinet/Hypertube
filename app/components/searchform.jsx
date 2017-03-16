@@ -82,12 +82,14 @@ class SearchForm extends React.Component {
         axios
             .get(this.state.url)
             .then(function(result){
+                if (result.data && result.data.data){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20) - 1
                 console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
                     maxPage: maxPage
                 })
+            }
             })
    }
 
@@ -121,7 +123,6 @@ class SearchForm extends React.Component {
       <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
-      <h2> results: </h2>
       <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore.bind(this)}

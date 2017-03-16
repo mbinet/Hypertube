@@ -26,7 +26,7 @@ getResult(){
     axios
     .get(this.props.url)
     .then(function(result) {
-        if (result.data.data.movies && _this.state.page <= _this.state.maxPage)
+        if (result.data && result.data.data && result.data.data.movies && _this.state.page <= _this.state.maxPage)
         {
             if (!_this.state.res || _this.state.res == null){
                 console.log("searchRsults --- no previous result", _this.state.res)
