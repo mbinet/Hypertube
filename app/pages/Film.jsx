@@ -53,10 +53,8 @@ class Film extends Component {
     render() {
         return (
             <Page {...this.getMetaData()}>
-                <h1>coucou</h1>
-                <DatePicker />
-                {/*<FilmContainer {...this.props} message={'bonjour'} />*/}
-                <MovieBox message={this.state.message} subFr={this.state.subFr} subEn={this.state.subEn} idImdb={this.props.params.idImdb}/>
+                {/*<DatePicker />*/}
+                <FilmContainer {...this.props} message={'bonjour'} subFr={this.state.subFr} subEn={this.state.subEn} idImdb={this.props.params.idImdb} />
             </Page>
         );
     }
