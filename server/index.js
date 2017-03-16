@@ -216,8 +216,20 @@ app.get('/api/getAntdCss', function (req, res, next) {
 
 
 app.get('/api/getDetails/:idImdb', function (req, res, next) {
-    console.log(req.params.idImdb);
-    res.json({title: "this is a title"});
+    var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + req.params.idImdb;
+
+    axios.get(url)
+        .then(function (response) {
+            if (response.data && response.data.status == "ok") {
+                var result = response.data.data.movies[0];
+                res.json({  title: result.title,
+                            rating: result.rating,
+                            genres: result.genres,
+                            synopsis: result.synopsis,
+                            language: result.language
+                });
+            }
+        });
 });
 
 

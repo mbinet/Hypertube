@@ -12,7 +12,11 @@ class Film extends Component {
         this.state = {
             subFr: "",
             subEn: "",
-            title: ""
+            title: "",
+            rating: "",
+            genre: [],
+            synopsis: "",
+            language: ""
         }
     }
 
@@ -51,7 +55,11 @@ class Film extends Component {
         axios.get('/api/getDetails/' + this.props.params.idImdb)
             .then((response) => {
                 that.setState({
-                    title: response.data.title
+                    title: response.data.title,
+                    rating: response.data.rating,
+                    genres: response.data.genres,
+                    synopsis: response.data.synopsis,
+                    language: response.data.language
                 })
             });
     }
@@ -66,6 +74,10 @@ class Film extends Component {
                                subEn={this.state.subEn}
                                idImdb={this.props.params.idImdb}
                                title={this.state.title}
+                               rating={this.state.rating}
+                               genres={this.state.genres}
+                               synopsis={this.state.synopsis}
+                               language={this.state.language}
                 />
             </Page>
         );
