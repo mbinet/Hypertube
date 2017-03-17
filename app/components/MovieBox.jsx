@@ -28,7 +28,7 @@ class MovieBox extends React.Component {
             <div>
             <FormattedMessage
                     id="welcome"
-                    defaultMessage={`Test`}
+                    defaultMessage={` `}
                 />
 
                 {/*<script src='//vjs.zencdn.net/5-unsafe/video.js' />*/}

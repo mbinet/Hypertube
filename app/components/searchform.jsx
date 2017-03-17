@@ -71,6 +71,7 @@ class SearchForm extends React.Component {
 /** check max number of pages */
    maxPages(e){
        e.preventDefault()
+       this.setState({page:0, newSearch:true}, function(){
        var url = this.YUrlGen()
        console.log("url in searchForm maxPages", url)
        var _this = this
@@ -85,13 +86,14 @@ class SearchForm extends React.Component {
                 _this.setState({
                     maxPage: maxPage,
                     url: url,
-                    page: 0,
+                    page:0,
                     newSearch:true
                 }, function(){
-                    console.log("state on search click", _this.state)
+                    console.warn("state on search click", _this.state)
                 })
             }
             })
+        })
    }
 
  /** load next page **/
