@@ -1,6 +1,9 @@
 import React from 'react';
 import Video from "react-h5-video";
-
+import en from 'react-intl/locale-data/en';
+import { IntlProvider, FormattedMessage, addLocaleData
+} from 'react-intl';
+addLocaleData([...en]);
 /**
  * A counter button: tap the button to increase the count.
  */
@@ -17,7 +20,16 @@ class MovieBox extends React.Component {
         var subFr = this.props.subFr ? <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/> : ""
         var subEn = this.props.subEn ? <track kind="subtitles" label="English" src={this.props.subEn} srcLang="fr"/> : ""
         return (
+            <IntlProvider
+        locale='en'
+    >
+
+    
             <div>
+            <FormattedMessage
+                    id="welcome"
+                    defaultMessage={`Test`}
+                />
 
                 {/*<script src='//vjs.zencdn.net/5-unsafe/video.js' />*/}
                 {/*<link href='//vjs.zencdn.net/5.4.6/video-js.min.css' rel='stylesheet' />*/}
@@ -46,6 +58,7 @@ class MovieBox extends React.Component {
 
 
             </div>
+            </IntlProvider>
         );
     }
 }
