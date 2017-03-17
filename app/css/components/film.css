@@ -78,6 +78,12 @@
       border-bottom: 1px dotted red;
 }
 
-.synopsis {
+.genres {
+    font-weight: bold;
+    font-size: 1.4em;
+}
 
+
+.genres:not(:last-child)::after{
+    content:' / ';
 }

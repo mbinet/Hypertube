@@ -7,27 +7,24 @@ import StarRatingComponent from 'react-star-rating-component';
 
 const cx = classNames.bind(styles);
 
-function getGenres(props){
-    console.log("genres",props)
-    if (!props || !props.list || props.list.length == 0)
-    {
-        console.log('resultList --- hasresult: no result')
-        return (<p> No Genre </p>)
-    }
-    console.log('resultList --- hasresult', props.list.length)
-    return (
-        <div> {
-            props.list.forEach(function(genre){
-            return (<p>{genre}</p>)
-        })}
-        </div>
+function GetGenres(props){
+    console.log("genres", typeof props.genresList)
+    var genresArray = props.genresList
+    // return (<h2>{genresArray+" "}</h2>)
+    return (<div>{Object.keys(genresArray).map(function (key){
+        return (<span className={cx('genres')}>{genresArray[key] + " "}</span>)
+    })}</div>
     )
 }
 
 class Film extends Component {
+    constructor(props) {
+        super(props)
+    }
 
     render() {
             var backgroundImage = "url("+ this.props.img + ")"
+            var genres = this.props.genres
         return (
             <div className={cx('filmContainer')}>
                 <h1 className={cx('title')}>  {this.props.title} </h1>
@@ -41,8 +38,8 @@ class Film extends Component {
                         editing={false}
                         emptyStarColor= {'#d5d5d5'}
                         />
-                        <p>genres </p><h2> {this.props.genres} </h2>
-                        <getGenres list={this.props.genres}/>
+                        <p>genres </p>
+                        <div><GetGenres genresList={genres}/></div>
                         <p>language </p> <h2>  {this.props.language} </h2>
                     </div>
                     <div className={cx('rightInfo')}>
