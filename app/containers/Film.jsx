@@ -10,7 +10,6 @@ const cx = classNames.bind(styles);
 class Film extends Component {
 
     render() {
-            console.log(this.props)
         return (
             <div className={cx('filmContainer')}>
                 <h1 className={cx('title')}>  {this.props.title} </h1>

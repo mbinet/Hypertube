@@ -104,7 +104,7 @@ app.get('/api/getSubs/:idImdb', function (req, res, next) {
             })
         })
         .catch(err => {
-            console.log(err);
+            console.log('err');
         });
     // next()
 });
@@ -124,7 +124,7 @@ const getSubs = function(subtitles, idImdb) {
                         // if (err) throw new Error(err);
                         if (err) {
                             ret.subEn = 'false';
-                            console.log(err);
+                            console.log('err');
                         }
                         else
                             ret.subEn = idImdb + ".en.vtt";
@@ -140,7 +140,7 @@ const getSubs = function(subtitles, idImdb) {
                                         // if (err) throw new Error(err);
                                         if (err) {
                                             ret.subFr = 'false';
-                                            console.log(err);
+                                            console.log('err');
                                         }
                                         else
                                             ret.subFr = idImdb + ".fr.vtt";
@@ -173,7 +173,7 @@ const getSubs = function(subtitles, idImdb) {
 app.get('/api/sub/:filename', function (req, res, next) {
     fs.readFile('./app/sub/' + req.params.filename, 'utf8', function (err, data) {
         if (err) {
-            console.log(err);
+            console.log('err');
         }
         res.send(data);
     });
@@ -192,7 +192,7 @@ app.get('/api/getVideoCss', function (req, res, next) {
     fs.readFile('./node_modules/react-h5-video/lib/react-html5-video.css', function (err, data) {
         if (err) {
             res.writeHead(500)
-            console.log(err);
+            console.log('err');
         }
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.end(data);
@@ -203,7 +203,7 @@ app.get('/api/getAntdCss', function (req, res, next) {
     fs.readFile('./node_modules/antd/dist/antd.min.css', function (err, data) {
         if (err) {
             res.writeHead(500)
-            console.log(err);
+            console.log('err');
         }
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.end(data);
@@ -292,7 +292,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                         })
                         .on('error', function (err) {
                             console.log("error now happening");
-                            console.log(err);
+                            console.log('err');
                             delete runningCommands[id];
                             console.log("runningCommands[id] is deleted from id " + id);
                         });
