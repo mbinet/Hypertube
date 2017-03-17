@@ -1,6 +1,5 @@
 import React from 'react';
 import Video from "react-h5-video";
-
 /**
  * A counter button: tap the button to increase the count.
  */

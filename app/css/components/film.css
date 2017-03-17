@@ -1,0 +1,34 @@
+@import '../settings';
+@import '../common/colors';
+@import '../common/typography';
+
+.filmContainer {
+    width:100%;
+    border-top : 1px solid var(--colorCrimson);
+    border-bottom : 1px solid var(--colorCrimson);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    width:80%;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    color: #2c2c2c;
+    letter-spacing: .05em;
+    text-shadow:
+      1px 1px 0px #d5d5d5,
+      2px 2px 0px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px dotted red;
+}
+
+.synopsis {
+    width:80%;
+    max-width: 800px;
+}

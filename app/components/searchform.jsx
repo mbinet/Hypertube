@@ -17,7 +17,6 @@ class SearchForm extends React.Component {
       query_term: "",
       genre: "",
       minRating: "0",
-      rtRating: "false",
       sortBy: "date",
       orderBy:"desc",
       quality:"720p",
@@ -31,7 +30,7 @@ class SearchForm extends React.Component {
 /**
     Generate URl for API request
 **/
-    YUrlGen(e){
+    YUrlGen(){
         var url = "https://yts.ag/api/v2/list_movies.json?"
         var sortBy = ""
 
@@ -61,33 +60,35 @@ class SearchForm extends React.Component {
         else {
             var orderBy = ""
         }
-        if (this.state.rtRatings)
-            var rtRatings = "&with_rt_ratings="+this.state.rtRatings
-        else {
-            var rtRatings = ""
-        }
-        var url = url + sortBy + query +genre + minRating + quality + orderBy + rtRatings + "&limit=20&page=" + this.state.page
-        var _this = this
-        this.setState({url:url, newSearch:true, page:0}, function(){
-            _this.maxPages()
-        // this.maxPages()
-        console.log("searchForm --- search hit",this.state)})
-        e.preventDefault()
+        var url = url + sortBy + query +genre + minRating + quality + orderBy + "&limit=20&page=" + this.state.page
+        // var _this = this
+        // this.setState({url:url, newSearch:true, page:0}, function(){
+            // _this.maxPages()
+        // console.log("searchForm --- search hit",this.state)})
+        return (url)
     }
 
 /** check max number of pages */
-   maxPages(){
+   maxPages(e){
+       e.preventDefault()
+       var url = this.YUrlGen()
+       console.log("url in searchForm maxPages", url)
        var _this = this
        this.serverRequest =
         axios
-            .get(this.state.url)
+            .get(url)
             .then(function(result){
                 if (result.data && result.data.data){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20) - 1
                 console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
-                    maxPage: maxPage
+                    maxPage: maxPage,
+                    url: url,
+                    page: 0,
+                    newSearch:true
+                }, function(){
+                    console.log("state on search click", _this.state)
                 })
             }
             })
@@ -113,14 +114,13 @@ class SearchForm extends React.Component {
       var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
     return (
         <div>
-      <form className={cx('searchForm')} id="searchForm" onSubmit={this.YUrlGen.bind(this)}>
+      <form className={cx('searchForm')} id="searchForm" onSubmit={this.maxPages.bind(this)}>
       <input onChange={this.handleChange.bind(this)} value={this.state.query_term} type="text" placeholder="keyword" name="query_term"/>
       <input onChange={this.handleChange.bind(this)} value={this.state.genre} type="text" placeholder="genre" name="genre"/>
       <SelectInput name="sortBy" editValue={this.handleChange.bind(this)} values={['date', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'title']}/>
       <SelectInput name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
       <SelectInput name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
       <SelectInput name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
-      <SelectInput name="rtRating" editValue={this.handleChange.bind(this)} values={['no', 'yes']}/>
       <input type="submit" value="search"/>
       </form>
       <InfiniteScroll
