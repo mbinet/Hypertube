@@ -226,7 +226,8 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
                             rating: result.rating,
                             genres: result.genres,
                             synopsis: result.synopsis,
-                            language: result.language
+                            language: result.language,
+                            img: result.background_image
                 });
             }
         });

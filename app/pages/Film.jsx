@@ -16,7 +16,8 @@ class Film extends Component {
             rating: "",
             genre: [],
             synopsis: "",
-            language: ""
+            language: "",
+            img: ""
         }
     }
 
@@ -59,7 +60,8 @@ class Film extends Component {
                     rating: response.data.rating,
                     genres: response.data.genres,
                     synopsis: response.data.synopsis,
-                    language: response.data.language
+                    language: response.data.language,
+                    img: response.data.img
                 })
             });
     }
@@ -78,6 +80,7 @@ class Film extends Component {
                                genres={this.state.genres}
                                synopsis={this.state.synopsis}
                                language={this.state.language}
+                               img={this.state.img}
                 />
             </Page>
         );

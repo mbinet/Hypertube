@@ -25,6 +25,7 @@ class Film extends Component {
                 genres : <h2> {this.props.genres} </h2>
                 synopsis : <h3 className={cx('synopsis')}>  {this.props.synopsis} </h3>
                 language : <h2>  {this.props.language} </h2>
+                <img src={this.props.img} />
                 <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
             </div>
         )
