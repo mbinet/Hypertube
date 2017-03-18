@@ -36,16 +36,17 @@ export function logout(req, res) {
  * Create a new local account
  */
 export function signUp(req, res, next) {
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password
-  });
+  const user = new User();
 
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });
     }
-
+      user.email = req.body.email;
+      user.password = req.body.password;
+      user.profile.username = req.body.username;
+      user.profile.firstname = req.body.firstname;
+      user.profile.lastname = req.body.lastname;
     return user.save((saveErr) => {
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
