@@ -24,7 +24,7 @@ getResult(){
     var _this = this;
     this.serverRequest =
     axios
-    .get(this.props.url)
+    .get(this.state.url)
     .then(function(result) {
         if (result.data && result.data.data && result.data.data.movies && _this.state.page <= _this.state.maxPage)
         {

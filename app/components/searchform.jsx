@@ -21,12 +21,19 @@ class SearchForm extends React.Component {
       orderBy:"desc",
       quality:"720p",
       maxPage:0,
-      page:0,
+      page:1,
       url:"",
       newSearch:true
   };
 }
 
+componentDidMount(){
+    this.setState({
+        url:"https://yts.ag/api/v2/list_movies.json?minimum_rating=8&sort_by=rating&order_by=desc&page=0",
+        page:1,
+        maxPage:15
+    })
+}
 /**
     Generate URl for API request
 **/
@@ -81,12 +88,12 @@ class SearchForm extends React.Component {
             .then(function(result){
                 if (result.data && result.data.data){
                 var nMovies = result.data.data.movie_count
-                var maxPage = Math.ceil(nMovies/20) - 1
+                var maxPage = Math.ceil(nMovies/20)
                 console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
                     maxPage: maxPage,
                     url: url,
-                    page:0,
+                    page:1,
                     newSearch:true
                 }, function(){
                     console.warn("state on search click", _this.state)

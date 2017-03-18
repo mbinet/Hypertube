@@ -8,13 +8,17 @@ import StarRatingComponent from 'react-star-rating-component';
 const cx = classNames.bind(styles);
 
 function GetGenres(props){
-    console.log("genres", typeof props.genresList)
+    if (props.genresList){
     var genresArray = props.genresList
-    // return (<h2>{genresArray+" "}</h2>)
     return (<div>{Object.keys(genresArray).map(function (key){
-        return (<span className={cx('genres')}>{genresArray[key] + " "}</span>)
-    })}</div>
-    )
+        return (<span key={key + 1} className={cx('genres')}>{genresArray[key] + " "}</span>)
+    })}</div>)
+}
+else {
+    {
+        return <span></span>
+    }
+}
 }
 
 class Film extends Component {

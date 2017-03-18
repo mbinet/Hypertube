@@ -14,8 +14,8 @@ function HasResult(props){
     console.log('resultList --- hasresult', props.list.length)
     return (
         <div className={cx('movieListDiv')}> {
-            props.list.map(function(oneMovie){
-            return <MovieVignet movie={oneMovie}/>
+            props.list.map(function(oneMovie, i){
+            return <MovieVignet key={i + 1} movie={oneMovie}/>
         })}
         </div>
     )
