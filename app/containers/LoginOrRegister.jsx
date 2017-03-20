@@ -17,9 +17,13 @@ class LoginOrRegister extends Component {
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.state = {value: ''};
   }
 
-
+handleChange(event){
+    console.log(event.target);
+    this.setState({value: event.target.value});
+}
   handleOnSubmit(event) {
     event.preventDefault();
 
@@ -104,9 +108,9 @@ class LoginOrRegister extends Component {
                             'message-show': message && message.length > 0
                         })}>{message}</p>
                     <input
-                        className={cx('button')}
                         type="submit"
-                        value={isLogin ? 'Login' : 'Register'}/>
+                        value={isLogin ? 'Login' : 'Register'}
+                    />
                   </form>
                 </div>
                 <div className={cx('google-container')}>
@@ -154,21 +158,24 @@ class LoginOrRegister extends Component {
                       type="text"
                       ref="username"
                       placeholder="username"
-                      value=""
+                      value={this.state.value}
+                      onChange={this.handleChange}
                   />
                   <input
                       className={cx('input')}
                       type="text"
                       ref="firstname"
                       placeholder="firstname"
-                      value=""
+                      value={this.state.value}
+                      onChange={this.handleChange}
                   />
                   <input
                       className={cx('input')}
                       type="text"
                       ref="lastname"
                       placeholder="lastname"
-                      value=""
+                      value={this.state.value}
+                      onChange={this.handleChange}
                   />
 
                   <div className={cx('hint')}>
@@ -180,9 +187,9 @@ class LoginOrRegister extends Component {
                           'message-show': message && message.length > 0
                       })}>{message}</p>
                   <input
-                      className={cx('button')}
                       type="submit"
-                      value={isLogin ? 'Login' : 'Register'}/>
+                      value={isLogin ? 'Login' : 'Register'}
+                  />
                 </form>
               </div>
               <div className={cx('google-container')}>
