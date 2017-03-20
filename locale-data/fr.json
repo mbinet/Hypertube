@@ -1,0 +1,9 @@
+{
+  "welcome": "Bonjour",
+  "keyword": "Mot clé",
+  "genre": "Genre",
+  "sortBy": "Trier par",
+  "orderBy": "Ranger par",
+  "quality": "Qualité",
+  "minRating": "Note minimum"
+}

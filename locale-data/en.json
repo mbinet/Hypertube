@@ -1,0 +1,9 @@
+{
+    "welcome": "Hello",
+    "keyword": "Keyword",
+    "genre": "Genre",
+    "sortBy": "Sort by",
+    "orderBy": "Order by",
+    "quality": "Quality",
+    "minRating": "Min rating"
+}

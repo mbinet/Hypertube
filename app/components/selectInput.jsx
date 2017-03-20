@@ -9,7 +9,7 @@ class SelectInput extends React.Component {
   render() {
     return (
         <label>
-        {this.props.name}:
+        {this.props.text} : &nbsp;
         <select onChange={this.props.editValue} name={this.props.name}>
         {
             this.props.values.map(function(thisvalue) {
