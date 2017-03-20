@@ -124,6 +124,7 @@ componentDidMount(){
 
     render() {
         var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
+        // var trad = window.locale == 'fr' ? fr : en
         var trad = en
         return (
             <div>

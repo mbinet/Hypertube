@@ -16,13 +16,12 @@ const cx = classNames.bind(styles);
 
 const Navigation = ({ user, logOut }) => {
     var trad;
-    if (window.locale != 'fr') {
-        window.locale == 'en'
+    // if (window.locale != 'fr') {
+    //     trad = en1.navigation
+    // }
+    // else {
         trad = en1.navigation
-    }
-    else {
-        trad = fr1.navigation
-    }
+    // }
     return (
         <IntlProvider locale='fr' messages={fr1} >
             <nav className={cx('navigation')} role="navigation">
