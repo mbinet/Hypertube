@@ -7,9 +7,17 @@
 .login {
   width: 420px;
   margin: 0 auto;
-  background-color: var(--colorAthensGray);
-  border: 2px solid var(--colorMercury);
+  background-color: var(--colorWhite);
+  border: 2px dotted var(--colorCrimson);
   border-radius: var(--globalRadius);
+  padding-bottom: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .waiting {
@@ -26,9 +34,13 @@
 }
 
 .alternative-link {
-  color: var(--colorDodgerBlue);
+  color: var(--colorCrimson);
   font-weight: bold;
   cursor: pointer;
+}
+
+.alternative-link:hover{
+    color:orange;
 }
 
 .loading {
@@ -39,7 +51,6 @@
 
 .email-container {
   padding: 16px 12px;
-  border-bottom: 2px solid var(--colorMercury);
 }
 
 .google-container {
@@ -50,8 +61,16 @@
 
 .heading {
   @apply --subHeading;
-  padding: 16px 12px;
+  text-transform: uppercase;
   text-align: center;
+  margin: 15px;
+  padding-bottom: 15px;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+  text-shadow:
+    1px 1px 0px #d5d5d5,
+    2px 2px 0px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px dotted red;
 }
 
 .input {
@@ -64,7 +83,19 @@
 }
 
 .button {
-  @apply --greenButton;
+    @apply --button;
+    text-align: center;
+    background-color: var(--colorCrimson);
+    color:var(--colorWhite);
+    font-size: 1.5em;
+    border:none;
+    text-transform: capitalize;
+}
+
+.button:hover {
+    background: linear-gradient(to right, var(--colorCrimson), orange);
+    border:none;
+    color:white;
 }
 
 .hint {
