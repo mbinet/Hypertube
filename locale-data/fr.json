@@ -5,5 +5,11 @@
   "sortBy": "Trier par",
   "orderBy": "Ranger par",
   "quality": "Qualité",
-  "minRating": "Note minimum"
+  "minRating": "Note minimum",
+  "navigation": {
+    "login": "SE CONNECTER",
+    "logout": "SE DECONNECTER",
+    "search": "RECHERCHE",
+    "about": "À PROPOS"
+  }
 }

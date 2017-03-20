@@ -4,8 +4,7 @@ import en1 from '../../locale-data/en.json';
 import fr1 from '../../locale-data/fr.json';
 import en from 'react-intl/locale-data/en';
 import fr from 'react-intl/locale-data/fr';
-import { IntlProvider, FormattedMessage, addLocaleData
-} from 'react-intl';
+import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
 addLocaleData([...en, ...fr]);
 
 /**

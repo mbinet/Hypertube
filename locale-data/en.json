@@ -5,5 +5,11 @@
     "sortBy": "Sort by",
     "orderBy": "Order by",
     "quality": "Quality",
-    "minRating": "Min rating"
+    "minRating": "Min rating",
+    "navigation": {
+        "login": "LOGIN",
+        "logout": "LOGOUT",
+        "search": "SEARCH",
+        "about": "ABOUT"
+    }
 }
