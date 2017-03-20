@@ -104,7 +104,6 @@ class LoginOrRegister extends Component {
                             'message-show': message && message.length > 0
                         })}>{message}</p>
                     <input
-                        className={cx('button')}
                         type="submit"
                         value={isLogin ? 'Login' : 'Register'}/>
                   </form>
@@ -180,7 +179,6 @@ class LoginOrRegister extends Component {
                           'message-show': message && message.length > 0
                       })}>{message}</p>
                   <input
-                      className={cx('button')}
                       type="submit"
                       value={isLogin ? 'Login' : 'Register'}/>
                 </form>
@@ -222,4 +220,3 @@ function mapStateToProps({user}) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(LoginOrRegister);
-
