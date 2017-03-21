@@ -11,5 +11,6 @@
         "logout": "LOGOUT",
         "search": "SEARCH",
         "about": "ABOUT"
-    }
+    },
+    "comments": "Comments"
 }
