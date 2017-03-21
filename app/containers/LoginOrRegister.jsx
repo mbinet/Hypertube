@@ -30,13 +30,13 @@ handleChange(event){
     const { manualLogin, signUp, user: { isLogin } } = this.props;
     const email = ReactDOM.findDOMNode(this.refs.email).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
-    const firstname = ReactDOM.findDOMNode(this.refs.firstname).value;
-    const lastname = ReactDOM.findDOMNode(this.refs.lastname).value;
-    const username = ReactDOM.findDOMNode(this.refs.username).value;
 
     if (isLogin) {
       manualLogin({ email, password });
     } else {
+        const firstname = ReactDOM.findDOMNode(this.refs.firstname).value;
+        const lastname = ReactDOM.findDOMNode(this.refs.lastname).value;
+        const username = ReactDOM.findDOMNode(this.refs.username).value;
       signUp({ email, password, username, firstname, lastname});
     }
   }
