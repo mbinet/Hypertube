@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Video from "react-h5-video";
 import MovieBox from '../components/MovieBox';
+import CommentBox from '../components/CommentBox';
 import styles from '../css/components/film';
 import classNames from 'classnames/bind';
 import StarRatingComponent from 'react-star-rating-component';
@@ -65,6 +66,7 @@ class Film extends Component {
                     </div>
                 </div>
                 <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
+                <CommentBox />
             </div>
         )
     }
