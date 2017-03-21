@@ -21,6 +21,7 @@ export function login(req, res, next) {
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
+      res.cookie('userId', user);
       return res.status(200).json({
         message: 'You have been successfully logged in.'
       });
@@ -71,6 +72,7 @@ export function signUp(req, res, next) {
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
+          res.cookie('userId', user);
         return res.status(200).json({
           message: 'You have been successfully logged in.'
         });
