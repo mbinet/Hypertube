@@ -1,0 +1,16 @@
+{
+  "welcome": "Bonjour",
+  "keyword": "Mot clé",
+  "genre": "Genre",
+  "sortBy": "Trier par",
+  "orderBy": "Ranger par",
+  "quality": "Qualité",
+  "minRating": "Note minimum",
+  "navigation": {
+    "login": "SE CONNECTER",
+    "logout": "SE DECONNECTER",
+    "search": "RECHERCHE",
+    "about": "À PROPOS"
+  },
+  "comments": "Commentaires"
+}

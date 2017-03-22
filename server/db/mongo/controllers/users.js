@@ -6,6 +6,12 @@ import User from '../models/user';
  */
 export function login(req, res, next) {
   // Do email and password validation for the server
+    if (!req.body.email) {
+        return res.status(409).json({ message: 'invalid email!' });
+    }
+    if (!req.body.password) {
+        return res.status(409).json({ message: 'invalid password!' });
+    }
   passport.authenticate('local', (authErr, user, info) => {
     if (authErr) return next(authErr);
     if (!user) {
@@ -15,6 +21,7 @@ export function login(req, res, next) {
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
+      res.cookie('userId', user);
       return res.status(200).json({
         message: 'You have been successfully logged in.'
       });
@@ -27,6 +34,7 @@ export function login(req, res, next) {
  */
 export function logout(req, res) {
   // Do email and password validation for the server
+    res.clearCookie('userId');
   req.logout();
   res.redirect('/');
 }
@@ -37,7 +45,21 @@ export function logout(req, res) {
  */
 export function signUp(req, res, next) {
   const user = new User();
-
+  if (!req.body.email) {
+    return res.status(409).json({ message: 'invalid email!' });
+  }
+    if (!req.body.password) {
+        return res.status(409).json({ message: 'invalid password!' });
+    }
+    if (!req.body.username) {
+        return res.status(409).json({ message: 'invalid username!' });
+    }
+    if (!req.body.firstname) {
+        return res.status(409).json({ message: 'invalid firstname!' });
+    }
+    if (!req.body.lastname) {
+        return res.status(409).json({ message: 'invalid lastname!' });
+    }
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });
@@ -51,6 +73,7 @@ export function signUp(req, res, next) {
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
+          res.cookie('userId', user);
         return res.status(200).json({
           message: 'You have been successfully logged in.'
         });

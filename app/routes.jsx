@@ -32,7 +32,7 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
         {/*<IndexRoute component={Vote} fetchData={fetchVoteData} />*/}
-        <IndexRoute component={Search} />
+        <IndexRoute component={Search} onEnter={requireAuth} />
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
 
 
@@ -40,8 +40,8 @@ export default (store) => {
 
 
         <Route path="dashboard" component={Dashboard} />
-        <Route path="search" component={Search} />
-        <Route path="film/:idImdb" component={Film} />
+        <Route path="search" component={Search} onEnter={requireAuth} />
+        <Route path="film/:idImdb" component={Film} onEnter={requireAuth} />
         <Route path="about" component={About} />
     </Route>
   );

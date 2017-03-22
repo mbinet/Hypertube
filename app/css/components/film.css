@@ -2,6 +2,7 @@
 @import '../common/colors';
 @import '../common/typography';
 
+
 .filmContainer {
     width:100%;
     border-top : 1px solid var(--colorCrimson);
@@ -13,6 +14,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.filmContainerNight {
+    width:100%;
+    border-top : 1px solid var(--colorCrimson);
+    border-bottom : 1px solid var(--colorCrimson);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #f7f7f7;
 }
 .infos {
     display: flex;
@@ -56,6 +71,10 @@
 .rating {
     font-size: 1.6em;
 }
+
+.ratingNight {
+    font-size: 1.6em;
+}
 .rightInfo {
     display: flex;
     flex-direction: column;
@@ -78,6 +97,18 @@
       border-bottom: 1px dotted red;
 }
 
+.titleNight {
+    width:80%;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    padding-bottom: 15px;
+    color: var(--colorWhite);
+    letter-spacing: .05em;
+    text-shadow:
+      1px 1px 0px #2c2e30,
+      2px 2px 0px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px dotted red;
+}
 .genres {
     font-weight: bold;
     font-size: 1.4em;
@@ -86,4 +117,9 @@
 
 .genres:not(:last-child)::after{
     content:' / ';
+}
+
+.light {
+    width:30px;
+    height:30px;
 }

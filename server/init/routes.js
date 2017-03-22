@@ -35,12 +35,21 @@ export default (app) => {
     // Google will redirect the user to this URL after authentication. Finish the
     // process by verifying the assertion. If valid, the user will be logged in.
     // Otherwise, the authentication has failed.
-    app.get('/auth/google/callback',
-      passport.authenticate('google', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-      })
-    );
+    app.get('/auth/google/callback',function(req, res, next) {
+        passport.authenticate('google', (authErr, user, info) => {
+            if (authErr) return next(authErr);
+            if (!user) {
+                return res.redirect('/login');
+            }
+            // Passport exposes a login() function on req (also aliased as
+            // logIn()) that can be used to establish a login session
+            return req.logIn(user, (loginErr) => {
+                if (loginErr) return res.redirect('/login');
+                res.cookie('userId', user);
+                return res.redirect('/');
+            });
+        })(req, res, next)
+    });
   }
   if (passportConfig && passportConfig.key42) {
     // google auth
@@ -54,11 +63,20 @@ export default (app) => {
     // Google will redirect the user to this URL after authentication. Finish the
     // process by verifying the assertion. If valid, the user will be logged in.
     // Otherwise, the authentication has failed.
-    app.get('/auth/42/callback',
-      passport.authenticate('42', {failureRedirect: '/login'}),
-      function(req, res) {
-    // Successful authentication, redirect home.
-      res.redirect('/');
+    app.get('/auth/42/callback', function(req, res, next) {
+        passport.authenticate('42', (authErr, user, info) => {
+            if (authErr) return next(authErr);
+            if (!user) {
+                return res.redirect('/login');
+            }
+            // Passport exposes a login() function on req (also aliased as
+            // logIn()) that can be used to establish a login session
+            return req.logIn(user, (loginErr) => {
+                if (loginErr) return res.redirect('/login');
+                res.cookie('userId', user);
+                return res.redirect('/');
+            });
+        })(req, res, next)
     });
   }
 

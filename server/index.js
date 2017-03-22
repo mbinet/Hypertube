@@ -252,6 +252,11 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
         });
 });
 
+app.post('/api/addComment', function (req, res, next) {
+    console.log("HELLOOOO", req.params.comment)
+    res.json({message: "test"})
+});
+
 
 
 //***********//

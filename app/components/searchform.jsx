@@ -1,11 +1,14 @@
+import en from '../../locale-data/en.json';
+import fr from '../../locale-data/fr.json';
+
 import React from 'react';
 import SelectInput from './selectInput'
 import SearchResults from './searchResults'
 import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
 import InfiniteScroll from 'react-infinite-scroller';
-import axios from 'axios'
-import PirateBay from 'thepiratebay'
+import axios from 'axios';
+
 
 const cx = classNames.bind(styles);
 /**
@@ -34,11 +37,6 @@ componentDidMount(){
         page:1,
         maxPage:15
     })
-    PirateBay.search('Game of Thrones', {
-      category: 205
-    })
-    .then(results => console.log("pb=",results))
-    .catch(err => console.log(err))
 }
 /**
     Generate URl for API request
@@ -121,30 +119,33 @@ componentDidMount(){
        this.setState({[event.target.name]: event.target.value})
    }
 
-  render() {
-      var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
-    return (
-        <div>
-      <form className={cx('searchForm')} id="searchForm" onSubmit={this.maxPages.bind(this)}>
-      <input onChange={this.handleChange.bind(this)} value={this.state.query_term} type="text" placeholder="keyword" name="query_term"/>
-      <input onChange={this.handleChange.bind(this)} value={this.state.genre} type="text" placeholder="genre" name="genre"/>
-      <SelectInput name="sortBy" editValue={this.handleChange.bind(this)} values={['date', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'title']}/>
-      <SelectInput name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
-      <SelectInput name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
-      <SelectInput name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
-      <input type="submit" value="search"/>
-      </form>
-      <InfiniteScroll
-          pageStart={0}
-          loadMore={this.loadMore.bind(this)}
-          hasMore={hasMoreBool}
-          initialLoad={false}
-          loader={<div className={cx('loader')}></div>}
-      >
-        <SearchResults url={this.state.url} page={this.state.page} maxPage={this.state.maxPage} newSearch={this.state.newSearch}/>
-        </InfiniteScroll>
-      </div>
-  );
-  }
+    render() {
+        var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
+        // var trad = window.locale == 'fr' ? fr : en
+        var trad = en
+        return (
+            <div>
+                <form className={cx('searchForm')} id="searchForm" onSubmit={this.maxPages.bind(this)}>
+                    <input onChange={this.handleChange.bind(this)} value={this.state.query_term} type="text" placeholder={trad.keyword} name="query_term"/>
+                    <input onChange={this.handleChange.bind(this)} value={this.state.genre} type="text" placeholder={trad.genre} name="genre"/>
+                    <SelectInput text={trad.sortBy} name="sortBy" editValue={this.handleChange.bind(this)} values={['date', 'year', 'rating', 'peers', 'seeds', 'downloads', 'likes', 'title']}/>
+                    <SelectInput text={trad.orderBy} name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
+                    <SelectInput text={trad.quality} name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
+                    <SelectInput text={trad.minRating} name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
+                    <input type="submit" value="search"/>
+                </form>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={this.loadMore.bind(this)}
+                    hasMore={hasMoreBool}
+                    initialLoad={false}
+                    loader={<div className={cx('loader')}></div>}
+                >
+                    <SearchResults url={this.state.url} page={this.state.page} maxPage={this.state.maxPage} newSearch={this.state.newSearch}/>
+                </InfiniteScroll>
+            </div>
+        );
+    }
 }
+
 export default SearchForm;
