@@ -34,6 +34,7 @@ export function login(req, res, next) {
  */
 export function logout(req, res) {
   // Do email and password validation for the server
+    res.clearCookie('userId');
   req.logout();
   res.redirect('/');
 }
