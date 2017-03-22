@@ -98,6 +98,7 @@
     "postcss-loader": "^1.2.1",
     "postcss-reporter": "^3.0.0",
     "range-parser": "^1.2.0",
+    "rarbg": "^0.4.4",
     "react": "^15.4.1",
     "react-cookie": "^1.0.5",
     "react-dom": "^15.4.1",
