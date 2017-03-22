@@ -55,6 +55,7 @@ class Film extends Component {
 
         axios.get('/api/getDetails/' + this.props.params.idImdb)
             .then((response) => {
+            if (response.data.msg == 'ok') {
                 that.setState({
                     title: response.data.title,
                     rating: response.data.rating,
@@ -63,6 +64,9 @@ class Film extends Component {
                     language: response.data.language,
                     img: response.data.img
                 })
+            }
+            else
+                console.log("JE CRASH WESH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION  TODO
             });
     }
 

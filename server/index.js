@@ -115,7 +115,7 @@ const getSubs = function(subtitles, idImdb) {
     // console.log(idImdb);
     return new Promise(function (resolve, reject) {
         var ret = {subFr: 'false', subEn: 'false'};
-        if (subtitles.en.url) {
+        if (subtitles.en) {
             var fileEn = fs.createWriteStream("./app/sub/" + idImdb + ".en.srt");
             var requestEn = https.get(subtitles.en.url, function (response) { // Debut du telechargement des sous titres anglais
                 var srt = response.pipe(fileEn);
@@ -131,7 +131,7 @@ const getSubs = function(subtitles, idImdb) {
                             ret.subEn = idImdb + ".en.vtt";
                         fs.writeFileSync('./app/sub/' + idImdb + '.en.vtt', vttData); // fin du telechargement des sous titres anglais
 
-                        if (subtitles.fr.url) {
+                        if (subtitles.fr) {
                             var fileFr = fs.createWriteStream("./app/sub/" + idImdb + ".fr.srt"); // Asynchrone donc telechargement des sous titres francais dans le callback
                             var requestFr = https.get(subtitles.fr.url, function (response) { // Debut du telechargement des sous titres francais
                                 var srt = response.pipe(fileFr);
@@ -159,7 +159,7 @@ const getSubs = function(subtitles, idImdb) {
                 })
             });
         }
-        else if (subtitles.fr.url) {
+        else if (subtitles.fr) {
             var fileFr = fs.createWriteStream("./app/sub/" + idImdb + ".fr.srt"); // Asynchrone donc telechargement des sous titres francais dans le callback
             var requestFr = https.get(subtitles.fr.url, function (response) { // Debut du telechargement des sous titres francais
                 var srt = response.pipe(fileFr);
@@ -240,15 +240,19 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
 
     axios.get(url)
         .then(function (response) {
-            if (response.data && response.data.status == "ok") {
+            if (response.data && response.data.status == "ok" && response.data.data.movie_count != 0) {
                 var result = response.data.data.movies[0];
                 res.json({  title: result.title,
                     rating: result.rating,
                     genres: result.genres,
                     synopsis: result.synopsis,
                     language: result.language,
-                    img: result.background_image
+                    img: result.background_image,
+                    msg: 'ok'
                 });
+            }
+            else {
+                res.json({ msg: "Coucou maxime, alors en fait je t'explique, ce film n'existe pas ou n'est repertorie sur yify. Unlucky :/" })
             }
         });
 });
@@ -271,8 +275,9 @@ app.post('/api/addComment', function (req, res, next) {
 var runningCommands = {};
 
 app.get('/api/film/:idImdb', function (req, res, next) {
+    console.log("api/filn/idimdb");
     res.setHeader('Accept-Ranges', 'bytes');
-    console.log(req.useragent.browser);
+    // console.log(req.useragent.browser);
     getMagnet(req.params.idImdb, function(data) {
         if (data != 'error') {
             const engine = torrentStream(data, {
@@ -353,10 +358,14 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                 res.end(e);
             });
         }
+        else {
+            console.log("ca a pas marche");
+        }
     })
 });
 
 function getMagnet(id, callback) {
+    console.log("get magnet");
     var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id;
 
     axios.get(url)
@@ -384,6 +393,7 @@ function getMagnet(id, callback) {
                     min_seeders: 5
                 })
                     .then(response => {
+                        console.log(response);
                         if (response[0].download)
                             callback(response[0].download);
                         else
