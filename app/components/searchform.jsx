@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios'
+import PirateBay from 'thepiratebay'
 
 const cx = classNames.bind(styles);
 /**
@@ -33,6 +34,11 @@ componentDidMount(){
         page:1,
         maxPage:15
     })
+    PirateBay.search('Game of Thrones', {
+      category: 205
+    })
+    .then(results => console.log("pb=",results))
+    .catch(err => console.log(err))
 }
 /**
     Generate URl for API request
@@ -68,10 +74,6 @@ componentDidMount(){
             var orderBy = ""
         }
         var url = url + sortBy + query +genre + minRating + quality + orderBy + "&limit=20&page=" + this.state.page
-        // var _this = this
-        // this.setState({url:url, newSearch:true, page:0}, function(){
-            // _this.maxPages()
-        // console.log("searchForm --- search hit",this.state)})
         return (url)
     }
 
@@ -97,8 +99,8 @@ componentDidMount(){
                     newSearch:true
                 }, function(){
                     console.warn("state on search click", _this.state)
-                })
-            }
+                })}
+
             })
         })
    }
