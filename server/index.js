@@ -66,6 +66,7 @@ const OpenSubtitles = new OS({
     password: 'dotef',
     ssl: true
 });
+const rarbg = require('rarbg');
 
 var useragent = require('express-useragent');
 app.use(useragent.express());
@@ -273,105 +274,122 @@ app.get('/api/film/:idImdb', function (req, res, next) {
     res.setHeader('Accept-Ranges', 'bytes');
     console.log(req.useragent.browser);
     getMagnet(req.params.idImdb, function(data) {
-        const engine = torrentStream(data, {
-            path: '/tmp/film'
-        });
-        getTorrentFile(engine).then(function (file) {
-            const ranges = parseRange(file.length, req.headers.range, {combine: true});
-            console.log(ranges);
-            if (file.ext == 'mkv') {// && req.useragent.browser == 'Firefox') {
-                res.setHeader('Content-Length', file.length);
-                if (ranges === -1) {
-                    res.statusCode = 416;
-                    return res.end();
-                }
-                else if (ranges === -2 || ranges.type !== 'bytes' || ranges.length > 1) {
-                    if (req.method !== 'GET') return res.end();
-                    var stream = file.createReadStream().pipe(res);
+        if (data != 'error') {
+            const engine = torrentStream(data, {
+                path: '/tmp/film'
+            });
+            getTorrentFile(engine).then(function (file) {
+                const ranges = parseRange(file.length, req.headers.range, {combine: true});
+                console.log(ranges);
+                if (file.ext == 'mkv') {// && req.useragent.browser == 'Firefox') {
+                    res.setHeader('Content-Length', file.length);
+                    if (ranges === -1) {
+                        res.statusCode = 416;
+                        return res.end();
+                    }
+                    else if (ranges === -2 || ranges.type !== 'bytes' || ranges.length > 1) {
+                        if (req.method !== 'GET') return res.end();
+                        var stream = file.createReadStream().pipe(res);
+                    }
+                    else {
+                        const range = ranges[0];
+                        res.statusCode = 206;
+                        res.setHeader('Content-Length', 1 + range.end - range.start);
+                        res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
+                        if (req.method !== 'GET') return res.end();
+                        var stream = file.createReadStream(range);
+                    }
+                    if (stream) {
+                        var id = Math.floor(Math.random() * 10001);
+                        runningCommands[id] = ffmpeg(stream).videoCodec('libvpx').audioCodec('libvorbis').format('webm')
+                            .audioBitrate(128)
+                            .videoBitrate(1024)
+                            .outputOptions([
+                                '-threads 8',
+                                '-deadline realtime',
+                                '-error-resilient 1'
+                            ])
+                            .on('start', function (cmd) {
+                                //console.log('this has started ' + cmd);
+
+                            })
+                            .on('end', function () {
+                                delete runningCommands[id];
+                            })
+                            .on('error', function (err) {
+                                console.log("error now happening");
+                                console.log('err');
+                                delete runningCommands[id];
+                                console.log("runningCommands[id] is deleted from id " + id);
+                            });
+                        // console.log("oui je suis un mkv");
+                        runningCommands[id].pipe(res);
+                    }
                 }
                 else {
-                    const range = ranges[0];
-                    res.statusCode = 206;
-                    res.setHeader('Content-Length', 1 + range.end - range.start);
-                    res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
-                    if (req.method !== 'GET') return res.end();
-                    var stream = file.createReadStream(range);
+                    res.setHeader('Content-Length', file.length);
+                    res.setHeader('Content-Type', `video/${file.ext}`);
+                    if (ranges === -1) {
+                        // 416 Requested Range Not Satisfiable
+                        res.statusCode = 416;
+                        return res.end();
+                    } else if (ranges === -2 || ranges.type !== 'bytes' || ranges.length > 1) {
+                        // 200 OK requested range malformed or multiple ranges requested, stream entire video
+                        if (req.method !== 'GET') return res.end();
+                        return file.createReadStream().pipe(res);
+                    } else {
+                        // 206 Partial Content valid range requested
+                        const range = ranges[0];
+                        res.statusCode = 206;
+                        res.setHeader('Content-Length', 1 + range.end - range.start);
+                        res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
+                        if (req.method !== 'GET') return res.end();
+                        // console.log("oui je suis un mp4");
+                        return file.createReadStream(range).pipe(res);
+                    }
                 }
-                if (stream) {
-                    var id = Math.floor(Math.random() * 10001);
-                    runningCommands[id] = ffmpeg(stream).videoCodec('libvpx').audioCodec('libvorbis').format('webm')
-                        .audioBitrate(128)
-                        .videoBitrate(1024)
-                        .outputOptions([
-                            '-threads 8',
-                            '-deadline realtime',
-                            '-error-resilient 1'
-                        ])
-                        .on('start', function (cmd) {
-                            //console.log('this has started ' + cmd);
-
-                        })
-                        .on('end', function () {
-                            delete runningCommands[id];
-                        })
-                        .on('error', function (err) {
-                            console.log("error now happening");
-                            console.log('err');
-                            delete runningCommands[id];
-                            console.log("runningCommands[id] is deleted from id " + id);
-                        });
-                    // console.log("oui je suis un mkv");
-                    runningCommands[id].pipe(res);
-                }
-            }
-            else {
-                res.setHeader('Content-Length', file.length);
-                res.setHeader('Content-Type', `video/${file.ext}`);
-                if (ranges === -1) {
-                    // 416 Requested Range Not Satisfiable
-                    res.statusCode = 416;
-                    return res.end();
-                } else if (ranges === -2 || ranges.type !== 'bytes' || ranges.length > 1) {
-                    // 200 OK requested range malformed or multiple ranges requested, stream entire video
-                    if (req.method !== 'GET') return res.end();
-                    return file.createReadStream().pipe(res);
-                } else {
-                    // 206 Partial Content valid range requested
-                    const range = ranges[0];
-                    res.statusCode = 206;
-                    res.setHeader('Content-Length', 1 + range.end - range.start);
-                    res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
-                    if (req.method !== 'GET') return res.end();
-                    // console.log("oui je suis un mp4");
-                    return file.createReadStream(range).pipe(res);
-                }
-            }
-        }).catch(function (e) {
-            console.error(e);
-            res.end(e);
-        });
-
+            }).catch(function (e) {
+                console.error(e);
+                res.end(e);
+            });
+        }
     })
 });
 
 function getMagnet(id, callback) {
-    var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id
+    var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id;
 
     axios.get(url)
         .then(function (response) {
             var result = response.data.data;
-            var torrentHash = "";
-            for (var d of result.movies[0].torrents) {
-                if (d.quality == '720p')
-                    torrentHash = d.hash;
-            }
-            // var torrentHash = response.data.data.movies[0].torrents[0].hash
-            var name = encodeURI(response.data.data.movies[0].title)
-            var magnet="magnet:?xt=urn:btih:"+torrentHash+"&dn="+name+"&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://glotorrents.pw:6969/announce"
+            if (result.movie_count != 0) {
+                var torrentHash = "";
+                for (var d of result.movies[0].torrents) {
+                    if (d.quality == '720p')
+                        torrentHash = d.hash;
+                }
+                // var torrentHash = response.data.data.movies[0].torrents[0].hash
+                var name = encodeURI(response.data.data.movies[0].title)
+                var magnet = "magnet:?xt=urn:btih:" + torrentHash + "&dn=" + name + "&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://glotorrents.pw:6969/announce"
 
-            // this is a mkv
-            //callback('magnet:?xt=urn:btih:7e1581f588474b7fa744ca4b4f37f4bf139af644&dn=Office.Christmas.Party.2016.1080p.WEB-DL.DD5.1.H264-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710')
-            callback(magnet)
+                // this is a mkv
+                //callback('magnet:?xt=urn:btih:7e1581f588474b7fa744ca4b4f37f4bf139af644&dn=Office.Christmas.Party.2016.1080p.WEB-DL.DD5.1.H264-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710')
+                callback(magnet)
+            }
+            else {
+                rarbg.search({
+                    search_imdb: id,
+                    sort: 'seeders',
+                    category: rarbg.categories.MOVIES_X264_1080,
+                    min_seeders: 5
+                })
+                    .then(response => {
+                        if (response[0].download)
+                            callback(response[0].download);
+                        else
+                            callback('error');
+                    })
+            }
         })
 }
 
