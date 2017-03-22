@@ -66,7 +66,7 @@ class Film extends Component {
                     </div>
                 </div>
                 <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
-                <CommentBox />
+                <CommentBox idImdb={this.props.idImdb} />
             </div>
         )
     }

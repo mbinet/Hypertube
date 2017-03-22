@@ -7,6 +7,13 @@ import initExpress from './init/express';
 import initRoutes from './init/routes';
 import renderMiddleware from './render/middleware';
 
+
+import User from './db/mongo/models/user';
+var mongo = require('mongodb').MongoClient
+var objectId = require('mongodb').ObjectID
+var url = 'mongodb://localhost:27017/ReactWebpackNode'
+var dateFormat = require('dateformat');
+
 const app = express();
 
 /*
@@ -257,9 +264,63 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
         });
 });
 
+
+//*****************//
+//    COMMENTS     //
+//*****************//
+
+
 app.post('/api/addComment', function (req, res, next) {
-    console.log("HELLOOOO", req.params.comment)
-    res.json({message: "test"})
+
+    var now = new Date()
+    var date = dateFormat(now, "ddd d mmm yy - h:MM TT");
+
+    var row = {
+        userId: req.body.userId,
+        videoId: req.body.videoId,
+        msg: req.body.msg,
+        date: date
+    }
+    mongo.connect(url, function (err, db) {
+        db.collection('comments').insertOne(row, function (err, result) {
+            if (!err) {
+                res.json({ message: 'inserted'})
+            }
+            else {
+                res.json({ message: 'unexpected error'})
+            }
+        })
+    })
+});
+
+app.get('/api/getComments/:idImdb', function (req, res, next) {
+    mongo.connect(url, function (err, db) {
+        var cursor = db.collection('comments').find({ videoId: req.params.idImdb })
+        var resultArray = [];
+        cursor.forEach(function (doc, err) {
+            resultArray.push(doc)
+        }, function () {
+            db.close()
+            // getting names related to userId
+            var res2 = [];
+            function getNames(counter) {
+                User.findById( resultArray[counter].userId, (findByIdErr, user) => {
+                    if (user) {
+                        resultArray[counter].userName = user.profile.firstname
+                        res2.push(resultArray[counter])
+                        if (counter > 0) {
+                            getNames(counter - 1)
+                        }
+                        else {
+                            res.json({ comments: res2 })
+                        }
+                    }
+                })
+            }
+            if (resultArray[0])
+                getNames(resultArray.length - 1)
+        })
+    })
 });
 
 

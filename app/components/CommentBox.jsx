@@ -6,6 +6,7 @@ import en from 'react-intl/locale-data/en';
 import fr from 'react-intl/locale-data/fr';
 import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
 import { Table, Icon, Card, Input, Button } from 'antd';
+import cookie from 'react-cookie';
 addLocaleData([...en, ...fr]);
 
 /**
@@ -16,7 +17,12 @@ class CommentBox extends React.Component {
         super();
         this.state = {
             comment: "",
+            comments: [],
         };
+    }
+
+    componentWillMount() {
+        this.getComments(this.props.idImdb)
     }
 
     handleChange(event){
@@ -24,12 +30,32 @@ class CommentBox extends React.Component {
     }
 
     onSubmit() {
+        var user = cookie.load('userId')
+        user = user.substr(2)
+        user = JSON.parse(user)
+        var that = this
         axios.post('/api/addComment/', {
-            name: 'jack',
+            userId: user._id,
+            videoId: this.props.idImdb,
             msg: this.state.comment
         }).then(function (response) {
-            console.log(response);
+            console.log(response.data.message);
+            that.getComments(that.props.idImdb)
         })
+        this.setState({
+            comment: ""
+        })
+    }
+
+    getComments(idImdb) {
+        axios.get('/api/getComments/' + idImdb)
+            .then((response) => {
+                    console.log(response.data.comments)
+                    this.setState({
+                        comments: response.data.comments
+                    })
+                }
+            )
     }
 
     render() {
@@ -37,48 +63,41 @@ class CommentBox extends React.Component {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
+            width: 150
         }, {
             title: 'Comment',
             dataIndex: 'comment',
             key: 'comment',
+            width: 600
         }];
+        const data = [];
 
-        const data = [{
-            name: 'John Brown',
-            comment: ' New York No. 1 Lake ParkNew York No. 1 Lake ParkNew York No. 1 Lake Park jrioleflsndskjn',
-        }, {
-            name: 'Jim Green',
-            comment: 'London No. 1 Lake Park',
-        }, {
-            name: 'Joe Black',
-            comment: 'Sidney No. 1 Lake Park',
-        }, {
-            name: 'Joe Black',
-            comment: 'Sidney No. 1 Lake Park',
-        }];
+        var comments = this.state.comments
+        comments.forEach(function (doc, err) {
+            data.push({
+                name: doc.userName,
+                comment: doc.msg,
+                key: doc._id
+            })
+        })
 
         var tab = fr1
         return (
             <IntlProvider locale='fr' messages={fr1} >
                 <div style={{marginTop: 30}}>
                     <Card title={tab.comments} >
-                        {/*<Card title="Maxime">*/}
-                            {/*Good movie lol*/}
-                        {/*</Card>*/}
-                        {/*<br />*/}
-                        {/*<Card title="Nathan" >*/}
-                            {/*<p>I like to mve it</p>*/}
-                        {/*</Card>*/}
-                        <Input type="textarea"
-                               placeholder="Type your comment..."
-                               autosize={{ minRows: 2 }}
-                               style={{ display: 'inline-block', width: '70%'}}
-                               name="comment"
-                               value={this.state.comment}
-                               onChange={this.handleChange.bind(this)}
-                        />
-                        <Button type="primary" onClick={this.onSubmit.bind(this)}>Primary</Button>
-                        <Table columns={columns} dataSource={data} pagination={false} showHeader={false} />
+                        <div style={{ display: 'block', marginBottom: 30 }}>
+                            <Input type="textarea"
+                                   placeholder="Type your comment..."
+                                   autosize={{ minRows: 2 }}
+                                   style={{ display: 'inline-block', width: 650}}
+                                   name="comment"
+                                   value={this.state.comment}
+                                   onChange={this.handleChange.bind(this)}
+                            />
+                            <Button type="primary" onClick={this.onSubmit.bind(this)} style={{ width: 100 }}>Primary</Button>
+                        </div>
+                        <Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
                     </Card>
                 </div>
             </IntlProvider>
