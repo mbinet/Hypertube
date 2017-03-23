@@ -30,9 +30,11 @@ class CommentBox extends React.Component {
     }
 
     onSubmit() {
-        var user = cookie.load('userId')
-        user = user.substr(2)
-        user = JSON.parse(user)
+        var user = cookie.load('user')
+        if (user[0] == 'j') {
+            user = user.substr(2)
+            user = JSON.parse(user)
+        }
         var that = this
 
         if (this.state.comment != "") {

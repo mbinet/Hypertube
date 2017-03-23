@@ -6,7 +6,8 @@ import initPassport from './init/passport';
 import initExpress from './init/express';
 import initRoutes from './init/routes';
 import renderMiddleware from './render/middleware';
-
+import nodemailer from 'nodemailer';
+import randomstring from 'randomstring';
 
 import User from './db/mongo/models/user';
 var mongo = require('mongodb').MongoClient
@@ -264,6 +265,24 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
         });
 });
 
+app.post('/api/addToSeen', function (req, res, next) {
+   var idImdb = req.body.idImdb;
+   var user = req.body.user;
+
+   console.log("add to seen");
+   if (user.profile.seen.indexOf(idImdb) == -1) {
+       mongo.connect(url, function (err, db) {
+           db.collection('users').updateOne({"_id": objectId(user._id)}, {$push: {"profile.seen": idImdb}}, function (err, result) {
+               console.log('add to seen');
+           });
+           db.close();
+       });
+       res.json({ message: 'inserted'});
+   }
+   else
+       res.json({ message: 'already seen'});
+});
+
 
 //*****************//
 //    COMMENTS     //
@@ -336,7 +355,6 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
 var runningCommands = {};
 
 app.get('/api/film/:idImdb', function (req, res, next) {
-    console.log("api/filn/idimdb");
     res.setHeader('Accept-Ranges', 'bytes');
     // console.log(req.useragent.browser);
     getMagnet(req.params.idImdb, function(data) {
@@ -426,7 +444,6 @@ app.get('/api/film/:idImdb', function (req, res, next) {
 });
 
 function getMagnet(id, callback) {
-    console.log("get magnet");
     var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id;
 
     axios.get(url)
@@ -484,6 +501,49 @@ const getTorrentFile = function(engine) {
         });
     });
 };
+
+
+//*********************//
+//  RETRIEVE PASSWORD  //
+//*********************//
+
+app.post('/sendPassword', function(req, res, next){
+    let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'matcha.cmoncouc@gmail.com',
+        pass: 'cmoncouc42'
+    }
+});
+
+var newHash = randomstring.generate(7)
+let mailOptions = {
+    from: '"Hypertube " <hypertube@superfast.com>', // sender address
+    to: req.body.mail, // list of receivers
+    subject: 'Hypertube - password recuperation', // Subject line
+    text: 'This is your new password, you can change it latre in your settings', // plain text body
+    html: '<p>This is your new password, you can change it later in your settings:<br/><b>'+ newHash + '</b></p>' // html body
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log("mail error",error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+});
+
+//fonction de modification de pass dans la db
+User.findOne({email: req.body.mail}, function(err, user){
+    if (err){
+        console.log('no user matching')
+    }
+    console.log("user before", user)
+    user.password = newHash
+    user.encryptPassword
+    user.save
+    console.log("user after", user)
+})
+})
 
 app.get('*', renderMiddleware);
 
