@@ -266,23 +266,35 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
 });
 
 app.post('/api/addToSeen', function (req, res, next) {
-   var idImdb = req.body.idImdb;
-   var user = req.body.user;
+    var idImdb = req.body.idImdb;
+    var userId = req.body.userId;
 
-   console.log("add to seen");
-   if (user.profile.seen.indexOf(idImdb) == -1) {
-       mongo.connect(url, function (err, db) {
-           db.collection('users').updateOne({"_id": objectId(user._id)}, {$push: {"profile.seen": idImdb}}, function (err, result) {
-               console.log('add to seen');
-           });
-           db.close();
-       });
-       res.json({ message: 'inserted'});
-   }
-   else
-       res.json({ message: 'already seen'});
+    // console.log(user);
+    mongo.connect(url, function (err, db) {
+        db.collection('users').findOne({"_id": objectId(userId)}).then(function (cursor) {
+            if (cursor.profile.seen.indexOf(idImdb) == -1) {
+                db.collection('users').updateOne({"_id": objectId(cursor._id)}, {$push: {"profile.seen": idImdb}}, function (err, result) {
+                    console.log('add to seen');
+                });
+                res.json({message: 'inserted'});
+            }
+            else
+                res.json({message: 'already seen'});
+        });
+    });
 });
 
+app.post('/api/updateCookie', function (req, res, next) {
+    var id_user = req.body.id_user;
+    mongo.connect(url, function (err, db) {
+        db.collection('users').findOne({"_id": objectId(id_user)}).then(function (cursor) {
+            console.log(cursor);
+            res.cookie('user', cursor);
+        });
+        db.close();
+    });
+
+});
 //*****************//
 //      USER       //
 //*****************//

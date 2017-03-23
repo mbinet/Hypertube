@@ -46,45 +46,55 @@ class Film extends Component {
     }
 
     componentWillMount() {
-        var user = cookie.load('user')
-        if (user[0] == 'j') {
-            user = user.substr(2)
-            user = JSON.parse(user)
-        }
-        var that = this;
-
-        axios.get('/api/getSubs/' + this.props.params.idImdb)
-            .then((response) => {
-                that.setState({
-                    subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
-                    subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
-                })
-            });
-
-        axios.get('/api/getDetails/' + this.props.params.idImdb)
-            .then((response) => {
-            if (response.data.msg == 'ok') {
-                that.setState({
-                    title: response.data.title,
-                    rating: response.data.rating,
-                    genres: response.data.genres,
-                    synopsis: response.data.synopsis,
-                    language: response.data.language,
-                    img: response.data.img
-                })
+        var userCookie;
+        if (userCookie = cookie.load('user')) {
+            if (userCookie[0] == 'j') {
+                userCookie = userCookie.substr(2)
+                userCookie = JSON.parse(userCookie)
             }
-            else
-                console.log("JE CRASH WESH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION  TODO
-                var transitionTo = Router.transitionTo
-                transitionTo('/')
-            });
 
-        axios.post('/api/addToSeen/', {
-            user: user,
-            idImdb: this.props.params.idImdb,
-        }).then(function (response) {
-            console.log(response.data.message);
-        });
+            var that = this;
+
+            axios.get('/api/getSubs/' + this.props.params.idImdb)
+                .then((response) => {
+                    that.setState({
+                        subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
+                        subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
+                    })
+                });
+
+            axios.get('/api/getDetails/' + this.props.params.idImdb)
+                .then((response) => {
+                    if (response.data.msg == 'ok') {
+                        that.setState({
+                            title: response.data.title,
+                            rating: response.data.rating,
+                            genres: response.data.genres,
+                            synopsis: response.data.synopsis,
+                            language: response.data.language,
+                            img: response.data.img
+                        })
+                    }
+                    else {
+                        console.log("JE CRASH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION
+                        var transitionTo = Router.transitionTo
+                        transitionTo('/')
+                    }
+                });
+
+            console.log(userCookie);
+            axios.post('/api/addToSeen', {
+                userId: userCookie._id,
+                idImdb: this.props.params.idImdb
+            }).then(function (response) {
+                console.log(response.data.message);
+                axios.post('/api/updateCookie', {
+                    id_user: userCookie._id
+                }).then(function (response) {
+                    console.log("cookie updated");
+                })
+            });
+        }
     }
 
     render() {
