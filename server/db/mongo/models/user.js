@@ -20,11 +20,9 @@ const UserSchema = new mongoose.Schema({
     username: { type: String, default: '' },
     firstname: { type: String, default: '' },
     lastname: { type: String, default: '' },
-    name: { type: String, default: '' },
-    gender: { type: String, default: '' },
-    location: { type: String, default: '' },
-    website: { type: String, default: '' },
-    picture: { type: String, default: '' }
+    picture: { type: String, default: '' },
+      lang: {type: String, default: 'en'},
+      seen: {}
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
