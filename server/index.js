@@ -283,6 +283,25 @@ app.post('/api/addToSeen', function (req, res, next) {
        res.json({ message: 'already seen'});
 });
 
+//*****************//
+//      USER       //
+//*****************//
+
+
+app.get('/api/getUser/:idUser', function (req, res, next) {
+    if (req.params.idUser) {
+        User.findById(req.params.idUser, (findByIdErr, user) => {
+            if (user) {
+                res.json({ user: user})
+            }
+            else {
+                res.json({ message: "Can't find user" })
+            }
+        })
+    }
+
+});
+
 
 //*****************//
 //    COMMENTS     //

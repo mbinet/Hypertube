@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import { logOut } from '../actions/users';
 import styles from '../css/components/navigation';
+import cookie from 'react-cookie'
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +23,17 @@ const Navigation = ({ user, logOut }) => {
     // else {
         trad = en1.navigation
     // }
+
+    var userCookie;
+    var linkUser = "";
+    if (userCookie = cookie.load('userId')) {
+        if (userCookie[0] == 'j') {
+            userCookie = userCookie.substr(2)
+            userCookie = JSON.parse(userCookie)
+            linkUser = <Link className={cx('item')} to={'/user/' + userCookie._id }>{trad.profile}</Link>
+        }
+    }
+
     return (
         <IntlProvider locale='fr' messages={fr1} >
             <nav className={cx('navigation')} role="navigation">
@@ -30,9 +42,11 @@ const Navigation = ({ user, logOut }) => {
                     className={cx('item', 'logo')}
                     activeClassName={cx('active')}>HYPERFASTTUBE</Link>
                 { user.authenticated ? (
-                        <Link
+                        <span><Link
                             onClick={logOut}
                             className={cx('item')} to="/">{trad.logout}</Link>
+                            {linkUser}
+                        </span>
                     ) : (
                         <Link className={cx('item')} to="/login">{trad.login}</Link>
                     )}

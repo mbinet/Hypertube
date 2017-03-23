@@ -9,6 +9,7 @@
   "navigation": {
     "login": "SE CONNECTER",
     "logout": "SE DECONNECTER",
+    "profile": "PROFIL",
     "search": "RECHERCHE",
     "about": "À PROPOS"
   },
