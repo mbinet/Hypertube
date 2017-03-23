@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
 import styles from '../css/components/login';
 import hourGlassSvg from '../images/hourglass.svg';
+import axios from 'axios'
 
 const cx = classNames.bind(styles);
 
@@ -39,6 +40,20 @@ handleChange(event){
         const username = ReactDOM.findDOMNode(this.refs.username).value;
       signUp({ email, password, username, firstname, lastname});
     }
+  }
+
+  forgotPassword(){
+      var mail = prompt("enter your email", "")
+      console.log('mail=', mail)
+      if (mail != null && mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
+      {
+          axios.post('/sendPassword', {mail: mail})
+          .then(function(response){alert('a password has been send to your email if it is linked to an account')})
+          .catch(function(error){alert('a problem occured, please try later'+error)})
+      }
+      else {
+          alert('invalid mail format')
+      }
   }
 
   renderHeader() {
@@ -112,6 +127,7 @@ handleChange(event){
                         value={isLogin ? 'Login' : 'Register'}
                     />
                   </form>
+                  <div><button onClick={this.forgotPassword.bind(this)}>Forgot your password?</button></div>
                 </div>
                 <div className={cx('google-container')}>
                   <h1 className={cx('heading')}>Google Login Demo</h1>

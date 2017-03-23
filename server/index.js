@@ -6,7 +6,8 @@ import initPassport from './init/passport';
 import initExpress from './init/express';
 import initRoutes from './init/routes';
 import renderMiddleware from './render/middleware';
-
+import nodemailer from 'nodemailer';
+import randomstring from 'randomstring';
 
 import User from './db/mongo/models/user';
 var mongo = require('mongodb').MongoClient
@@ -484,6 +485,40 @@ const getTorrentFile = function(engine) {
         });
     });
 };
+
+
+//*********************//
+//  RETRIEVE PASSWORD  //
+//*********************//
+
+app.post('/sendPassword', function(req, res, next){
+    let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'matcha.cmoncouc@gmail.com',
+        pass: 'cmoncouc42'
+    }
+});
+
+var newHash = randomstring.generate(7)
+let mailOptions = {
+    from: '"Hypertube " <hypertube@superfast.com>', // sender address
+    to: req.body.mail, // list of receivers
+    subject: 'Hypertube - password recuperation', // Subject line
+    text: 'This is your new password, you can change it latre in your settings', // plain text body
+    html: '<p>This is your new password, you can change it later in your settings:<br/><b>'+ newHash + '</b></p>' // html body
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log("mail error",error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+});
+
+//fonction de modification de pass dans la db
+
+})
 
 app.get('*', renderMiddleware);
 
