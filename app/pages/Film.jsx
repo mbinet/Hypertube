@@ -4,6 +4,7 @@ import FilmContainer from '../containers/Film';
 import MovieBox from '../components/MovieBox';
 import axios from 'axios';
 import { DatePicker } from 'antd';
+import cookie from 'react-cookie';
 
 class Film extends Component {
 
