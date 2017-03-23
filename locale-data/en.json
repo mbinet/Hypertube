@@ -9,6 +9,7 @@
     "navigation": {
         "login": "LOGIN",
         "logout": "LOGOUT",
+        "profile": "PROFILE",
         "search": "SEARCH",
         "about": "ABOUT"
     },

@@ -283,6 +283,25 @@ app.post('/api/addToSeen', function (req, res, next) {
        res.json({ message: 'already seen'});
 });
 
+//*****************//
+//      USER       //
+//*****************//
+
+
+app.get('/api/getUser/:idUser', function (req, res, next) {
+    if (req.params.idUser) {
+        User.findById(req.params.idUser, (findByIdErr, user) => {
+            if (user) {
+                res.json({ user: user})
+            }
+            else {
+                res.json({ message: "Can't find user" })
+            }
+        })
+    }
+
+});
+
 
 //*****************//
 //    COMMENTS     //
@@ -325,7 +344,7 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
             function getNames(counter) {
                 User.findById( resultArray[counter].userId, (findByIdErr, user) => {
                     if (user) {
-                        resultArray[counter].userName = user.profile.firstname
+                        resultArray[counter].userName = user.profile.username
                         res2.push(resultArray[counter])
                         if (counter > 0) {
                             getNames(counter - 1)
