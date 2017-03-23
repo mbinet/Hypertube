@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Router from 'react-router';
 import Page from '../pages/Page';
 import FilmContainer from '../containers/Film';
 import MovieBox from '../components/MovieBox';
@@ -74,6 +75,8 @@ class Film extends Component {
             }
             else
                 console.log("JE CRASH WESH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION  TODO
+                var transitionTo = Router.transitionTo
+                transitionTo('/')
             });
 
         axios.post('/api/addToSeen/', {
@@ -89,7 +92,7 @@ class Film extends Component {
             <Page {...this.getMetaData()}>
                 {/*<DatePicker />*/}
                 <FilmContainer {...this.props}
-                               message={'bonjour'}
+                               message={''}
                                subFr={this.state.subFr}
                                subEn={this.state.subEn}
                                idImdb={this.props.params.idImdb}
