@@ -44,7 +44,13 @@ class Film extends Component {
     }
 
     componentWillMount() {
-        var that = this
+        var user = cookie.load('user')
+        if (user[0] == 'j') {
+            user = user.substr(2)
+            user = JSON.parse(user)
+        }
+        var that = this;
+
         axios.get('/api/getSubs/' + this.props.params.idImdb)
             .then((response) => {
                 that.setState({
@@ -68,6 +74,13 @@ class Film extends Component {
             else
                 console.log("JE CRASH WESH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION  TODO
             });
+
+        axios.post('/api/addToSeen/', {
+            idUser: user._id,
+            idImdb: this.props.idImdb,
+        }).then(function (response) {
+            console.log(response.data.message);
+        });
     }
 
     render() {
