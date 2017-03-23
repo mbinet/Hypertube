@@ -264,6 +264,23 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
         });
 });
 
+app.post('/api/addToSeen', function (req, res, next) {
+   var idImdb = req.body.idImdb;
+   var idUser = req.body.idUser;
+
+   if (idUser.seen.indexOf(idImdb) == -1) {
+       mongo.connect(url, function (err, db) {
+           db.collection('users').updateOne({"_id": objectId(idUser)}, {$push: {seen: idImdb}}, function (err, result) {
+               console.log('add to seen');
+           });
+           db.close();
+       });
+       res.json({ message: 'inserted'});
+   }
+   else
+       res.json({ message: 'already seen'});
+});
+
 
 //*****************//
 //    COMMENTS     //
