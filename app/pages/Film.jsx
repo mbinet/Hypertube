@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Router from 'react-router';
+import {browserHistory} from 'react-router';
 import Page from '../pages/Page';
 import FilmContainer from '../containers/Film';
 import MovieBox from '../components/MovieBox';
@@ -77,12 +77,10 @@ class Film extends Component {
                     }
                     else {
                         console.log("JE CRASH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION
-                        var transitionTo = Router.transitionTo
-                        transitionTo('/')
+                        this.props.history.push('/')
                     }
                 });
-
-            console.log(userCookie);
+            // console.log(userCookie);
             axios.post('/api/addToSeen', {
                 userId: userCookie._id,
                 idImdb: this.props.params.idImdb
