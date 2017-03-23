@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Router from 'react-router';
+import {browserHistory} from 'react-router';
 import Page from '../pages/Page';
 import FilmContainer from '../containers/Film';
 import MovieBox from '../components/MovieBox';
@@ -75,8 +75,7 @@ class Film extends Component {
             }
             else
                 console.log("JE CRASH WESH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION  TODO
-                var transitionTo = Router.transitionTo
-                transitionTo('/')
+                this.props.history.push('/')
             });
 
         axios.post('/api/addToSeen/', {
