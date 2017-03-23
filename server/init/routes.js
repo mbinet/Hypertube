@@ -45,7 +45,7 @@ export default (app) => {
             // logIn()) that can be used to establish a login session
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.redirect('/login');
-                res.cookie('userId', user);
+                res.cookie('user', user);
                 return res.redirect('/');
             });
         })(req, res, next)
@@ -73,7 +73,7 @@ export default (app) => {
             // logIn()) that can be used to establish a login session
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.redirect('/login');
-                res.cookie('userId', user);
+                res.cookie('user', user);
                 return res.redirect('/');
             });
         })(req, res, next)
