@@ -306,7 +306,7 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
             function getNames(counter) {
                 User.findById( resultArray[counter].userId, (findByIdErr, user) => {
                     if (user) {
-                        resultArray[counter].userName = user.profile.firstname
+                        resultArray[counter].userName = user.profile.username
                         res2.push(resultArray[counter])
                         if (counter > 0) {
                             getNames(counter - 1)

@@ -34,17 +34,20 @@ class CommentBox extends React.Component {
         user = user.substr(2)
         user = JSON.parse(user)
         var that = this
-        axios.post('/api/addComment/', {
-            userId: user._id,
-            videoId: this.props.idImdb,
-            msg: this.state.comment
-        }).then(function (response) {
-            console.log(response.data.message);
-            that.getComments(that.props.idImdb)
-        })
-        this.setState({
-            comment: ""
-        })
+
+        if (this.state.comment != "") {
+            axios.post('/api/addComment/', {
+                userId: user._id,
+                videoId: this.props.idImdb,
+                msg: this.state.comment
+            }).then(function (response) {
+                console.log(response.data.message);
+                that.getComments(that.props.idImdb)
+            })
+            this.setState({
+                comment: ""
+            })
+        }
     }
 
     getComments(idImdb) {
@@ -86,7 +89,7 @@ class CommentBox extends React.Component {
             <IntlProvider locale='fr' messages={fr1} >
                 <div style={{marginTop: 30}}>
                     <Card title={tab.comments} >
-                        <div style={{ display: 'block', marginBottom: 30 }}>
+                        <div style={{ display: 'block', marginBottom: 20 }}>
                             <Input type="textarea"
                                    placeholder="Type your comment..."
                                    autosize={{ minRows: 2 }}
@@ -95,8 +98,8 @@ class CommentBox extends React.Component {
                                    value={this.state.comment}
                                    onChange={this.handleChange.bind(this)}
                             />
-                            <Button type="primary" onClick={this.onSubmit.bind(this)} style={{ width: 100 }}>Primary</Button>
                         </div>
+                        <Button type="primary" onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>Send</Button>
                         <Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
                     </Card>
                 </div>
