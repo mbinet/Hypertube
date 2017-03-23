@@ -77,8 +77,8 @@ class Film extends Component {
             });
 
         axios.post('/api/addToSeen/', {
-            idUser: user._id,
-            idImdb: this.props.idImdb,
+            user: user,
+            idImdb: this.props.params.idImdb,
         }).then(function (response) {
             console.log(response.data.message);
         });

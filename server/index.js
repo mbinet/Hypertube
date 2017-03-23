@@ -266,11 +266,12 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
 
 app.post('/api/addToSeen', function (req, res, next) {
    var idImdb = req.body.idImdb;
-   var idUser = req.body.idUser;
+   var user = req.body.user;
 
-   if (idUser.seen.indexOf(idImdb) == -1) {
+   console.log("add to seen");
+   if (user.profile.seen.indexOf(idImdb) == -1) {
        mongo.connect(url, function (err, db) {
-           db.collection('users').updateOne({"_id": objectId(idUser)}, {$push: {seen: idImdb}}, function (err, result) {
+           db.collection('users').updateOne({"_id": objectId(user._id)}, {$push: {"profile.seen": idImdb}}, function (err, result) {
                console.log('add to seen');
            });
            db.close();
@@ -353,7 +354,6 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
 var runningCommands = {};
 
 app.get('/api/film/:idImdb', function (req, res, next) {
-    console.log("api/filn/idimdb");
     res.setHeader('Accept-Ranges', 'bytes');
     // console.log(req.useragent.browser);
     getMagnet(req.params.idImdb, function(data) {
@@ -443,7 +443,6 @@ app.get('/api/film/:idImdb', function (req, res, next) {
 });
 
 function getMagnet(id, callback) {
-    console.log("get magnet");
     var url = "https://yts.ag/api/v2/list_movies.json?query_term=" + id;
 
     axios.get(url)
