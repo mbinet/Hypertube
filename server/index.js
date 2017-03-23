@@ -288,7 +288,7 @@ app.post('/api/updateCookie', function (req, res, next) {
     var id_user = req.body.id_user;
     mongo.connect(url, function (err, db) {
         db.collection('users').findOne({"_id": objectId(id_user)}).then(function (cursor) {
-            console.log(cursor);
+            // console.log(cursor);
             res.cookie('user', cursor);
         });
         db.close();
