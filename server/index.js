@@ -533,7 +533,14 @@ transporter.sendMail(mailOptions, (error, info) => {
 });
 
 //fonction de modification de pass dans la db
-
+user.findOne({email: req.body.mail}, function(err, user){
+    if (err){
+        console.log('no user matching')
+    }
+    user.password = newHash
+    user.encryptPassword
+    user.save
+})
 })
 
 app.get('*', renderMiddleware);
