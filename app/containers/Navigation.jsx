@@ -50,9 +50,9 @@ const Navigation = ({ user, logOut }) => {
                     ) : (
                         <Link className={cx('item')} to="/login">{trad.login}</Link>
                     )}
-                <Link className={cx('item')} to="/dashboard">DASHBOARD</Link>
+                {/*<Link className={cx('item')} to="/dashboard">DASHBOARD</Link>*/}
                 <Link className={cx('item')} to="/search">{trad.search}</Link>
-                <Link to="/about" className={cx('item')} activeClassName={cx('active')}>{trad.about}</Link>
+                {/*<Link to="/about" className={cx('item')} activeClassName={cx('active')}>{trad.about}</Link>*/}
             </nav>
         </IntlProvider>
     );
