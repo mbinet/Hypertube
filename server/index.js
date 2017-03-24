@@ -540,40 +540,42 @@ const getTorrentFile = function(engine) {
 
 app.post('/sendPassword', function(req, res, next){
     let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'matcha.cmoncouc@gmail.com',
-        pass: 'cmoncouc42'
-    }
-});
+        service: 'gmail',
+        auth: {
+            user: 'matcha.cmoncouc@gmail.com',
+            pass: 'cmoncouc42'
+        }
+    });
 
-var newHash = randomstring.generate(7)
-let mailOptions = {
-    from: '"Hypertube " <hypertube@superfast.com>', // sender address
-    to: req.body.mail, // list of receivers
-    subject: 'Hypertube - password recuperation', // Subject line
-    text: 'This is your new password, you can change it latre in your settings', // plain text body
-    html: '<p>This is your new password, you can change it later in your settings:<br/><b>'+ newHash + '</b></p>' // html body
-};
+    var newHash = randomstring.generate(7)
+    let mailOptions = {
+        from: '"Hypertube " <hypertube@superfast.com>', // sender address
+        to: req.body.mail, // list of receivers
+        subject: 'Hypertube - password recuperation', // Subject line
+        text: 'This is your new password, you can change it later in your settings', // plain text body
+        html: '<p>This is your new password, you can change it later in your settings:<br/><b>'+ newHash + '</b></p>' // html body
+    };
 
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        return console.log("mail error",error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-});
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log("mail error",error);
+        }
+        // console.log('Message %s sent: %s', info.messageId, info.response);
+    });
 
 //fonction de modification de pass dans la db
-User.findOne({email: req.body.mail}, function(err, user){
-    if (err){
-        console.log('no user matching')
-    }
-    console.log("user before", user)
-    user.password = newHash
-    user.encryptPassword
-    user.save
-    console.log("user after", user)
-})
+    User.findOne({email: req.body.mail}, function(err, user){
+        if (err){
+            console.log('no user matching')
+        }
+        console.log("user before", user)
+        user.password = newHash;
+        // user.encryptPassword;
+        user.save((newErr) => {
+            console.log("Ca a fonctionné");
+        });
+        console.log("user after", user);
+    })
 })
 
 app.get('*', renderMiddleware);
