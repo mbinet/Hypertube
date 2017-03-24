@@ -1,7 +1,7 @@
 @import '../settings';
 @import '../common/colors';
 @import '../common/typography';
-
+@import '../common/button';
 
 .filmContainer {
     width:100%;
@@ -122,4 +122,27 @@
 .light {
     width:30px;
     height:30px;
+}
+
+.commentBox {
+    border-top: 1px solid var(--colorCrimson);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    background-color: var(--colorCrimson);
+    color:var(--colorWhite);
+    font-size: 1em;
+    border:none;
+    text-transform: capitalize;
+}
+
+.button:hover {
+    background: linear-gradient(to right, var(--colorCrimson), orange);
+    border:none;
+    color:white;
 }

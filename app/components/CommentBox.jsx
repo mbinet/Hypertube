@@ -8,6 +8,9 @@ import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
 import { Table, Icon, Card, Input, Button } from 'antd';
 import cookie from 'react-cookie';
 addLocaleData([...en, ...fr]);
+import styles from '../css/components/film'
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 /**
  * A counter button: tap the button to increase the count.
@@ -89,9 +92,9 @@ class CommentBox extends React.Component {
         var tab = fr1
         return (
             <IntlProvider locale='fr' messages={fr1} >
-                <div style={{marginTop: 30}}>
+                <div className={cx('commentBox')} style={{marginTop: 30}}>
                     <Card title={tab.comments} >
-                        <div style={{ display: 'block', marginBottom: 20 }}>
+                        <div style={{marginBottom: 20 }}>
                             <Input type="textarea"
                                    placeholder="Type your comment..."
                                    autosize={{ minRows: 2 }}
@@ -101,7 +104,7 @@ class CommentBox extends React.Component {
                                    onChange={this.handleChange.bind(this)}
                             />
                         </div>
-                        <Button type="primary" onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>Send</Button>
+                        <Button type='primary' className={cx('button')} onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>Send</Button>
                         <Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
                     </Card>
                 </div>
