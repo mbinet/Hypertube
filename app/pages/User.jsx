@@ -54,10 +54,10 @@ class Film extends Component {
             if (userCookie[0] == 'j') {
                 userCookie = userCookie.substr(2)
                 userCookie = JSON.parse(userCookie)
-                this.setState({
-                    userCookie: userCookie
-                })
             }
+            this.setState({
+                userCookie: userCookie
+            })
         }
     }
 

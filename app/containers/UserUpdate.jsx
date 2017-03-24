@@ -7,6 +7,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import { Link } from 'react-router';
 import update from 'react-addons-update';
 import axios from 'axios';
+import cookie from 'react-cookie';
 
 class Film extends Component {
     constructor(props) {
@@ -37,18 +38,23 @@ class Film extends Component {
     }
 
     handleSubmit() {
-        // if (this.state.user.username && this.state.user.firstname && this.state.user.lastname && this.state.user.email) {
-        console.log("hey")
-            axios.post('/api/updateUser/', {
-                userId: this.props.user._id,
-                username: this.state.user.username,
-                firstname: this.state.user.firstname,
-                lastname: this.state.user.lastname,
-                email: this.state.user.email
-            }).then(function (response) {
-                console.log(response.data.msg);
+        axios.post('/api/updateUser/', {
+            userId: this.props.user._id,
+            username: this.state.user.username,
+            firstname: this.state.user.firstname,
+            lastname: this.state.user.lastname,
+            email: this.state.user.email
+        }).then(function (response) {
+            console.log(response.data.msg);
+        })
+
+        // update cookie
+        axios.get('/api/getUser/' + this.props.user._id)
+            .then((response) => {
+                cookie.remove('user', { path: '/' });
+                cookie.save('user', response.data.user, { path: '/' });
+                console.log(this.props.user._id + "    " + response.data.user._id)
             })
-        // }
     }
 
     handleChange(e) {

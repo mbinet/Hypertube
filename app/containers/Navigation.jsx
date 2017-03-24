@@ -30,8 +30,8 @@ const Navigation = ({ user, logOut }) => {
         if (userCookie[0] == 'j') {
             userCookie = userCookie.substr(2)
             userCookie = JSON.parse(userCookie)
-            linkUser = <Link className={cx('item')} to={'/user/' + userCookie._id }>{trad.profile}</Link>
         }
+        linkUser = <Link className={cx('item')} to={'/user/' + userCookie._id }>{trad.profile}</Link>
     }
 
     return (
