@@ -104,6 +104,7 @@
     "range-parser": "^1.2.0",
     "rarbg": "^0.4.4",
     "react": "^15.4.1",
+    "react-addons-update": "^15.4.2",
     "react-cookie": "^1.0.5",
     "react-dom": "^15.4.1",
     "react-h5-video": "^1.0.4",

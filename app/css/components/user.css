@@ -11,3 +11,10 @@
 .custom-card p {
     color: #999;
 }
+.button {
+    background-color: var(--colorCrimson);
+    color:var(--colorWhite);
+    font-size: 1em;
+    border:none;
+    text-transform: capitalize;
+}

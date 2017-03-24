@@ -7,4 +7,5 @@ export { default as Test } from 'pages/Test';
 export { default as Search } from 'pages/Search';
 export { default as Film } from 'pages/Film';
 export { default as User } from 'pages/User';
+export { default as UserUpdate } from 'pages/UserUpdate';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Page from '../pages/Page';
-import UserContainer from '../containers/User';
+import UserUpdateContainer from '../containers/UserUpdate';
 import cookie from 'react-cookie'
 import axios from 'axios';
 
@@ -27,7 +27,7 @@ class Film extends Component {
     }
 
     pageTitle() {
-        return 'User | HyperFastTube';
+        return 'User Update | HyperFastTube';
     }
 
     pageMeta() {
@@ -64,7 +64,7 @@ class Film extends Component {
     render() {
         return (
             <Page {...this.getMetaData()}>
-                <UserContainer user={this.state.user} cookieUser={this.state.userCookie} />
+                <UserUpdateContainer user={this.state.user} cookieUser={this.state.userCookie} />
             </Page>
         );
     }
