@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from '../css/components/movieCard';
 import StarRatingComponent from 'react-star-rating-component';
 import { Link } from 'react-router';
+import cookie from 'react-cookie'
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,21 @@ class MovieVignet extends React.Component {
         super(props)
     }
     render(){
+
+        var userCookie;
+        var seen_str = "";
+        if (userCookie = cookie.load('user')) {
+            if (userCookie[0] == 'j') {
+                userCookie = userCookie.substr(2)
+                userCookie = JSON.parse(userCookie)
+            }
+            if (userCookie.profile.seen) {
+                if (userCookie.profile.seen.indexOf(this.props.movie.imdb_code) != -1) {
+                    seen_str = <p>Vu</p>
+                }
+            }
+        }
+
         var movieLink = "/film/" + this.props.movie.imdb_code
         var backgroundImage = "url("+ this.props.movie.large_cover_image + ")"
     return(
@@ -26,6 +42,7 @@ class MovieVignet extends React.Component {
             editing={false}
             emptyStarColor= {'#fff'}
             />
+            {seen_str}
             <p><br/>peers / seeds:<br/>{this.props.movie.torrents[0].peers} / {this.props.movie.torrents[0].seeds}</p>
             <p className={cx('shortSummary')}><br/>{this.props.movie.summary}</p>
         </div>

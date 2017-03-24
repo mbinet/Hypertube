@@ -85,11 +85,10 @@ class Film extends Component {
                 userId: userCookie._id,
                 idImdb: this.props.params.idImdb
             }).then(function (response) {
-                console.log(response.data.message);
-                axios.post('/api/updateCookie', {
-                    id_user: userCookie._id
-                }).then(function (response) {
-                    console.log("cookie updated");
+                axios.get('/api/getUser/' + userCookie._id)
+                    .then((response) => {
+                        cookie.remove('user', { path: '/' });
+                        cookie.save('user', response.data.user, { path: '/' });
                 })
             });
         }

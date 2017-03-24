@@ -311,7 +311,6 @@ app.get('/api/getUser/:idUser', function (req, res, next) {
             }
         })
     }
-
 });
 
 
