@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchVoteData } from './fetch-data';
-import { App, Vote, Dashboard, About, LoginOrRegister, Test, Film, Search, User } from './pages';
+import { App, Vote, Dashboard, About, LoginOrRegister, Test, Film, Search, User, UserUpdate } from './pages';
 import cookie from 'react-cookie'
 
 /*
@@ -44,6 +44,7 @@ export default (store) => {
             <Route path="search" component={Search} onEnter={requireAuth} />
             <Route path="film/:idImdb" component={Film} onEnter={requireAuth} />
             <Route path="user/:idUser" component={User} onEnter={requireAuth} />
+            <Route path="user/:idUser/update" component={UserUpdate} onEnter={requireAuth} />
             <Route path="about" component={About} />
         </Route>
     );
