@@ -13,5 +13,24 @@
     "search": "RECHERCHE",
     "about": "À PROPOS"
   },
-  "comments": "Commentaires"
+  "comments": "Commentaires",
+  "login": {
+    "title_1": "Se connecter avec son email",
+    "title_2": "Enregistrez vous avec votre email",
+    "undertitle_1": "Ce n'est pas ce que vous cherchez ? ",
+    "undertitle_2": "Vous avez deja un compte ? ",
+    "register_1": "Enregistrez vous",
+    "register_2": "Connectez vous",
+    "email": "email",
+    "pwd": "mot de passe",
+    "hint": "email: example@ninja.com mot de passe: ninja",
+    "login": "Connectez vous",
+    "register": "Enregistrez vous",
+    "forgot": "Vous avez oublié votre mot de passe ?",
+    "google": "Connectez vous avec google",
+    "quarante_deux": "Connectez vous avec 42",
+    "username": "pseudonyme",
+    "firstname": "prenom",
+    "lastname": "nom"
+  }
 }

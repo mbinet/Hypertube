@@ -13,5 +13,24 @@
         "search": "SEARCH",
         "about": "ABOUT"
     },
-    "comments": "Comments"
+    "comments": "Comments",
+    "login": {
+        "title_1": "Login with email",
+        "title_2": "Register with email",
+        "undertitle_1": "Not what you want ? ",
+        "undertitle_2": "Already have an account ? ",
+        "register_1": "Register an Account",
+        "register_2": "Login",
+        "email": "email",
+        "pwd": "password",
+        "hint": "email: example@ninja.com password: ninja",
+        "login": "Login",
+        "register": "Register",
+        "forgot": "Forgot your password ?",
+        "google": "Log in with google",
+        "quarante_deux": "Log in with 42",
+        "username": "username",
+        "firstname": "firstname",
+        "lastname": "lastname"
+    }
 }
