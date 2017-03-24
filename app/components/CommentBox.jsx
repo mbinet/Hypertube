@@ -7,6 +7,7 @@ import fr from 'react-intl/locale-data/fr';
 import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
 import { Table, Icon, Card, Input, Button } from 'antd';
 import cookie from 'react-cookie';
+import { Link } from 'react-router';
 addLocaleData([...en, ...fr]);
 import styles from '../css/components/film'
 import classNames from 'classnames/bind';
@@ -83,10 +84,11 @@ class CommentBox extends React.Component {
         var comments = this.state.comments
         comments.forEach(function (doc, err) {
             data.push({
-                name: doc.userName,
+                name: <Link to={ '/user/' + doc.userId }>{doc.userName}</Link>,
                 comment: doc.msg,
                 key: doc._id
             })
+            console.log(doc)
         })
 
         var tab = fr1

@@ -26,7 +26,7 @@ const Navigation = ({ user, logOut }) => {
 
     var userCookie;
     var linkUser = "";
-    if (userCookie = cookie.load('userId')) {
+    if (userCookie = cookie.load('user')) {
         if (userCookie[0] == 'j') {
             userCookie = userCookie.substr(2)
             userCookie = JSON.parse(userCookie)
