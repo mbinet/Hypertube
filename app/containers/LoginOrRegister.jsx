@@ -138,20 +138,20 @@ class LoginOrRegister extends Component {
                                         'message-show': message && message.length > 0
                                     })}>{message}</p>
                                 <input
+                                className={cx('input')}
                                     type="submit"
                                     value={isLogin ? trad.login : trad.register}
                                 />
+                                <div><button className={cx('alternative-link')} onClick={this.forgotPassword.bind(this)}>{trad.forgot}</button></div>
                             </form>
-                            <div><button onClick={this.forgotPassword.bind(this)}>{trad.forgot}</button></div>
                         </div>
                         <div className={cx('google-container')}>
-                            <h1 className={cx('heading')}>{trad.google}</h1>
+                            <h1 className={cx('heading')}>{trad.quicklog}</h1>
                             <a
                                 className={cx('button')}
                                 href="/auth/google">{trad.google}</a>
                         </div>
                         <div className={cx('key42-container')}>
-                            <h1 className={cx('heading')}>{trad.quarante_deux}</h1>
                             <a
                                 className={cx('button')}
                                 href="/auth/42">{trad.quarante_deux}</a>

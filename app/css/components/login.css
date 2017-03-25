@@ -55,6 +55,11 @@
 
 .google-container {
   padding: 16px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header {}
@@ -77,6 +82,11 @@
   @apply --input;
 }
 
+input[type=submit]{
+    width:90%;
+    text-align: center;
+    padding: 0;
+}
 .message {
   color: var(--colorCrimson);
   font-size: var(--fontSmall);
@@ -92,13 +102,29 @@
     text-transform: capitalize;
 }
 
+.alternative-link {
+    border:none;
+    background: none;
+}
+
 .button:hover {
     background: linear-gradient(to right, var(--colorCrimson), orange);
     border:none;
     color:white;
 }
 
+
 .hint {
   @apply --small;
   color: var(--colorBombay);
+}
+
+@media screen and (max-width: 640px){
+    .login {
+        width:250px;
+    }
+    .button {
+        width:180px;
+        font-size: 1.1em;
+    }
 }
