@@ -20,3 +20,11 @@
 .resultsDiv {
     width:100%;
 }
+
+@media screen and (max-width: 525px){
+    .movieListDiv {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
