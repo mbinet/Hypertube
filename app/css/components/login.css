@@ -83,10 +83,11 @@
 }
 
 input[type=submit]{
-    width:90%;
+    width:185px;
     text-align: center;
     padding: 0;
 }
+
 .message {
   color: var(--colorCrimson);
   font-size: var(--fontSmall);

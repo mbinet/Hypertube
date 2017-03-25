@@ -40,3 +40,17 @@
 .active {
   color: var(--colorCrimson);
 }
+
+@media screen and (max-width: 640px){
+    .navigation {
+        width:100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .item {
+        padding:5px;
+    }
+}
