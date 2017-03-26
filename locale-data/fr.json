@@ -6,6 +6,7 @@
   "orderBy": "Ranger par",
   "quality": "Qualité",
   "minRating": "Note minimum",
+  "viewed":"vu",
   "navigation": {
     "login": "SE CONNECTER",
     "logout": "SE DECONNECTER",

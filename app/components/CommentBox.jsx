@@ -96,8 +96,9 @@ class CommentBox extends React.Component {
             <IntlProvider locale='fr' messages={fr1} >
                 <div className={cx('commentBox')} style={{marginTop: 30}}>
                     <Card title={tab.comments} >
-                        <div style={{marginBottom: 20 }}>
+                        <div style={{marginBottom: 20 }} className={cx('inputContain')}>
                             <Input type="textarea"
+                                    className={cx('input')}
                                    placeholder="Type your comment..."
                                    autosize={{ minRows: 2 }}
                                    style={{ display: 'inline-block', width: 650}}

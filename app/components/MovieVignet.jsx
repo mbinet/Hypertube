@@ -4,6 +4,8 @@ import styles from '../css/components/movieCard';
 import StarRatingComponent from 'react-star-rating-component';
 import { Link } from 'react-router';
 import cookie from 'react-cookie'
+import en1 from '../../locale-data/en.json';
+import fr1 from '../../locale-data/fr.json';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +17,14 @@ class MovieVignet extends React.Component {
 
         var userCookie;
         var seen_str = "";
+        var viewedStyle = "none"
+        var trad;
+        // if (window.locale != 'fr') {
+        //     trad = en1.navigation
+        // }
+        // else {
+            trad = en1
+        // }
         if (userCookie = cookie.load('user')) {
             if (userCookie[0] == 'j') {
                 userCookie = userCookie.substr(2)
@@ -22,7 +32,8 @@ class MovieVignet extends React.Component {
             }
             if (userCookie.profile.seen) {
                 if (userCookie.profile.seen.indexOf(this.props.movie.imdb_code) != -1) {
-                    seen_str = <p>Vu</p>
+                    seen_str = <p>{trad.viewed}</p>
+                    viewedStyle='inset 0 0 50px red'
                 }
             }
         }
@@ -31,7 +42,7 @@ class MovieVignet extends React.Component {
         var backgroundImage = "url("+ this.props.movie.large_cover_image + ")"
     return(
         <Link to={movieLink} className={cx('cardLink')}>
-        <div className={cx('movieCard')} style={{backgroundImage: backgroundImage}}>
+        <div className={cx('movieCard')} style={{backgroundImage: backgroundImage, boxShadow: viewedStyle}}>
         <div className={cx('cardInfo')}>
           <h3>{this.props.movie.title}</h3>
           <p>{this.props.movie.year}</p>

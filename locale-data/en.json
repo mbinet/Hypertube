@@ -6,6 +6,7 @@
     "orderBy": "Order by",
     "quality": "Quality",
     "minRating": "Min rating",
+    "viewed":"viewed",
     "navigation": {
         "login": "LOGIN",
         "logout": "LOGOUT",
