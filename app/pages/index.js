@@ -8,4 +8,4 @@ export { default as Search } from 'pages/Search';
 export { default as Film } from 'pages/Film';
 export { default as User } from 'pages/User';
 export { default as UserUpdate } from 'pages/UserUpdate';
-
+export { default as AllUsers } from 'pages/AllUsers';

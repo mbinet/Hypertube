@@ -48,6 +48,7 @@ const Navigation = ({ user, logOut }) => {
                             >{trad.logout}</Link>
                             {linkUser}
                             <Link className={cx('item')} to="/search" >{trad.search}</Link>
+                            <Link className={cx('item')} to="/allusers" >{trad.users}</Link>
                         </span>
                     ) : (
                         <span>

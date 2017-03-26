@@ -12,7 +12,8 @@
     "logout": "SE DECONNECTER",
     "profile": "PROFIL",
     "search": "RECHERCHE",
-    "about": "À PROPOS"
+    "about": "À PROPOS",
+    "users": "UTILISATEURS"
   },
   "comments": "Commentaires",
   "login": {

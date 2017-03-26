@@ -12,7 +12,8 @@
         "logout": "LOGOUT",
         "profile": "PROFILE",
         "search": "SEARCH",
-        "about": "ABOUT"
+        "about": "ABOUT",
+        "users": "USERS"
     },
     "comments": "Comments",
     "login": {

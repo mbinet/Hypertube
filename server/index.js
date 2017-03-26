@@ -338,6 +338,19 @@ app.post('/api/updateUser/', function (req, res, next) {
 
 });
 
+app.get('/api/getAllUsers/', function(req, res, next){
+    User.find({}, (err, result) => {
+            if (result){
+                console.log("in api", result, typeof result)
+                res.json({users: result})
+            }
+            else {
+                console.log("err in api", err)
+                res.json({message: "can't find all users"})
+            }
+    })
+})
+
 
 //*****************//
 //    COMMENTS     //
