@@ -41,6 +41,9 @@
   color: var(--colorCrimson);
 }
 
+.toggleNav {
+    display:none;
+}
 @media screen and (max-width: 640px){
     .navigation {
         width:100%;
@@ -49,8 +52,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        flex-wrap: nowrap;
     }
     .item {
         padding:5px;
+        margin-left: 0;
     }
 }

@@ -23,15 +23,15 @@ const Navigation = ({ user, logOut }) => {
     // else {
         trad = en1.navigation
     // }
-
     var userCookie;
     var linkUser = "";
+
     if (userCookie = cookie.load('user')) {
         if (userCookie[0] == 'j') {
             userCookie = userCookie.substr(2)
             userCookie = JSON.parse(userCookie)
         }
-        linkUser = <Link className={cx('item')} to={'/user/' + userCookie._id }>{trad.profile}</Link>
+        linkUser = <Link className={cx('item')} to={'/user/' + userCookie._id } >{trad.profile}</Link>
     }
 
     return (
@@ -44,14 +44,18 @@ const Navigation = ({ user, logOut }) => {
                 { user.authenticated ? (
                         <span><Link
                             onClick={logOut}
-                            className={cx('item')} to="/">{trad.logout}</Link>
+                            className={cx('item')} to="/"
+                            >{trad.logout}</Link>
                             {linkUser}
+                            <Link className={cx('item')} to="/search" >{trad.search}</Link>
                         </span>
                     ) : (
-                        <Link className={cx('item')} to="/login">{trad.login}</Link>
+                        <span>
+                        <Link className={cx('item')} to="/login" >{trad.login}</Link>
+                        <Link className={cx('item')} to="/search" >{trad.search}</Link>
+                        </span>
                     )}
                 {/*<Link className={cx('item')} to="/dashboard">DASHBOARD</Link>*/}
-                <Link className={cx('item')} to="/search">{trad.search}</Link>
                 {/*<Link to="/about" className={cx('item')} activeClassName={cx('active')}>{trad.about}</Link>*/}
             </nav>
         </IntlProvider>
