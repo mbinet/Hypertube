@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames/bind';
-import styles from '../css/components/film';
+import styles from '../css/components/user';
 const cx = classNames.bind(styles);
 import { Card, Layout, Button, Input} from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
@@ -78,6 +78,7 @@ class Film extends Component {
                                 <div style={{ textAlign: 'center' }}>
                                 Username
                                 <Input type="text"
+                                        className={cx('input')}
                                        name="username"
                                        placeholder="username"
                                        value={this.state.user.username}
@@ -86,6 +87,7 @@ class Film extends Component {
                                 />
                                 Firstname
                                 <Input type="text"
+                                className={cx('input')}
                                        name="firstname"
                                        placeholder="firstname"
                                        value={this.state.user.firstname}
@@ -94,6 +96,7 @@ class Film extends Component {
                                 />
                                 Lastname
                                 <Input type="text"
+                                className={cx('input')}
                                        name="lastname"
                                        placeholder="lastname"
                                        value={this.state.user.lastname}
@@ -102,6 +105,7 @@ class Film extends Component {
                                 />
                                 Email
                                 <Input type="email"
+                                className={cx('input')}
                                        name="email"
                                        placeholder="email"
                                        value={this.state.user.email}

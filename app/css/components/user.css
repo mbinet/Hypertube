@@ -18,3 +18,20 @@
     border:none;
     text-transform: capitalize;
 }
+
+.button:hover {
+    background: linear-gradient(to right, var(--colorCrimson), orange);
+}
+
+.input:hover {
+    border: 1px solid orange;
+    outline-color: orange;
+}
+.input:active {
+    border: 1px solid orange;
+    outline-color:red;
+}
+.input:focus {
+    border: 1px solid orange;
+    outline-color:red;
+}
