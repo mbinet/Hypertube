@@ -6,7 +6,10 @@ import en from 'react-intl/locale-data/en';
 import fr from 'react-intl/locale-data/fr';
 import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
 addLocaleData([...en, ...fr]);
+import classNames from 'classnames/bind';
+import styles from '../css/components/film';
 
+const cx = classNames.bind(styles);
 /**
  * A counter button: tap the button to increase the count.
  */
@@ -50,7 +53,7 @@ class MovieBox extends React.Component {
                     {/*>*/}
                     {/*</Video>*/}
 
-                    <video width='800' height='600' controls='controls' preload='auto' src={url}>
+                    <video width='800' height='600' className={cx('videoPlayer')} controls='controls' preload='auto' src={url}>
                         {subFr}
                         {subEn}
                     </video>

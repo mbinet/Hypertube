@@ -165,10 +165,31 @@
     .inputContain {
         width: 500px;
     }
+    .videoPlayer {
+        width:500px;
+        height:375px;
+    }
 }
 
 @media screen and (max-width:600px) {
+    .commentBox {
+        width:400px;
+    }
     .inputContain {
+        width:300px;
+    }
+    .videoPlayer {
+        width:300px;
+        height:225px;
+    }
+}
+
+@media screen and (max-width:300px){
+    .inputContain {
+        width: 200px;
+    }
+    .videoPlayer {
         width:200px;
+        height:150px;
     }
 }
