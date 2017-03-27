@@ -7,7 +7,14 @@ function getLang() {
 
     var user;
     if (user = cookie.load('user')) {
-        return (user.profile.lang)
+        if (user[0] == 'j') {
+            user = user.substr(2)
+            user = JSON.parse(user)
+        }
+        if (user.profile)
+            return (user.profile.lang)
+        else
+            return ('en')
     }
     else {
         return ('en')
