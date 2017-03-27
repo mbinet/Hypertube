@@ -62,7 +62,7 @@ class Film extends Component {
     render() {
         return (
             <Page {...this.getMetaData()}>
-                <AllUsersContainer allUsers={this.state.users} cookieUser={this.state.userCookie} />
+                <AllUsersContainer allUsers={this.state.users} usersObj={this.state.usersObj} cookieUser={this.state.userCookie} />
             </Page>
         );
     }

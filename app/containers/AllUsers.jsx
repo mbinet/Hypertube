@@ -10,18 +10,30 @@ class AllUsers extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: props.allUsers
+            users: props.allUsers,
         }
         console.log("component props", props.allUsers, typeof props.allUsers)
     }
 
 componentWillReceiveProps(nextProps)  {
-        this.setState({users: nextProps.allUsers})
-        console.log("nextprops")
+        var result = JSON.parse(nextProps.allUsers)
+        console.log("nextprops", result)
+        this.setState({users: result})
+    }
+
+    usersList (){
+        if (this.state.users){
+            this.state.users.forEach(user => {
+                return( <div>
+                    <p>user</p>
+                    <p>{user.email}</p>
+                </div>)
+            })
+        }
     }
     render() {
         return (
-            <p>hildediou {this.state.users}</p>
+            <userList />
         )
     }
 }

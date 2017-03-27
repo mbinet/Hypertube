@@ -33,7 +33,7 @@ class MovieVignet extends React.Component {
             if (userCookie.profile.seen) {
                 if (userCookie.profile.seen.indexOf(this.props.movie.imdb_code) != -1) {
                     seen_str = <p>{trad.viewed}</p>
-                    viewedStyle='inset 0 0 150px white'
+                    viewedStyle='inset 0 0 300px white'
                 }
             }
         }
