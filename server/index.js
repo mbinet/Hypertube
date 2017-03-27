@@ -307,6 +307,7 @@ app.get('/api/getUser/:idUser', function (req, res, next) {
     if (req.params.idUser) {
         User.findById(req.params.idUser, (findByIdErr, user) => {
             if (user) {
+                user.password = "";
                 res.json({ user: user})
             }
             else {
