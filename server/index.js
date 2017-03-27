@@ -9,6 +9,7 @@ import renderMiddleware from './render/middleware';
 import nodemailer from 'nodemailer';
 import randomstring from 'randomstring';
 import base64 from 'base-64';
+import bodyParser from 'body-parser';
 
 import User from './db/mongo/models/user';
 var mongo = require('mongodb').MongoClient
@@ -40,7 +41,8 @@ if (isDebug) {
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: devBrowserConfig.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 }
-
+app.use(bodyParser.urlencoded({limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
 /*
  * Bootstrap application settings
  */
@@ -348,6 +350,7 @@ app.post('/api/updateUser/', function (req, res, next) {
                 user.profile.username = req.body.username
                 user.profile.firstname = req.body.firstname
                 user.profile.lastname = req.body.lastname
+                user.profile.picture = req.body.picture
                 user.email = req.body.email
                 user.profile.lang = req.body.lang
                 user.save((newErr) => {
@@ -683,6 +686,8 @@ app.post('/upload/image', upload.single('photo'), function(req,res,next){
     console.log(img64);
     return res.jsonp({ imgsrc: img64});
 });
+
+
 
 app.get('*', renderMiddleware);
 

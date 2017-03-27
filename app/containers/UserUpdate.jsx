@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from '../css/components/user';
+import Dropzone from 'react-dropzone';
+
 const cx = classNames.bind(styles);
 import { Menu, Dropdown, Icon, Card, Layout, Button, Input} from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
@@ -13,6 +15,7 @@ class Film extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            imgPreview: '',
             user: {
                 username: "",
                 firstname: "",
@@ -38,7 +41,22 @@ class Film extends Component {
         })
         // console.log(nextProps.user)
     }
-
+    onImageDrop(files) {
+        console.log(files[0]);
+        this.setState({
+            uploadedFile: files[0]
+        });
+        this.uploadImage(files[0]);
+    }
+    uploadImage(file){
+        var that = this;
+        console.log(file);
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            that.setState({imgPreview: reader.result});
+        };
+    }
     handleSubmit() {
         var that = this;
         axios.post('/api/updateUser/', {
@@ -47,13 +65,16 @@ class Film extends Component {
             firstname: this.state.user.firstname,
             lastname: this.state.user.lastname,
             email: this.state.user.email,
+            picture: this.state.imgPreview,
             lang: this.state.user.lang
         }).then(function (response) {
             // update cookie
             axios.get('/api/getUser/' + that.props.user._id)
                 .then((response) => {
                     cookie.remove('user', { path: '/' });
-                    cookie.save('user', response.data.user, { path: '/' });
+                    var user = response.data.user;
+                    user.profile.picture = '';
+                    cookie.save('user', user, { path: '/' });
                 })
         })
 
@@ -89,6 +110,13 @@ class Film extends Component {
                 <Layout style={{backgroundColor: 'white'}}>
                     <Content style={{margin: 'auto'}}>
                         <Card style={{width: 300}}>
+                            <Dropzone
+                                multiple={false}
+                                accept="image/*"
+                                onDrop={this.onImageDrop.bind(this)}>
+                                <p>Drop an image or click to select a file to upload.</p>
+                                <img src={this.state.imgPreview} style={{maxWidth: "100%", maxHeigth: "100%"}}/>
+                            </Dropzone>
                             <div className={cx('custom-image')}>
                                 <img alt="example" width="100%" src={this.props.user.profile.picture}/>
                             </div>
