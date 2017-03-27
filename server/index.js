@@ -503,7 +503,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                         if (req.method !== 'GET') return res.end();
                         // console.log("oui je suis un mp4");
                         var tab = file.path.split('/');
-                        console.log(tab);
+                        // console.log(tab);
                         clearTimeout(o);
                         var o = setTimeout(function() {
                             console.log('first timeout');
