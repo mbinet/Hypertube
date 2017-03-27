@@ -14,6 +14,9 @@ class Film extends Component {
         this.state = {
             subFr: "",
             subEn: "",
+            year: "",
+            runtime:"",
+            mparating:"",
             title: "",
             rating: "",
             genre: [],
@@ -68,6 +71,9 @@ class Film extends Component {
                     if (response.data.msg == 'ok') {
                         that.setState({
                             title: response.data.title,
+                            year: response.data.year,
+                            runtime:response.data.runtime,
+                            mparating: response.data.mparating,
                             rating: response.data.rating,
                             genres: response.data.genres,
                             synopsis: response.data.synopsis,
@@ -100,6 +106,9 @@ class Film extends Component {
                 {/*<DatePicker />*/}
                 <FilmContainer {...this.props}
                                message={''}
+                               year={this.state.year}
+                               runtime={this.state.runtime}
+                               mparating={this.state.mparating}
                                subFr={this.state.subFr}
                                subEn={this.state.subEn}
                                idImdb={this.props.params.idImdb}

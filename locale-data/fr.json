@@ -35,5 +35,11 @@
     "username": "pseudonyme",
     "firstname": "prenom",
     "lastname": "nom"
+},
+  "movie":{
+      "year":"année",
+      "language":"langue",
+      "runtime":"durée",
+      "mparating":"classification"
   }
 }
