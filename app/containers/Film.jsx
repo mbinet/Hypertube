@@ -43,6 +43,7 @@ class Film extends Component {
             var backgroundImage = this.state.light?lightDown:lightUp
             var backgroundColor = this.state.light?'white':'#3f4144'
             var nightMode = this.state.light?'':'Night'
+            console.log("response data",this.props)
         return (
             <div className={cx('filmContainer'+nightMode)} style={{backgroundColor: backgroundColor}}>
                 <h1 className={cx('title'+nightMode)}>  {this.props.title} </h1>
@@ -58,11 +59,15 @@ class Film extends Component {
                         />
                         <p>genres </p>
                         <div><GetGenres genresList={genres}/></div>
+                        <p>year </p>
+                        <h2>{this.props.year}</h2>
                         <p>language </p> <h2>  {this.props.language} </h2>
                         <img onClick={this.toggleLight.bind(this)} className={cx('light')} src={backgroundImage}/>
                     </div>
                     <div className={cx('rightInfo')}>
                         <p>synopsis </p> <h3 className={cx('synopsis')}>  {this.props.synopsis} </h3>
+                        <p>runtime </p> <h3 className={cx('synopsis')}>  {this.props.runtime} min </h3>
+                        <p>mpa rating </p> <h3 className={cx('synopsis')}>  {this.props.mparating}</h3>
                     </div>
                 </div>
                 <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>

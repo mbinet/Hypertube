@@ -252,6 +252,9 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
                 var result = response.data.data.movies[0];
                 res.json({  title: result.title,
                     rating: result.rating,
+                    year: result.year,
+                    runtime:result.runtime,
+                    mparating: result.mpa_rating,
                     genres: result.genres,
                     synopsis: result.synopsis,
                     language: result.language,
