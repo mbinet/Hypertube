@@ -9,7 +9,7 @@ class Film extends Component {
     constructor() {
         super();
         this.state = {
-            users: {},
+            users: '',
             userCookie: {}
         }
     }
@@ -40,9 +40,10 @@ class Film extends Component {
 
         axios.get('/api/getAllUsers/')
             .then((response) => {
-                console.log("in container", response.data.users)
+                var result = JSON.stringify(response.data.users)
+                // console.log("in page", result, typeof result)
                 this.setState({
-                    users: response.data.users
+                    users: result
                 })
             })
 
@@ -61,7 +62,7 @@ class Film extends Component {
     render() {
         return (
             <Page {...this.getMetaData()}>
-                <AllUsersContainer allUsers={this.state.users} cookieUser={this.state.userCookie} />
+                <AllUsersContainer allUsers={this.state.users} usersObj={this.state.usersObj} cookieUser={this.state.userCookie} />
             </Page>
         );
     }

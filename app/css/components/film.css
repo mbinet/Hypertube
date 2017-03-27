@@ -126,6 +126,9 @@
 .input:hover {
     border:1px solid orange;
 }
+.inputContain {
+    width:800px;
+}
 .commentBox {
     border-top: 1px solid var(--colorCrimson);
     text-align: center;
@@ -160,15 +163,36 @@
     }
 
     .commentBox {
-        width:100%;
+        width:550px;
     }
     .inputContain {
         width: 500px;
     }
+    .videoPlayer {
+        width:500px;
+        height:375px;
+    }
 }
 
 @media screen and (max-width:600px) {
+    .commentBox {
+        width:400px;
+    }
     .inputContain {
+        width:300px;
+    }
+    .videoPlayer {
+        width:300px;
+        height:225px;
+    }
+}
+
+@media screen and (max-width:300px){
+    .inputContain {
+        width: 200px;
+    }
+    .videoPlayer {
         width:200px;
+        height:150px;
     }
 }

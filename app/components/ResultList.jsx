@@ -8,10 +8,10 @@ const cx = classNames.bind(styles);
 function HasResult(props){
     if (!props || !props.list || props.list.length == 0)
     {
-        console.log('resultList --- hasresult: no result')
+        // console.log('resultList --- hasresult: no result')
         return (<p> No movies </p>)
     }
-    console.log('resultList --- hasresult', props.list.length)
+    // console.log('resultList --- hasresult', props.list.length)
     return (
         <div className={cx('movieListDiv')}> {
             props.list.map(function(oneMovie, i){

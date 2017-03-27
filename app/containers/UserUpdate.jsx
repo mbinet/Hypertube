@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from '../css/components/user';
 const cx = classNames.bind(styles);
-import { Card, Layout, Button, Input} from 'antd';
+import { Menu, Dropdown, Icon, Card, Layout, Button, Input} from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Link } from 'react-router';
 import update from 'react-addons-update';
@@ -17,7 +17,8 @@ class Film extends Component {
                 username: "",
                 firstname: "",
                 lastname: "",
-                email: ""
+                email: "",
+                lang: ""
             },
         };
     }
@@ -31,30 +32,31 @@ class Film extends Component {
                 username: { $set: nextProps.user.profile.username },
                 firstname: { $set: nextProps.user.profile.firstname },
                 lastname: { $set: nextProps.user.profile.lastname },
-                email: { $set: nextProps.user.email }
+                email: { $set: nextProps.user.email },
+                lang: { $set: nextProps.user.profile.lang }
             })
         })
-        console.log(nextProps.user)
+        // console.log(nextProps.user)
     }
 
     handleSubmit() {
+        var that = this;
         axios.post('/api/updateUser/', {
             userId: this.props.user._id,
             username: this.state.user.username,
             firstname: this.state.user.firstname,
             lastname: this.state.user.lastname,
-            email: this.state.user.email
+            email: this.state.user.email,
+            lang: this.state.user.lang
         }).then(function (response) {
-            console.log(response.data.msg);
+            // update cookie
+            axios.get('/api/getUser/' + that.props.user._id)
+                .then((response) => {
+                    cookie.remove('user', { path: '/' });
+                    cookie.save('user', response.data.user, { path: '/' });
+                })
         })
 
-        // update cookie
-        axios.get('/api/getUser/' + this.props.user._id)
-            .then((response) => {
-                cookie.remove('user', { path: '/' });
-                cookie.save('user', response.data.user, { path: '/' });
-                console.log(this.props.user._id + "    " + response.data.user._id)
-            })
     }
 
     handleChange(e) {
@@ -63,7 +65,23 @@ class Film extends Component {
         })
     }
 
+    handleLangChange(param) {
+        this.setState({
+            user: update(this.state.user, {lang: {$set: param}})
+        })
+    }
+
     render() {
+        const menu = (
+            <Menu>
+                <Menu.Item onClick={ () => this.handleLangChange('en')}>
+                    <a onClick={ () => this.handleLangChange('en')}>en</a>
+                </Menu.Item>
+                <Menu.Item onClick={ () => this.handleLangChange('fr')}>
+                    <a onClick={ () => this.handleLangChange('fr')}>fr</a>
+                </Menu.Item>
+            </Menu>
+        );
 
         // checking if user is connected
         if (this.props.cookieUser._id == this.props.user._id) {
@@ -76,47 +94,54 @@ class Film extends Component {
                             </div>
                             <div className={cx('custom-card')}>
                                 <div style={{ textAlign: 'center' }}>
-                                Username
-                                <Input type="text"
-                                        className={cx('input')}
-                                       name="username"
-                                       placeholder="username"
-                                       value={this.state.user.username}
-                                       onChange={this.handleChange.bind(this)}
-                                       style={{ marginLeft: 0 }}
-                                />
-                                Firstname
-                                <Input type="text"
-                                className={cx('input')}
-                                       name="firstname"
-                                       placeholder="firstname"
-                                       value={this.state.user.firstname}
-                                       onChange={this.handleChange.bind(this)}
-                                       style={{ marginLeft: 0 }}
-                                />
-                                Lastname
-                                <Input type="text"
-                                className={cx('input')}
-                                       name="lastname"
-                                       placeholder="lastname"
-                                       value={this.state.user.lastname}
-                                       onChange={this.handleChange.bind(this)}
-                                       style={{ marginLeft: 0 }}
-                                />
-                                Email
-                                <Input type="email"
-                                className={cx('input')}
-                                       name="email"
-                                       placeholder="email"
-                                       value={this.state.user.email}
-                                       onChange={this.handleChange.bind(this)}
-                                       style={{ marginLeft: 0 }}
-                                />
+                                    Username
+                                    <Input type="text"
+                                           className={cx('input')}
+                                           name="username"
+                                           placeholder="username"
+                                           value={this.state.user.username}
+                                           onChange={this.handleChange.bind(this)}
+                                           style={{ marginLeft: 0 }}
+                                    />
+                                    Firstname
+                                    <Input type="text"
+                                           className={cx('input')}
+                                           name="firstname"
+                                           placeholder="firstname"
+                                           value={this.state.user.firstname}
+                                           onChange={this.handleChange.bind(this)}
+                                           style={{ marginLeft: 0 }}
+                                    />
+                                    Lastname
+                                    <Input type="text"
+                                           className={cx('input')}
+                                           name="lastname"
+                                           placeholder="lastname"
+                                           value={this.state.user.lastname}
+                                           onChange={this.handleChange.bind(this)}
+                                           style={{ marginLeft: 0 }}
+                                    />
+                                    Email
+                                    <Input type="email"
+                                           className={cx('input')}
+                                           name="email"
+                                           placeholder="email"
+                                           value={this.state.user.email}
+                                           onChange={this.handleChange.bind(this)}
+                                           style={{ marginLeft: 0 }}
+                                    />
+                                    <div>
+                                        <Dropdown overlay={menu}>
+                                            <a className="ant-dropdown-link" href="#">
+                                                Language <Icon type="down" />
+                                            </a>
+                                        </Dropdown>
+                                    </div>
                                     <Button
                                         type='primary'
                                         className={cx('button')}
                                         onClick={() => this.componentWillReceiveProps(this.props)}
-                                        style={{ width: 100 }}
+                                        style={{ width: 100, marginTop: 20 }}
                                     >
                                         Cancel
                                     </Button>

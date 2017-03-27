@@ -35,3 +35,12 @@
     border: 1px solid orange;
     outline-color:red;
 }
+
+.cards {
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}

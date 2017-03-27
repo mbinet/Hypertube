@@ -6,21 +6,51 @@ import { Card, Layout, Button } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Link } from 'react-router';
 
+function UserList(props){
+    // console.log(props)
+    if (!props.users)
+    {
+        // console.log('no users')
+        return (<p> No users </p>)
+    }
+    return (
+        <div className={cx('cards')}> {
+            props.users.map(function(user, i){
+                return (
+                    <Card key={i+1} style={{ width: 200, margin:5 }} bodyStyle={{ padding: 0}} >
+                        <div className={cx('custom-image')}>
+                            <img alt="example" width="100%" src={user.profile.picture} />
+                        </div>
+                        <div className={cx('custom-card')}>
+                            <h3>{user.profile.username}</h3>
+                            <p>{user.profile.firstname}</p>
+                            <p>{user.profile.lastname}</p>
+                        </div>
+                    </Card>
+                )
+            })}
+            </div>
+        )
+    }
+
 class AllUsers extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: props.allUsers
+            users: props.allUsers,
         }
-        console.log("component props", props.allUsers, typeof props.allUsers)
     }
 
 componentWillReceiveProps(nextProps)  {
-        this.setState({users: nextProps.allUsers})
+        var result = JSON.parse(nextProps.allUsers)
+        this.setState({users: result})
     }
+
+
     render() {
+        var users = this.state.users
         return (
-            <p>hildediou</p>
+            <UserList users={users}/>
         )
     }
 }

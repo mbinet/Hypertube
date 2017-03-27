@@ -8,6 +8,7 @@ import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
+import lang from '../utils/lang'
 
 
 const cx = classNames.bind(styles);
@@ -80,7 +81,7 @@ componentDidMount(){
        e.preventDefault()
        this.setState({page:0, newSearch:true}, function(){
        var url = this.YUrlGen()
-       console.log("url in searchForm maxPages", url)
+       // console.log("url in searchForm maxPages", url)
        var _this = this
        this.serverRequest =
         axios
@@ -89,14 +90,14 @@ componentDidMount(){
                 if (result.data && result.data.data){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20)
-                console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
+                // console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
                     maxPage: maxPage,
                     url: url,
                     page:1,
                     newSearch:true
                 }, function(){
-                    console.warn("state on search click", _this.state)
+                    // console.warn("state on search click", _this.state)
                 })}
 
             })
@@ -109,7 +110,7 @@ componentDidMount(){
        var pageNum = this.state.page + 1;
        var url = this.state.url.toString();
        var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
-       console.log('searcForm --- load page', pageNum);
+       // console.log('searcForm --- load page', pageNum);
        this.setState({url: newUrl, page:pageNum, newSearch:false});
    }
 
@@ -121,8 +122,8 @@ componentDidMount(){
 
     render() {
         var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
-        // var trad = window.locale == 'fr' ? fr : en
-        var trad = en
+        var trad;
+        trad = lang() == 'fr' ? fr : en
         return (
             <div>
                 <form className={cx('searchForm')} id="searchForm" onSubmit={this.maxPages.bind(this)}>
@@ -132,7 +133,7 @@ componentDidMount(){
                     <SelectInput text={trad.orderBy} name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
                     <SelectInput text={trad.quality} name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
                     <SelectInput text={trad.minRating} name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
-                    <input type="submit" value="search"/>
+                    <input type="submit" value={trad.search}/>
                 </form>
                 <InfiniteScroll
                     pageStart={0}

@@ -252,6 +252,9 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
                 var result = response.data.data.movies[0];
                 res.json({  title: result.title,
                     rating: result.rating,
+                    year: result.year,
+                    runtime:result.runtime,
+                    mparating: result.mpa_rating,
                     genres: result.genres,
                     synopsis: result.synopsis,
                     language: result.language,
@@ -321,6 +324,7 @@ app.post('/api/updateUser/', function (req, res, next) {
                 user.profile.firstname = req.body.firstname
                 user.profile.lastname = req.body.lastname
                 user.email = req.body.email
+                user.profile.lang = req.body.lang
                 user.save((newErr) => {
                     if (!newErr)
                         res.json({ msg: 'Ok'})
@@ -421,6 +425,7 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
  */
 
 var runningCommands = {};
+var o;
 
 app.get('/api/film/:idImdb', function (req, res, next) {
     res.setHeader('Accept-Ranges', 'bytes');
@@ -475,6 +480,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                                 console.log("runningCommands[id] is deleted from id " + id);
                             });
                         // console.log("oui je suis un mkv");
+                        // deleteFilmLater(file.path);
                         runningCommands[id].pipe(res);
                     }
                 }
@@ -497,6 +503,15 @@ app.get('/api/film/:idImdb', function (req, res, next) {
                         res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
                         if (req.method !== 'GET') return res.end();
                         // console.log("oui je suis un mp4");
+                        var tab = file.path.split('/');
+                        // console.log(tab);
+                        clearTimeout(o);
+                        var o = setTimeout(function() {
+                            console.log('first timeout');
+                            var s = setTimeout(function() {
+                                deleteFolderRecursive('/tmp/film/' + tab[0]);
+                            }, 1296000000);
+                        }, 1296000000);
                         return file.createReadStream(range).pipe(res);
                     }
                 }
@@ -555,7 +570,7 @@ const getTorrentFile = function(engine) {
         var tmp_file = null;
         engine.on('ready', function () {
             engine.files.forEach(function (file, idx) {
-                // console.log(file.length);
+                // console.log(file.path);
                 const ext = path.extname(file.name).slice(1);
                 if (ext === 'mkv' || ext === 'mp4') {
                     if (file.length > tmp_len) {
@@ -568,6 +583,20 @@ const getTorrentFile = function(engine) {
             resolve(tmp_file);
         });
     });
+};
+
+var deleteFolderRecursive = function(path) {
+    if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
 };
 
 
