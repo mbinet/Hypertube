@@ -126,6 +126,9 @@
 .input:hover {
     border:1px solid orange;
 }
+.inputContain {
+    width:800px;
+}
 .commentBox {
     border-top: 1px solid var(--colorCrimson);
     text-align: center;
@@ -160,7 +163,7 @@
     }
 
     .commentBox {
-        width:100%;
+        width:550px;
     }
     .inputContain {
         width: 500px;

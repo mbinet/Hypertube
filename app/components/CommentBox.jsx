@@ -72,12 +72,12 @@ class CommentBox extends React.Component {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            width: 150
+            width: 100
         }, {
             title: 'Comment',
             dataIndex: 'comment',
             key: 'comment',
-            width: 600
+            width: 500
         }];
         const data = [];
 
@@ -95,7 +95,7 @@ class CommentBox extends React.Component {
         return (
             <IntlProvider locale='fr' messages={fr1} >
                 <div className={cx('commentBox')} style={{marginTop: 30}}>
-                    <Card title={tab.comments} >
+                    <h1 className={cx('title')}>{tab.comments}</h1>
                         <div style={{marginBottom: 20 }} className={cx('inputContain')}>
                             <Input type="textarea"
                                     className={cx('input')}
@@ -109,7 +109,6 @@ class CommentBox extends React.Component {
                         </div>
                         <Button type='primary' className={cx('button')} onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>Send</Button>
                         <Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
-                    </Card>
                 </div>
             </IntlProvider>
         );
