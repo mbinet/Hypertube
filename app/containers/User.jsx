@@ -19,7 +19,7 @@ class Film extends Component {
         return (
             <Layout style={{ backgroundColor: 'white'}}>
                 <Content style={{ margin: 'auto' }}>
-                    <Card style={{ width: 300 }} bodyStyle={{ padding: 0 }} >
+                    <Card style={{ width: 250 }} bodyStyle={{ padding: 0 }} >
                         <div className={cx('custom-image')}>
                             <img alt="example" width="100%" src={this.props.user.profile.picture} />
                         </div>

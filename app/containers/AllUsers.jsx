@@ -17,10 +17,11 @@ class AllUsers extends Component {
 
 componentWillReceiveProps(nextProps)  {
         this.setState({users: nextProps.allUsers})
+        console.log("nextprops")
     }
     render() {
         return (
-            <p>hildediou</p>
+            <p>hildediou {this.state.users}</p>
         )
     }
 }
