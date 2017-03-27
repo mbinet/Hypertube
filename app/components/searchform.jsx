@@ -8,6 +8,7 @@ import classNames from 'classnames/bind';
 import styles from '../css/components/searchForm';
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
+import lang from '../utils/lang'
 
 
 const cx = classNames.bind(styles);
@@ -121,8 +122,8 @@ componentDidMount(){
 
     render() {
         var hasMoreBool = this.state.page >= this.state.maxPage ? false:true
-        // var trad = window.locale == 'fr' ? fr : en
-        var trad = en
+        var trad;
+        trad = lang() == 'fr' ? fr : en
         return (
             <div>
                 <form className={cx('searchForm')} id="searchForm" onSubmit={this.maxPages.bind(this)}>
@@ -132,7 +133,7 @@ componentDidMount(){
                     <SelectInput text={trad.orderBy} name="orderBy" editValue={this.handleChange.bind(this)} values={['desc', 'asc']}/>
                     <SelectInput text={trad.quality} name="quality" editValue={this.handleChange.bind(this)} values={['720p', '1080p', '3D']}/>
                     <SelectInput text={trad.minRating} name="minRating" editValue={this.handleChange.bind(this)} values={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}/>
-                    <input type="submit" value="search"/>
+                    <input type="submit" value={trad.search}/>
                 </form>
                 <InfiniteScroll
                     pageStart={0}

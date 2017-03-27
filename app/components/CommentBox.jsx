@@ -9,6 +9,7 @@ import { Table, Icon, Card, Input, Button } from 'antd';
 import cookie from 'react-cookie';
 import { Link } from 'react-router';
 addLocaleData([...en, ...fr]);
+import lang from '../utils/lang'
 import styles from '../css/components/film'
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -91,15 +92,16 @@ class CommentBox extends React.Component {
             // console.log(doc)
         })
 
-        var tab = fr1
+        var trad;
+        trad = lang() == 'fr' ? fr1.comments : en1.comments
         return (
             <IntlProvider locale='fr' messages={fr1} >
                 <div className={cx('commentBox')} style={{marginTop: 30}}>
-                    <h1 className={cx('title')}>{tab.comments}</h1>
+                    <h1 className={cx('title')}>{trad.comments}</h1>
                         <div style={{marginBottom: 20 }} className={cx('inputContain')}>
                             <Input type="textarea"
                                     className={cx('input')}
-                                   placeholder="Type your comment..."
+                                   placeholder={trad.typeYour}
                                    autosize={{ minRows: 2 }}
                                    style={{ display: 'inline-block', width: 650}}
                                    name="comment"
@@ -107,7 +109,7 @@ class CommentBox extends React.Component {
                                    onChange={this.handleChange.bind(this)}
                             />
                         </div>
-                        <Button type='primary' className={cx('button')} onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>Send</Button>
+                        <Button type='primary' className={cx('button')} onClick={this.onSubmit.bind(this)} style={{ width: 100, marginBottom: 30  }}>{trad.send}</Button>
                         <Table columns={columns} dataSource={data} pagination={false} showHeader={false} size={'small'}/>
                 </div>
             </IntlProvider>

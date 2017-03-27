@@ -28,10 +28,10 @@ class MovieBox extends React.Component {
         return (
             <IntlProvider locale='fr' messages={fr1} >
                 <div>
-                    <FormattedMessage
-                        id="welcome"
-                        defaultMessage={`Welcome`}
-                    />
+                    {/*<FormattedMessage*/}
+                        {/*id="welcome"*/}
+                        {/*defaultMessage={`Welcome`}*/}
+                    {/*/>*/}
 
                     {/*<script src='//vjs.zencdn.net/5-unsafe/video.js' />*/}
                     {/*<link href='//vjs.zencdn.net/5.4.6/video-js.min.css' rel='stylesheet' />*/}

@@ -324,6 +324,7 @@ app.post('/api/updateUser/', function (req, res, next) {
                 user.profile.firstname = req.body.firstname
                 user.profile.lastname = req.body.lastname
                 user.email = req.body.email
+                user.profile.lang = req.body.lang
                 user.save((newErr) => {
                     if (!newErr)
                         res.json({ msg: 'Ok'})

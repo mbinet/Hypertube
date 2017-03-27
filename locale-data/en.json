@@ -7,6 +7,7 @@
     "quality": "Quality",
     "minRating": "Min rating",
     "viewed":"viewed",
+    "search": "Search",
     "navigation": {
         "login": "LOGIN",
         "logout": "LOGOUT",
@@ -15,7 +16,11 @@
         "about": "ABOUT",
         "users": "USERS"
     },
-    "comments": "Comments",
+    "comments" : {
+        "comments": "Comments",
+        "send": "Send",
+        "typeYour": "Type your comment..."
+    },
     "login": {
         "title_1": "Login with email",
         "title_2": "Register with email",
