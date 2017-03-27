@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
 import styles from '../css/components/login';
 import hourGlassSvg from '../images/hourglass.svg';
-import axios from 'axios'
+import axios from 'axios';
+import Dropzone from 'react-dropzone';
 
 import en1 from '../../locale-data/en.json';
 import fr1 from '../../locale-data/fr.json';
@@ -32,12 +33,33 @@ class LoginOrRegister extends Component {
     constructor(props) {
         super(props);
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
-        this.state = {value: ''};
+        this.state = {
+            value: '',
+            imgPreview: '',
+            lastname: "",
+            firstname: '',
+            username: ''
+        };
     }
 
+    onImageDrop(files) {
+        console.log(files[0]);
+        this.setState({
+            uploadedFile: files[0]
+        });
+       this.uploadImage(files[0]);
+    }
+    uploadImage(file){
+    var that = this;
+        console.log(file);
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            that.setState({imgPreview: reader.result});
+        };
+    }
     handleChange(event){
-        // console.log(event.target);
-        this.setState({value: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
 
     handleOnSubmit(event) {
@@ -53,7 +75,8 @@ class LoginOrRegister extends Component {
             const firstname = ReactDOM.findDOMNode(this.refs.firstname).value;
             const lastname = ReactDOM.findDOMNode(this.refs.lastname).value;
             const username = ReactDOM.findDOMNode(this.refs.username).value;
-            signUp({ email, password, username, firstname, lastname});
+            const image = this.state.imgPreview;
+            signUp({ email, password, username, firstname, lastname, image});
         }
     }
 
@@ -170,6 +193,13 @@ class LoginOrRegister extends Component {
                     <img className={cx('loading')} alt="loading" src={hourGlassSvg}/>
                     <div className={cx('email-container')}>
                         <form onSubmit={this.handleOnSubmit}>
+                                <Dropzone
+                                    multiple={false}
+                                    accept="image/*"
+                                    onDrop={this.onImageDrop.bind(this)}>
+                                    <p>Drop an image or click to select a file to upload.</p>
+                                    <img src={this.state.imgPreview} style={{maxWidth: "100%", maxHeigth: "100%"}}/>
+                                </Dropzone>
                             <input
                                 className={cx('input')}
                                 type="email"
@@ -187,25 +217,28 @@ class LoginOrRegister extends Component {
                                 className={cx('input')}
                                 type="text"
                                 ref="username"
+                                name="username"
                                 placeholder={trad.username}
-                                value={this.state.value}
-                                onChange={this.handleChange}
+                                value={this.state.username}
+                                onChange={this.handleChange.bind(this)}
                             />
                             <input
                                 className={cx('input')}
                                 type="text"
                                 ref="firstname"
+                                name="firstname"
                                 placeholder={trad.firstname}
-                                value={this.state.value}
-                                onChange={this.handleChange}
+                                value={this.state.firstname}
+                                onChange={this.handleChange.bind(this)}
                             />
                             <input
                                 className={cx('input')}
                                 type="text"
                                 ref="lastname"
+                                name="lastname"
                                 placeholder={trad.lastname}
-                                value={this.state.value}
-                                onChange={this.handleChange}
+                                value={this.state.lastname}
+                                onChange={this.handleChange.bind(this)}
                             />
 
                             <div className={cx('hint')}>

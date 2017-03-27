@@ -8,6 +8,7 @@ import initRoutes from './init/routes';
 import renderMiddleware from './render/middleware';
 import nodemailer from 'nodemailer';
 import randomstring from 'randomstring';
+import base64 from 'base-64';
 
 import User from './db/mongo/models/user';
 var mongo = require('mongodb').MongoClient
@@ -85,6 +86,29 @@ app.use(require('forest-express-mongoose').init({
     authSecret: process.env.FOREST_AUTH_SECRET,
     mongoose: require('mongoose') // The mongoose database connection.
 }));
+
+var multer  = require('multer');
+var storage =  multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, 'public/images/');
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.originalname);
+    }
+});
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: 1 * 1000 * 1000 },
+    fileFilter: function (req, file, cb) {
+        if (regex_img(file.mimetype) == "ko") {
+            return cb(null, false, new Error('goes wrong on the mimetype'));
+        }
+        else {
+            cb(null, true);
+        }
+
+    }
+});
 
 //***********//
 // SUBTITLES //
@@ -643,6 +667,21 @@ app.post('/sendPassword', function(req, res, next){
         console.log("user after", user);
     })
 })
+
+//****************//
+//  UPLOAD IMAGE  //
+//****************//
+
+app.post('/upload/image', upload.single('photo'), function(req,res,next){
+    //console.log(req.body.filepreview);
+    console.log(req.body.file);
+    var url = req.body.filepreview.replace('blob:', '');
+
+    var img64 = 'data:' + req.body.filetype +';base64,' + base64.encode(url);
+    //var img64 = 'data:' + req.body.filetype +';base64,' + req.body.filepreview.toString("base64");
+    console.log(img64);
+    return res.jsonp({ imgsrc: img64});
+});
 
 app.get('*', renderMiddleware);
 
