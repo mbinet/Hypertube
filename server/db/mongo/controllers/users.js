@@ -21,6 +21,8 @@ export function login(req, res, next) {
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
+        user.profile.picture = '';
+        user.password = '';
       res.cookie('user', user);
       return res.status(200).json({
         message: 'You have been successfully logged in.'
@@ -60,6 +62,12 @@ export function signUp(req, res, next) {
     if (!req.body.lastname) {
         return res.status(409).json({ message: 'invalid lastname!' });
     }
+    if (!req.body.image) {
+        return res.status(409).json({ message: 'invalid image!' });
+    }
+    else {
+
+    }
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });
@@ -69,10 +77,13 @@ export function signUp(req, res, next) {
       user.profile.username = req.body.username;
       user.profile.firstname = req.body.firstname;
       user.profile.lastname = req.body.lastname;
+      user.profile.picture = req.body.image;
     return user.save((saveErr) => {
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
+          user.profile.picture = '';
+          user.password = '';
           res.cookie('user', user);
         return res.status(200).json({
           message: 'You have been successfully logged in.'

@@ -3,6 +3,7 @@ import User from '../models/user';
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
     var split = profile._json.emails[0].value.split('@');
+    var url = profile._json.image.url.replace(/([0-9]*)$/, '500');
   if (req.user) {
     return User.findOne({ google: profile.id }, (findOneErr, existingUser) => {
       if (existingUser) {
@@ -15,7 +16,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
         user.profile.lastname = user.profile.lastname || profile._json.name.familyName;
         user.profile.username = user.profile.username || split[0];
         //user.profile.gender = user.profile.gender || profile._json.gender;
-        user.profile.picture = user.profile.picture || profile._json.image.url;
+        user.profile.picture = user.profile.picture || url;
         user.save((err) => {
           done(err, user, { message: 'Google account has been linked.' });
         });
@@ -37,7 +38,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.profile.lastname = profile._json.name.familyName;
       user.profile.username = split[0];
       //user.profile.gender = profile._json.gender;
-      user.profile.picture = profile._json.image.url;
+      user.profile.picture = url;
       return user.save((err) => {
         done(err, user);
       });
