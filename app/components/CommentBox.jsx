@@ -47,7 +47,7 @@ class CommentBox extends React.Component {
                 videoId: this.props.idImdb,
                 msg: this.state.comment
             }).then(function (response) {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 that.getComments(that.props.idImdb)
             })
             this.setState({
@@ -59,7 +59,7 @@ class CommentBox extends React.Component {
     getComments(idImdb) {
         axios.get('/api/getComments/' + idImdb)
             .then((response) => {
-                    console.log(response.data.comments)
+                    // console.log(response.data.comments)
                     this.setState({
                         comments: response.data.comments
                     })
@@ -88,7 +88,7 @@ class CommentBox extends React.Component {
                 comment: doc.msg,
                 key: doc._id
             })
-            console.log(doc)
+            // console.log(doc)
         })
 
         var tab = fr1

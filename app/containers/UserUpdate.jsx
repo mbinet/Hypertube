@@ -34,7 +34,7 @@ class Film extends Component {
                 email: { $set: nextProps.user.email }
             })
         })
-        console.log(nextProps.user)
+        // console.log(nextProps.user)
     }
 
     handleSubmit() {
@@ -45,7 +45,7 @@ class Film extends Component {
             lastname: this.state.user.lastname,
             email: this.state.user.email
         }).then(function (response) {
-            console.log(response.data.msg);
+            // console.log(response.data.msg);
         })
 
         // update cookie
@@ -53,7 +53,7 @@ class Film extends Component {
             .then((response) => {
                 cookie.remove('user', { path: '/' });
                 cookie.save('user', response.data.user, { path: '/' });
-                console.log(this.props.user._id + "    " + response.data.user._id)
+                // console.log(this.props.user._id + "    " + response.data.user._id)
             })
     }
 

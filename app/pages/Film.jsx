@@ -82,7 +82,7 @@ class Film extends Component {
                         })
                     }
                     else {
-                        console.log("JE CRASH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION
+                        // console.log("JE CRASH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION
                         this.props.history.push('/')
                     }
                 });

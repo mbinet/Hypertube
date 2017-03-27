@@ -7,10 +7,10 @@ const { Header, Footer, Sider, Content } = Layout;
 import { Link } from 'react-router';
 
 function UserList(props){
-    console.log(props)
+    // console.log(props)
     if (!props.users)
     {
-        console.log('no users')
+        // console.log('no users')
         return (<p> No users </p>)
     }
     return (

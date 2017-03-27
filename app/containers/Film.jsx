@@ -53,7 +53,7 @@ class Film extends Component {
             var backgroundImage = this.state.light?lightDown:lightUp
             var backgroundColor = this.state.light?'white':'#3f4144'
             var nightMode = this.state.light?'':'Night'
-            console.log("response data",this.props)
+            // console.log("response data",this.props)
         return (
             <div className={cx('filmContainer'+nightMode)} style={{backgroundColor: backgroundColor}}>
                 <h1 className={cx('title'+nightMode)}>  {this.props.title} </h1>

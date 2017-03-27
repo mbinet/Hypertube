@@ -41,7 +41,7 @@ class Film extends Component {
         axios.get('/api/getAllUsers/')
             .then((response) => {
                 var result = JSON.stringify(response.data.users)
-                console.log("in page", result, typeof result)
+                // console.log("in page", result, typeof result)
                 this.setState({
                     users: result
                 })

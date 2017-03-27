@@ -36,7 +36,7 @@ class LoginOrRegister extends Component {
     }
 
     handleChange(event){
-        console.log(event.target);
+        // console.log(event.target);
         this.setState({value: event.target.value});
     }
 
@@ -59,7 +59,7 @@ class LoginOrRegister extends Component {
 
     forgotPassword(){
         var mail = prompt("enter your email", "")
-        console.log('mail=', mail)
+        // console.log('mail=', mail)
         if (mail != null && mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
         {
             axios.post('/sendPassword', {mail: mail})

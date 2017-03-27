@@ -80,7 +80,7 @@ componentDidMount(){
        e.preventDefault()
        this.setState({page:0, newSearch:true}, function(){
        var url = this.YUrlGen()
-       console.log("url in searchForm maxPages", url)
+       // console.log("url in searchForm maxPages", url)
        var _this = this
        this.serverRequest =
         axios
@@ -89,14 +89,14 @@ componentDidMount(){
                 if (result.data && result.data.data){
                 var nMovies = result.data.data.movie_count
                 var maxPage = Math.ceil(nMovies/20)
-                console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
+                // console.warn("searchForm --- maxpages=", maxPage, "movies=", nMovies)
                 _this.setState({
                     maxPage: maxPage,
                     url: url,
                     page:1,
                     newSearch:true
                 }, function(){
-                    console.warn("state on search click", _this.state)
+                    // console.warn("state on search click", _this.state)
                 })}
 
             })
@@ -109,7 +109,7 @@ componentDidMount(){
        var pageNum = this.state.page + 1;
        var url = this.state.url.toString();
        var newUrl = url.replace(/(page=[\w]+)$/, "page=" + pageNum);
-       console.log('searcForm --- load page', pageNum);
+       // console.log('searcForm --- load page', pageNum);
        this.setState({url: newUrl, page:pageNum, newSearch:false});
    }
 
