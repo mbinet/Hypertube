@@ -35,5 +35,11 @@
         "username": "username",
         "firstname": "firstname",
         "lastname": "lastname"
+    },
+    "movie":{
+        "year":"year",
+        "language":"language",
+        "runtime":"runtime",
+        "mparating":"mpa rating"
     }
 }

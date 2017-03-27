@@ -7,8 +7,18 @@ import classNames from 'classnames/bind';
 import StarRatingComponent from 'react-star-rating-component';
 import lightDown from '../images/lightdown.svg'
 import lightUp from '../images/lightup.svg'
+import en1 from '../../locale-data/en.json';
+import fr1 from '../../locale-data/fr.json';
 
 const cx = classNames.bind(styles);
+
+var trad;
+// if (window.locale != 'fr') {
+//     trad = en1.navigation
+// }
+// else {
+    trad = fr1.movie;
+// }
 
 function GetGenres(props){
     if (props.genresList){
@@ -57,17 +67,17 @@ class Film extends Component {
                         editing={false}
                         emptyStarColor= {'#d5d5d5'}
                         />
-                        <p>genres </p>
+                        <p>genres</p>
                         <div><GetGenres genresList={genres}/></div>
-                        <p>year </p>
+                        <p>{trad.year}</p>
                         <h2>{this.props.year}</h2>
-                        <p>language </p> <h2>  {this.props.language} </h2>
+                        <p>{trad.language}</p> <h2>  {this.props.language} </h2>
                         <img onClick={this.toggleLight.bind(this)} className={cx('light')} src={backgroundImage}/>
                     </div>
                     <div className={cx('rightInfo')}>
                         <p>synopsis </p> <h3 className={cx('synopsis')}>  {this.props.synopsis} </h3>
-                        <p>runtime </p> <h3 className={cx('synopsis')}>  {this.props.runtime} min </h3>
-                        <p>mpa rating </p> <h3 className={cx('synopsis')}>  {this.props.mparating}</h3>
+                        <p>{trad.runtime}</p> <h3 className={cx('synopsis')}>  {this.props.runtime} min </h3>
+                        <p>{trad.mparating}</p> <h3 className={cx('synopsis')}>  {this.props.mparating}</h3>
                     </div>
                 </div>
                 <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
