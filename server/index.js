@@ -180,7 +180,7 @@ const getSubs = function(subtitles, idImdb) {
                                         else
                                             ret.subFr = idImdb + ".fr.vtt";
                                         fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData); // fin du telechargement des sous titres francais
-                                        console.log(ret);
+                                        // console.log(ret);
                                         resolve(ret); // resolve de ret qui est un objet avec le path ou false si pas de sous titre trouves.
                                     });
                                 })
@@ -208,7 +208,7 @@ const getSubs = function(subtitles, idImdb) {
                         else
                             ret.subFr = idImdb + ".fr.vtt";
                         fs.writeFileSync('./app/sub/' + idImdb + '.fr.vtt', vttData); // fin du telechargement des sous titres francais
-                        console.log(ret);
+                        // console.log(ret);
                         resolve(ret); // resolve de ret qui est un objet avec le path ou false si pas de sous titre trouves.
                     });
                 })
@@ -373,7 +373,6 @@ app.post('/api/updateUser/', function (req, res, next) {
 app.get('/api/getAllUsers/', function(req, res, next){
     User.find({}, (err, result) => {
             if (result){
-                console.log("in api", result, typeof result)
                 res.json({users: result})
             }
             else {
@@ -582,7 +581,6 @@ function getMagnet(id, callback) {
                     min_seeders: 5
                 })
                     .then(response => {
-                        console.log(response);
                         if (response[0].download)
                             callback(response[0].download);
                         else
@@ -662,13 +660,13 @@ app.post('/sendPassword', function(req, res, next){
         if (err){
             console.log('no user matching')
         }
-        console.log("user before", user)
+        // console.log("user before", user)
         user.password = newHash;
         // user.encryptPassword;
         user.save((newErr) => {
             console.log("Ca a fonctionné");
         });
-        console.log("user after", user);
+        // console.log("user after", user);
     })
 })
 
@@ -678,12 +676,12 @@ app.post('/sendPassword', function(req, res, next){
 
 app.post('/upload/image', upload.single('photo'), function(req,res,next){
     //console.log(req.body.filepreview);
-    console.log(req.body.file);
+    // console.log(req.body.file);
     var url = req.body.filepreview.replace('blob:', '');
 
     var img64 = 'data:' + req.body.filetype +';base64,' + base64.encode(url);
     //var img64 = 'data:' + req.body.filetype +';base64,' + req.body.filepreview.toString("base64");
-    console.log(img64);
+    // console.log(img64);
     return res.jsonp({ imgsrc: img64});
 });
 
