@@ -94,7 +94,9 @@ class Film extends Component {
                 axios.get('/api/getUser/' + userCookie._id)
                     .then((response) => {
                         cookie.remove('user', { path: '/' });
-                        cookie.save('user', response.data.user, { path: '/' });
+                        var user = response.data.user;
+                        user.profile.picture = "";
+                        cookie.save('user', user, { path: '/' });
                 })
             });
         }
