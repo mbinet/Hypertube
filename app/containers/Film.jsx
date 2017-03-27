@@ -9,16 +9,12 @@ import lightDown from '../images/lightdown.svg'
 import lightUp from '../images/lightup.svg'
 import en1 from '../../locale-data/en.json';
 import fr1 from '../../locale-data/fr.json';
+import lang from '../utils/lang'
 
 const cx = classNames.bind(styles);
 
 var trad;
-// if (window.locale != 'fr') {
-//     trad = en1.navigation
-// }
-// else {
-    trad = fr1.movie;
-// }
+trad = lang() == 'fr' ? fr1.movie : en1.movie
 
 function GetGenres(props){
     if (props.genresList){

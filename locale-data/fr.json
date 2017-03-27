@@ -7,6 +7,7 @@
   "quality": "Qualité",
   "minRating": "Note minimum",
   "viewed":"vu",
+  "search": "Rechercher",
   "navigation": {
     "login": "SE CONNECTER",
     "logout": "SE DECONNECTER",
@@ -15,7 +16,11 @@
     "about": "À PROPOS",
     "users": "UTILISATEURS"
   },
-  "comments": "Commentaires",
+  "comments" : {
+    "comments": "Commentaires",
+    "send": "Envoyer",
+    "typeYour": "Entrez votre commentaire..."
+  },
   "login": {
     "title_1": "Se connecter avec son email",
     "title_2": "Enregistrez vous avec votre email",

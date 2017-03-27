@@ -12,17 +12,13 @@ import classNames from 'classnames/bind';
 import { logOut } from '../actions/users';
 import styles from '../css/components/navigation';
 import cookie from 'react-cookie'
+import lang from '../utils/lang'
 
 const cx = classNames.bind(styles);
 
 const Navigation = ({ user, logOut }) => {
     var trad;
-    // if (window.locale != 'fr') {
-    //     trad = en1.navigation
-    // }
-    // else {
-        trad = en1.navigation
-    // }
+    trad = lang() == 'fr' ? fr1.navigation : en1.navigation
     var userCookie;
     var linkUser = "";
 
