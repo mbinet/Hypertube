@@ -7,20 +7,20 @@ import User from '../models/user';
 export function login(req, res, next) {
   // Do email and password validation for the server
     if (!req.body.email) {
-        return res.status(409).json({ message: 'invalid email!' });
+        return res.status(302).json({ message: 'invalid email!' });
     }
     if (!req.body.password) {
-        return res.status(409).json({ message: 'invalid password!' });
+        return res.status(302).json({ message: 'invalid password!' });
     }
   passport.authenticate('local', (authErr, user, info) => {
     if (authErr) return next(authErr);
     if (!user) {
-      return res.status(401).json({ message: info.message });
+      return res.status(302).json({ message: info.message });
     }
     // Passport exposes a login() function on req (also aliased as
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
-      if (loginErr) return res.status(401).json({ message: loginErr });
+      if (loginErr) return res.status(302).json({ message: loginErr });
         user.profile.picture = '';
         user.password = '';
       res.cookie('user', user);
@@ -48,29 +48,29 @@ export function logout(req, res) {
 export function signUp(req, res, next) {
   const user = new User();
   if (!req.body.email) {
-    return res.status(409).json({ message: 'invalid email!' });
+    return res.status(302).json({ message: 'invalid email!' });
   }
     if (!req.body.password) {
-        return res.status(409).json({ message: 'invalid password!' });
+        return res.status(302).json({ message: 'invalid password!' });
     }
     if (!req.body.username) {
-        return res.status(409).json({ message: 'invalid username!' });
+        return res.status(302).json({ message: 'invalid username!' });
     }
     if (!req.body.firstname) {
-        return res.status(409).json({ message: 'invalid firstname!' });
+        return res.status(302).json({ message: 'invalid firstname!' });
     }
     if (!req.body.lastname) {
-        return res.status(409).json({ message: 'invalid lastname!' });
+        return res.status(302).json({ message: 'invalid lastname!' });
     }
     if (!req.body.image) {
-        return res.status(409).json({ message: 'invalid image!' });
+        return res.status(302).json({ message: 'invalid image!' });
     }
     else {
 
     }
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
-      return res.status(409).json({ message: 'Account with this email address already exists!' });
+      return res.status(302).json({ message: 'Account with this email address already exists!' });
     }
       user.email = req.body.email;
       user.password = req.body.password;
@@ -81,7 +81,7 @@ export function signUp(req, res, next) {
     return user.save((saveErr) => {
       if (saveErr) return next(saveErr);
       return req.logIn(user, (loginErr) => {
-        if (loginErr) return res.status(401).json({ message: loginErr });
+        if (loginErr) return res.status(302).json({ message: loginErr });
           user.profile.picture = '';
           user.password = '';
           res.cookie('user', user);
