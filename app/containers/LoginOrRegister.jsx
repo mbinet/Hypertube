@@ -21,7 +21,7 @@ var trad;
 //     trad = en1.navigation
 // }
 // else {
-    trad = fr1.login;
+    trad = en1.login;
 // }
 
 class LoginOrRegister extends Component {
