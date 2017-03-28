@@ -1,7 +1,7 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
-
+import {browserHistory} from 'react-router';
 import * as types from '../types';
 
 polyfill();
@@ -114,6 +114,7 @@ export function logOut() {
       .then(response => {
         if (response.status === 200) {
           dispatch(logoutSuccess());
+          browserHistory.push('/login')
         } else {
           dispatch(logoutError());
         }
