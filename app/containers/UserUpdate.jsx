@@ -26,6 +26,7 @@ class Film extends Component {
         };
     }
 
+
     componentWillMount() {
     }
 
@@ -54,18 +55,22 @@ class Film extends Component {
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            that.setState({imgPreview: reader.result});
+            that.setState({imgPreview: reader.result}
+                );
         };
     }
     handleSubmit() {
         var that = this;
+        var image = that.props.user.profile.picture;
+        if (this.state.imgPreview)
+            image = this.state.imgPreview;
         axios.post('/api/updateUser/', {
             userId: this.props.user._id,
             username: this.state.user.username,
             firstname: this.state.user.firstname,
             lastname: this.state.user.lastname,
             email: this.state.user.email,
-            picture: this.state.imgPreview,
+            picture: image,
             lang: this.state.user.lang
         }).then(function (response) {
             // update cookie
