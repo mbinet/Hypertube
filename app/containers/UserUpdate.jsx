@@ -10,6 +10,7 @@ import { Link } from 'react-router';
 import update from 'react-addons-update';
 import axios from 'axios';
 import cookie from 'react-cookie';
+import {browserHistory} from 'react-router';
 
 class Film extends Component {
     constructor(props) {
@@ -42,7 +43,6 @@ class Film extends Component {
                 lang: { $set: nextProps.user.profile.lang }
             })
         })
-        // console.log(nextProps.user)
     }
     onImageDrop(files) {
         console.log(files[0]);
@@ -83,6 +83,7 @@ class Film extends Component {
                     var user = response.data.user;
                     user.profile.picture = '';
                     cookie.save('user', user, { path: '/' });
+                    browserHistory.push('/user/' + that.props.user._id)
                 })
         })
 
@@ -185,16 +186,8 @@ class Film extends Component {
                                     <Button
                                         type='primary'
                                         className={cx('button')}
-                                        onClick={() => this.componentWillReceiveProps(this.props)}
-                                        style={{ width: 100, marginTop: 20 }}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        type='primary'
-                                        className={cx('button')}
                                         onClick={() => this.handleSubmit()}
-                                        style={{ width: 100, marginLeft: 10 }}
+                                        style={{ width: 100, marginLeft: 10, marginTop: 10}}
                                     >
                                         Save
                                     </Button>

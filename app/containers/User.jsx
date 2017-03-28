@@ -27,8 +27,6 @@ class Film extends Component {
                             <h3>{this.props.user.profile.username}</h3>
                             <p>{this.props.user.profile.firstname}</p>
                             <p>{this.props.user.profile.lastname}</p>
-                            <p>{this.props.user.email}</p>
-                            <p>Card content</p>
                         </div>
                     </Card>
                     <div style={{ textAlign: 'center', marginTop: 20 }}>{btn}</div>
