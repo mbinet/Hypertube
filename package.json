@@ -115,7 +115,6 @@
     "react-helmet": "^3.2.2",
     "react-infinite-scroller": "^1.0.7",
     "react-intl": "^2.2.3",
-    "react-rating-stars": "^1.0.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-router-redux": "^4.0.0",
