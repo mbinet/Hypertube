@@ -135,6 +135,7 @@
     "torrent-search-api": "^1.0.6",
     "torrent-stream": "^1.0.3",
     "url-loader": "^0.5.7",
+    "validator": "^7.0.0",
     "video.js": "^5.17.0",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.9.0",

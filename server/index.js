@@ -345,29 +345,30 @@ app.get('/api/getUser/:idUser', function (req, res, next) {
 
 app.post('/api/updateUser/', function (req, res, next) {
     if (req.body.userId) {
-        User.findById(req.body.userId, (findByIdErr, user) => {
-            if (user) {
-                user.profile.username = req.body.username
-                user.profile.firstname = req.body.firstname
-                user.profile.lastname = req.body.lastname
-                user.profile.picture = req.body.picture
-                user.email = req.body.email
-                user.profile.lang = req.body.lang
-                user.save((newErr) => {
-                    if (!newErr)
-                        res.json({ msg: 'Ok'})
-                    else
-                        res.json({ msg: "Didn't work"})
-                })
-            }
-            else {
-                res.json({ msg: "Can't find user" })
-            }
-        })
-    }
-    else
-        res.json({ msg: "Can't find user" })
-
+            User.findById(req.body.userId, (findByIdErr, user) => {
+                if (user) {
+                    if (req.body.password && req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/))
+                        user.password = req.body.password
+                    user.profile.username = req.body.username
+                    user.profile.firstname = req.body.firstname
+                    user.profile.lastname = req.body.lastname
+                    user.profile.picture = req.body.picture
+                    user.email = req.body.email
+                    user.profile.lang = req.body.lang
+                    user.save((newErr) => {
+                        if (!newErr)
+                            res.json({msg: 'Ok'})
+                        else
+                            res.json({msg: "Didn't work"})
+                    })
+                }
+                else {
+                    res.json({msg: "Can't find user"})
+                }
+            })
+        }
+        else
+            res.json({msg: "Can't find user"})
 });
 
 app.get('/api/getAllUsers/', function(req, res, next){

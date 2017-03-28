@@ -15,7 +15,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
         user.profile.firstname = user.profile.firstname || profile._json.name.givenName;
         user.profile.lastname = user.profile.lastname || profile._json.name.familyName;
         user.profile.username = user.profile.username || split[0];
-        //user.profile.gender = user.profile.gender || profile._json.gender;
         user.profile.picture = user.profile.picture || url;
         user.save((err) => {
           done(err, user, { message: 'Google account has been linked.' });
@@ -37,7 +36,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.profile.firstname = profile._json.name.givenName;
       user.profile.lastname = profile._json.name.familyName;
       user.profile.username = split[0];
-      //user.profile.gender = profile._json.gender;
       user.profile.picture = url;
       return user.save((err) => {
         done(err, user);

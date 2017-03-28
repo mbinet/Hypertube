@@ -22,6 +22,7 @@ class Film extends Component {
                 firstname: "",
                 lastname: "",
                 email: "",
+                password: "",
                 lang: ""
             },
         };
@@ -38,6 +39,7 @@ class Film extends Component {
                 firstname: { $set: nextProps.user.profile.firstname },
                 lastname: { $set: nextProps.user.profile.lastname },
                 email: { $set: nextProps.user.email },
+                password: {$set: nextProps.user.password},
                 lang: { $set: nextProps.user.profile.lang }
             })
         })
@@ -70,6 +72,7 @@ class Film extends Component {
             firstname: this.state.user.firstname,
             lastname: this.state.user.lastname,
             email: this.state.user.email,
+            password: this.state.user.password,
             picture: image,
             lang: this.state.user.lang
         }).then(function (response) {
@@ -152,6 +155,15 @@ class Film extends Component {
                                            name="lastname"
                                            placeholder="lastname"
                                            value={this.state.user.lastname}
+                                           onChange={this.handleChange.bind(this)}
+                                           style={{ marginLeft: 0 }}
+                                    />
+                                    Password
+                                    <Input type="password"
+                                           className={cx('input')}
+                                           name="password"
+                                           placeholder="password"
+                                           value={this.state.user.password}
                                            onChange={this.handleChange.bind(this)}
                                            style={{ marginLeft: 0 }}
                                     />
