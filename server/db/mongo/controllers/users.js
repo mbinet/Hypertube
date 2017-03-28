@@ -1,6 +1,6 @@
 import passport from 'passport';
 import User from '../models/user';
-
+import validator from 'validator';
 /**
  * POST /login
  */
@@ -50,7 +50,16 @@ export function signUp(req, res, next) {
   if (!req.body.email) {
     return res.status(409).json({ message: 'invalid email!' });
   }
+  else
+    {
+        if(!validator.isEmail(req.body.email))
+            return res.status(409).json({ message: 'invalid email!' });
+    }
     if (!req.body.password) {
+        return res.status(409).json({ message: 'invalid password!' });
+    }
+    else {
+      if(!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/))
         return res.status(409).json({ message: 'invalid password!' });
     }
     if (!req.body.username) {
@@ -64,9 +73,6 @@ export function signUp(req, res, next) {
     }
     if (!req.body.image) {
         return res.status(409).json({ message: 'invalid image!' });
-    }
-    else {
-
     }
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {

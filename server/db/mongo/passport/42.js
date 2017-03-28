@@ -13,7 +13,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
         user.profile.username = user.profile.username || profile._json.login;
         user.profile.firstname = user.profile.firstname || profile._json.first_name;
         user.profile.lastname = user.profile.lastname || profile._json.last_name;
-        //user.profile.gender = user.profile.gender || profile._json.gender;
         user.profile.picture = user.profile.picture || profile._json.image_url;
         user.save((err) => {
           done(err, user, { message: '42 account has been linked.' });
@@ -34,7 +33,6 @@ export default (req, accessToken, refreshToken, profile, done) => {
       user.profile.firstname = profile._json.first_name;
       user.profile.lastname = profile._json.last_name;
       user.profile.username = profile._json.login;
-      //user.profile.gender = profile._json.gender;
       user.profile.picture = profile._json.image_url;
       return user.save((err) => {
         done(err, user);
