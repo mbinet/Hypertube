@@ -53,14 +53,14 @@ export function signUp(req, res, next) {
   else
     {
         if(!validator.isEmail(req.body.email))
-            return res.status(409).json({ message: 'invalid email!' });
+            return res.status(302).json({ message: 'invalid email!' });
     }
     if (!req.body.password) {
         return res.status(302).json({ message: 'invalid password!' });
     }
     else {
       if(!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/))
-        return res.status(409).json({ message: 'invalid password!' });
+        return res.status(302).json({ message: 'invalid password!' });
     }
     if (!req.body.username) {
         return res.status(302).json({ message: 'invalid username!' });
