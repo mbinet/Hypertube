@@ -46,6 +46,7 @@ export default (app) => {
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.redirect('/login');
                 user.password = '';
+                user.profile.picture = '';
                 res.cookie('user', user);
                 return res.redirect('/');
             });
@@ -75,6 +76,7 @@ export default (app) => {
                 return req.logIn(user, (loginErr) => {
                     if (loginErr) return res.redirect('/login');
                     user.password = '';
+                    user.profile.picture = '';
                     res.cookie('user', user);
                     return res.redirect('/');
                 });
@@ -104,6 +106,7 @@ export default (app) => {
             return req.logIn(user, (loginErr) => {
                 if (loginErr) return res.redirect('/login');
                 user.password = '';
+                user.profile.picture = '';
                 res.cookie('user', user);
                 return res.redirect('/');
             });
