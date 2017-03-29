@@ -48,8 +48,7 @@ componentDidMount(){
         if (this.state.sortBy)
             var sortBy = "sort_by="+this.state.sortBy
         if (this.state.query_term && !this.state.query_term.match(/'(\s)*(or).*=.*/))
-        {console.log("ca passe ouil faut pas")
-            var query = "&query_term="+this.state.query_term}
+            var query = "&query_term="+this.state.query_term
         else
             var query=""
         if (this.state.minRating)
