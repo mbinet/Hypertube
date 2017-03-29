@@ -60,7 +60,6 @@ class CommentBox extends React.Component {
     getComments(idImdb) {
         axios.get('/api/getComments/' + idImdb)
             .then((response) => {
-                    console.warn(response.data.comments)
                     this.setState({
                         comments: response.data.comments
                     })
@@ -89,7 +88,6 @@ class CommentBox extends React.Component {
                 comment: doc.msg,
                 key: doc._id
             })
-            // console.log(doc)
         })
 
         var trad;
