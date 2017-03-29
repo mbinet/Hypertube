@@ -45,11 +45,11 @@ componentDidMount(){
     YUrlGen(){
         var url = "https://yts.ag/api/v2/list_movies.json?"
         var sortBy = ""
-
         if (this.state.sortBy)
             var sortBy = "sort_by="+this.state.sortBy
-        if (this.state.query_term)
-            var query = "&query_term="+this.state.query_term
+        if (this.state.query_term && !this.state.query_term.match(/'(\s)*(or).*=.*/))
+        {console.log("ca passe ouil faut pas")
+            var query = "&query_term="+this.state.query_term}
         else
             var query=""
         if (this.state.minRating)
@@ -62,7 +62,7 @@ componentDidMount(){
         else {
             var quality = ""
         }
-        if (this.state.genre)
+        if (this.state.genre && !this.state.genre.match(/'(\s)*(or).*=.*/))
             var genre = "&genre="+this.state.genre
         else {
             var genre = ""
@@ -83,6 +83,10 @@ componentDidMount(){
        var url = this.YUrlGen()
        // console.log("url in searchForm maxPages", url)
        var _this = this
+       if (this.state.genre.match(/'(\s)*(or).*=.*/) || this.state.query_term.match(/'(\s)*(or).*=.*/))
+       {
+           url = "https://yts.ag/api/v2/list_movies.json?query_term=ueasdfymhajsoeidlfjoads&minimum_rating=8&sort_by=rating&order_by=desc&page=0"
+       }
        this.serverRequest =
         axios
             .get(url)
@@ -99,7 +103,6 @@ componentDidMount(){
                 }, function(){
                     // console.warn("state on search click", _this.state)
                 })}
-
             })
         })
    }
