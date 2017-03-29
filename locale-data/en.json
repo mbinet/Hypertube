@@ -9,6 +9,7 @@
     "viewed":"viewed",
     "search": "Search",
     "updatelol": "Update",
+    "nomovie": "no movies found",
     "navigation": {
         "login": "LOGIN",
         "logout": "LOGOUT",
