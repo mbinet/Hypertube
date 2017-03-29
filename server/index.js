@@ -423,7 +423,7 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
             // getting names related to userId
             var res2 = [];
             function getNames(counter) {
-                User.findById( resultArray[counter].userId, (findByIdErr, user) => {
+                User.findById(resultArray[counter].userId, (findByIdErr, user) => {
                     if (user) {
                         resultArray[counter].userName = user.profile.username
                         res2.push(resultArray[counter])
@@ -431,13 +431,16 @@ app.get('/api/getComments/:idImdb', function (req, res, next) {
                             getNames(counter - 1)
                         }
                         else {
-                            res.json({ comments: res2 })
+                            res.json({comments: res2})
                         }
                     }
                 })
             }
             if (resultArray[0])
                 getNames(resultArray.length - 1)
+            else {
+                res.json({ msg: 'no comment' })
+            }
         })
     })
 });
