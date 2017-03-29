@@ -43,7 +43,7 @@ class LoginOrRegister extends Component {
     }
 
     onImageDrop(files) {
-        console.log(files[0]);
+        // console.log(files[0]);
         this.setState({
             uploadedFile: files[0]
         });
@@ -51,7 +51,7 @@ class LoginOrRegister extends Component {
     }
     uploadImage(file){
     var that = this;
-        console.log(file);
+        // console.log(file);
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {

@@ -5,6 +5,13 @@ const cx = classNames.bind(styles);
 import { Card, Layout, Button } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Link } from 'react-router';
+import en1 from '../../locale-data/en.json';
+import fr1 from '../../locale-data/fr.json';
+import lang from '../utils/lang'
+
+
+var trad;
+trad = lang() == 'fr' ? fr1 : en1
 
 class Film extends Component {
     constructor(props) {
@@ -14,7 +21,7 @@ class Film extends Component {
     render() {
         var btn = ""
         if (this.props.cookieUser._id == this.props.user._id) {
-            btn = <Link to={ '/user/' + this.props.user._id + '/update' }><Button type='primary' className={cx('button')} style={{ width: 100, marginBottom: 30, textAlign: 'center' }}>Update</Button></Link>
+            btn = <Link to={ '/user/' + this.props.user._id + '/update' }><Button type='primary' className={cx('button')} style={{ width: 100, marginBottom: 30, textAlign: 'center' }}>{trad.updatelol}</Button></Link>
         }
         return (
             <Layout style={{ backgroundColor: 'white'}}>

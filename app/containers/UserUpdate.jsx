@@ -11,6 +11,12 @@ import update from 'react-addons-update';
 import axios from 'axios';
 import cookie from 'react-cookie';
 import {browserHistory} from 'react-router';
+import en1 from '../../locale-data/en.json';
+import fr1 from '../../locale-data/fr.json';
+import lang from '../utils/lang'
+
+var trad;
+trad = lang() == 'fr' ? fr1.login : en1.login
 
 class Film extends Component {
     constructor(props) {
@@ -123,7 +129,7 @@ class Film extends Component {
                                 multiple={false}
                                 accept="image/*"
                                 onDrop={this.onImageDrop.bind(this)}>
-                                <p>Drop an image or click to select a file to upload.</p>
+                                <p>{trad.dropzone}</p>
                                 <img src={this.state.imgPreview} style={{maxWidth: "100%", maxHeigth: "100%"}}/>
                             </Dropzone>
                             <div className={cx('custom-image')}>
@@ -131,38 +137,38 @@ class Film extends Component {
                             </div>
                             <div className={cx('custom-card')}>
                                 <div style={{ textAlign: 'center' }}>
-                                    Username
+                                    {trad.username}
                                     <Input type="text"
                                            className={cx('input')}
                                            name="username"
-                                           placeholder="username"
+                                           placeholder={trad.username}
                                            value={this.state.user.username}
                                            onChange={this.handleChange.bind(this)}
                                            style={{ marginLeft: 0 }}
                                     />
-                                    Firstname
+                                    {trad.firstname}
                                     <Input type="text"
                                            className={cx('input')}
                                            name="firstname"
-                                           placeholder="firstname"
+                                           placeholder={trad.firstname}
                                            value={this.state.user.firstname}
                                            onChange={this.handleChange.bind(this)}
                                            style={{ marginLeft: 0 }}
                                     />
-                                    Lastname
+                                    {trad.lastname}
                                     <Input type="text"
                                            className={cx('input')}
                                            name="lastname"
-                                           placeholder="lastname"
+                                           placeholder={trad.lastname}
                                            value={this.state.user.lastname}
                                            onChange={this.handleChange.bind(this)}
                                            style={{ marginLeft: 0 }}
                                     />
-                                    Password
+                                    {trad.pwd}
                                     <Input type="password"
                                            className={cx('input')}
                                            name="password"
-                                           placeholder="password"
+                                           placeholder={trad.pwd}
                                            value={this.state.user.password}
                                            onChange={this.handleChange.bind(this)}
                                            style={{ marginLeft: 0 }}
@@ -189,7 +195,7 @@ class Film extends Component {
                                         onClick={() => this.handleSubmit()}
                                         style={{ width: 100, marginLeft: 10, marginTop: 10}}
                                     >
-                                        Save
+                                        {trad.save}
                                     </Button>
                                 </div>
                             </div>

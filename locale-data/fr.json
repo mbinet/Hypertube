@@ -8,6 +8,7 @@
   "minRating": "Note minimum",
   "viewed":"vu",
   "search": "Rechercher",
+  "updatelol": "Mettre à jour",
   "navigation": {
     "login": "SE CONNECTER",
     "logout": "SE DECONNECTER",
@@ -28,8 +29,8 @@
     "undertitle_2": "Vous avez deja un compte ? ",
     "register_1": "Enregistrez vous",
     "register_2": "Connectez vous",
-    "email": "email",
-    "pwd": "mot de passe",
+    "email": "Email",
+    "pwd": "Mot de passe",
     "hint": "email: example@ninja.com mot de passe: ninja",
     "login": "se Connecter",
     "register": "s'enregistrer",
@@ -37,9 +38,11 @@
     "forgot": "Vous avez oublié votre mot de passe ?",
     "google": "Connectez vous avec google",
     "quarante_deux": "Connectez vous avec 42",
-    "username": "pseudonyme",
-    "firstname": "prenom",
-    "lastname": "nom"
+    "username": "Pseudonyme",
+    "firstname": "Prenom",
+    "save": "Sauver",
+    "dropzone": "Deposer une image ou cliquer pour selectrionner un fichier à uploader.",
+    "lastname": "Nom"
 },
   "movie":{
       "year":"année",

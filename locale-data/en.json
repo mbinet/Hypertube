@@ -8,6 +8,7 @@
     "minRating": "Min rating",
     "viewed":"viewed",
     "search": "Search",
+    "updatelol": "Update",
     "navigation": {
         "login": "LOGIN",
         "logout": "LOGOUT",
@@ -35,10 +36,12 @@
         "register": "Register",
         "forgot": "Forgot your password ?",
         "quicklog": "Quick Log",
-        "google": "Log in with google",
+        "google": "Log in with facebook",
         "quarante_deux": "Log in with 42",
-        "username": "username",
-        "firstname": "firstname",
+        "username": "Username",
+        "firstname": "Firstname",
+        "save": "Save",
+        "dropzone": "Drop an image or click to select a file to upload.",
         "lastname": "lastname"
     },
     "movie":{
