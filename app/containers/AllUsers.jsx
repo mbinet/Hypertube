@@ -22,7 +22,7 @@ function UserList(props){
                             <img alt="example" width="100%" src={user.profile.picture} />
                         </div>
                         <div className={cx('custom-card')}>
-                            <h3>{user.profile.username}</h3>
+                            <Link to={ '/user/' + user._id }><h3>{user.profile.username}</h3></Link>
                             <p>{user.profile.firstname}</p>
                             <p>{user.profile.lastname}</p>
                         </div>
