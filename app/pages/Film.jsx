@@ -58,14 +58,6 @@ class Film extends Component {
 
             var that = this;
 
-            axios.get('/api/getSubs/' + this.props.params.idImdb)
-                .then((response) => {
-                    that.setState({
-                        subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
-                        subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
-                    })
-                });
-
             axios.get('/api/getDetails/' + this.props.params.idImdb)
                 .then((response) => {
                     if (response.data.msg == 'ok') {
@@ -79,25 +71,41 @@ class Film extends Component {
                             synopsis: response.data.synopsis,
                             language: response.data.language,
                             img: response.data.img
-                        })
+                        });
+                        axios.get('/api/getSubs/' + this.props.params.idImdb)
+                            .then((response) => {
+                                that.setState({
+                                    subFr: response.data.subFr != 'false' ? '/api/sub/' + response.data.subFr : "",
+                                    subEn: response.data.subEn != 'false' ? '/api/sub/' + response.data.subEn : "",
+                                })
+                            }).catch(function () {
+                            console.log("Promise Rejected");
+                        });
+
+                        axios.post('/api/addToSeen', {
+                            userId: userCookie._id,
+                            idImdb: this.props.params.idImdb
+                        }).then(function (response) {
+                            axios.get('/api/getUser/' + userCookie._id)
+                                .then((response) => {
+                                    cookie.remove('user', { path: '/' });
+                                    var user = response.data.user;
+                                    user.profile.picture = "";
+                                    cookie.save('user', user, { path: '/' });
+                                })
+                        }).catch(function () {
+                            console.log("Promise Rejected");
+                        });
                     }
                     else {
                         // console.log("JE CRASH " + response.data.msg); //ICI IL FAUT FAIRE UNE REDIRECTION
-                        this.props.history.push('/')
+
+                        setTimeout(function() {
+                            browserHistory.push('/');
+                        }, 500);
                     }
-                });
-            // console.log(userCookie);
-            axios.post('/api/addToSeen', {
-                userId: userCookie._id,
-                idImdb: this.props.params.idImdb
-            }).then(function (response) {
-                axios.get('/api/getUser/' + userCookie._id)
-                    .then((response) => {
-                        cookie.remove('user', { path: '/' });
-                        var user = response.data.user;
-                        user.profile.picture = "";
-                        cookie.save('user', user, { path: '/' });
-                })
+                }).catch(function () {
+                console.log("Promise Rejected");
             });
         }
     }

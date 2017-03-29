@@ -291,7 +291,9 @@ app.get('/api/getDetails/:idImdb', function (req, res, next) {
             else {
                 res.json({ msg: "Coucou maxime, alors en fait je t'explique, ce film n'existe pas ou n'est repertorie sur yify. Unlucky :/" })
             }
-        });
+        }).catch(function () {
+        console.log("Promise Rejected");
+    });
 });
 
 app.post('/api/addToSeen', function (req, res, next) {
@@ -552,7 +554,7 @@ app.get('/api/film/:idImdb', function (req, res, next) {
             });
         }
         else {
-            console.log("ca a pas marche");
+            res.json({msg: "oupsi"});
         }
     })
 });
@@ -563,7 +565,7 @@ function getMagnet(id, callback) {
     axios.get(url)
         .then(function (response) {
             var result = response.data.data;
-            if (result.movie_count != 0) {
+            if (response.data && response.data.status == "ok" && response.data.data.movie_count != 0) {
                 var torrentHash = "";
                 for (var d of result.movies[0].torrents) {
                     if (d.quality == '720p')
@@ -589,9 +591,14 @@ function getMagnet(id, callback) {
                             callback(response[0].download);
                         else
                             callback('error');
-                    })
+                    }).catch(function (e) {
+                        console.error(e);
+                        res.end(e);
+                });
             }
-        })
+        }).catch(function () {
+        console.log("Promise Rejected");
+    });
 }
 
 const getTorrentFile = function(engine) {

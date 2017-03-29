@@ -25,6 +25,16 @@ class MovieBox extends React.Component {
         var url = 'https://localhost:3001/api/film/' + this.props.idImdb
         var subFr = this.props.subFr ? <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/> : ""
         var subEn = this.props.subEn ? <track kind="subtitles" label="English" src={this.props.subEn} srcLang="fr"/> : ""
+        var film;
+        if (this.props.title) {
+            film = <video width='800' height='600' className={cx('videoPlayer')} controls='controls' preload='auto' src={url}>
+                {subFr}
+                {subEn}
+            </video>
+        }
+        else {
+            film = ""
+        }
         return (
             <IntlProvider locale='fr' messages={fr1} >
                 <div>
@@ -53,10 +63,12 @@ class MovieBox extends React.Component {
                     {/*>*/}
                     {/*</Video>*/}
 
-                    <video width='800' height='600' className={cx('videoPlayer')} controls='controls' preload='auto' src={url}>
-                        {subFr}
-                        {subEn}
-                    </video>
+                    {/*<video width='800' height='600' className={cx('videoPlayer')} controls='controls' preload='auto' src={url}>*/}
+                        {/*{subFr}*/}
+                        {/*{subEn}*/}
+                    {/*</video>*/}
+
+                    {film}
 
 
                 </div>

@@ -76,7 +76,7 @@ class Film extends Component {
                         <p>{trad.mparating}</p> <h3 className={cx('synopsis')}>  {this.props.mparating}</h3>
                     </div>
                 </div>
-                <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb}/>
+                <MovieBox subFr={this.props.subFr} subEn={this.props.subEn} idImdb={this.props.idImdb} title={this.props.title}/>
                 <CommentBox idImdb={this.props.idImdb} />
             </div>
         )
