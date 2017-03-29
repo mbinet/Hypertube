@@ -41,8 +41,8 @@ if (isDebug) {
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: devBrowserConfig.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 }
-app.use(bodyParser.urlencoded({limit: '50mb'}));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '100mb'}));
+app.use(bodyParser.json({limit: '100mb'}));
 /*
  * Bootstrap application settings
  */
