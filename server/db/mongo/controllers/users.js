@@ -60,7 +60,7 @@ export function signUp(req, res, next) {
     }
     else {
       if(!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/))
-        return res.status(302).json({ message: 'invalid password!' });
+        return res.status(302).json({ message: 'Your password must have at least 8 characters, a capital letter and one digit' });
     }
     if (!req.body.username) {
         return res.status(302).json({ message: 'invalid username!' });
