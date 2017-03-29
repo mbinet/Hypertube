@@ -72,26 +72,28 @@ class Film extends Component {
         var image = that.props.user.profile.picture;
         if (this.state.imgPreview)
             image = this.state.imgPreview;
-        axios.post('/api/updateUser/', {
-            userId: this.props.user._id,
-            username: this.state.user.username,
-            firstname: this.state.user.firstname,
-            lastname: this.state.user.lastname,
-            email: this.state.user.email,
-            password: this.state.user.password,
-            picture: image,
-            lang: this.state.user.lang
-        }).then(function (response) {
-            // update cookie
-            axios.get('/api/getUser/' + that.props.user._id)
-                .then((response) => {
-                    cookie.remove('user', { path: '/' });
-                    var user = response.data.user;
-                    user.profile.picture = '';
-                    cookie.save('user', user, { path: '/' });
-                    browserHistory.push('/user/' + that.props.user._id)
-                })
-        })
+        if (this.state.user.username && this.state.user.firstname && this.state.user.lastname && this.state.user.email) {
+            axios.post('/api/updateUser/', {
+                userId: this.props.user._id,
+                username: this.state.user.username,
+                firstname: this.state.user.firstname,
+                lastname: this.state.user.lastname,
+                email: this.state.user.email,
+                password: this.state.user.password,
+                picture: image,
+                lang: this.state.user.lang
+            }).then(function (response) {
+                // update cookie
+                axios.get('/api/getUser/' + that.props.user._id)
+                    .then((response) => {
+                        cookie.remove('user', {path: '/'});
+                        var user = response.data.user;
+                        user.profile.picture = '';
+                        cookie.save('user', user, {path: '/'});
+                        browserHistory.push('/user/' + that.props.user._id)
+                    })
+            })
+        }
 
     }
 
