@@ -171,7 +171,7 @@ class LoginOrRegister extends Component {
                             <h1 className={cx('heading')}>{trad.quicklog}</h1>
                             <a
                                 className={cx('button')}
-                                href="/auth/google">{trad.google}</a>
+                                href="/auth/facebook">{trad.google}</a>
                         </div>
                         <div className={cx('key42-container')}>
                             <a
@@ -259,7 +259,7 @@ class LoginOrRegister extends Component {
                         <h1 className={cx('heading')}>{trad.quicklog}</h1>
                         <a
                             className={cx('button')}
-                            href="/auth/google">{trad.google}</a>
+                            href="/auth/facebook">{trad.google}</a>
                     </div>
                     <div className={cx('key42-container')}>
                         <a

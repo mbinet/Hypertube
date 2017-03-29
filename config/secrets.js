@@ -13,3 +13,9 @@ export const key42 = {
   clientSecret: process.env.KEY42_SECRET || 'dda4bc3561031497b1792fef4642b7475f7e4ccf4891106b4470e841a908845b',
   callbackURL: process.env.KEY42_CALLBACK || '/auth/42/callback'
 };
+
+export const facebook = {
+    clientID: process.env.FACEBOOK_CLIENTID || '380797335636741',
+    clientSecret: process.env.FACEBOOK_SECRET || 'a463d6726c9a8c1a142c1bad8ba9d61a',
+    callbackURL: process.env.FACEBOOK_CALLBACK || '/auth/facebook/callback'
+};
