@@ -2,6 +2,9 @@ import User from '../models/user';
 
 /* eslint-disable no-param-reassign */
 export default (req, accessToken, refreshToken, profile, done) => {
+    if (profile._json.email == null) {
+        return done(null, false, {message: 'no email!'});
+    }
     var split = profile._json.email.split('@');
     if (req.user) {
         return User.findOne({ facebook: profile.id }, (findOneErr, existingUser) => {
