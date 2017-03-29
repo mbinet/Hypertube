@@ -33,7 +33,7 @@ export default (passport) => {
   passport.use(new Key42Strategy({
     clientID: key42.clientID,
     clientSecret: key42.clientSecret,
-    callbackURL: "http://localhost:3000/auth/42/callback",
+    callbackURL: "https://localhost:3001/auth/42/callback",
   }, dbPassport.key42));
 };
 /*passport.use(new new Key42Strategy({

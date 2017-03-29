@@ -60,7 +60,7 @@ class CommentBox extends React.Component {
     getComments(idImdb) {
         axios.get('/api/getComments/' + idImdb)
             .then((response) => {
-                    // console.log(response.data.comments)
+                    console.warn(response.data.comments)
                     this.setState({
                         comments: response.data.comments
                     })

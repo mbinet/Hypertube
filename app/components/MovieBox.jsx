@@ -22,7 +22,7 @@ class MovieBox extends React.Component {
     }
 
     render() {
-        var url = 'http://localhost:3000/api/film/' + this.props.idImdb
+        var url = 'https://localhost:3000/api/film/' + this.props.idImdb
         var subFr = this.props.subFr ? <track kind="subtitles" label="Francais" src={this.props.subFr} srcLang="fr"/> : ""
         var subEn = this.props.subEn ? <track kind="subtitles" label="English" src={this.props.subEn} srcLang="fr"/> : ""
         return (

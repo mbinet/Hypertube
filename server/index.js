@@ -691,4 +691,9 @@ app.post('/upload/image', upload.single('photo'), function(req,res,next){
 app.get('*', renderMiddleware);
 
 
+https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem')
+}, app).listen(3001);
+
 app.listen(app.get('port'));
