@@ -16,6 +16,7 @@ var mongo = require('mongodb').MongoClient
 var objectId = require('mongodb').ObjectID
 var url = 'mongodb://localhost:27017/ReactWebpackNode'
 var dateFormat = require('dateformat');
+var ffmpeg = require('fluent-ffmpeg');
 
 const app = express();
 
