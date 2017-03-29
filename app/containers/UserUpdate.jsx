@@ -51,7 +51,6 @@ class Film extends Component {
         })
     }
     onImageDrop(files) {
-        console.log(files[0]);
         this.setState({
             uploadedFile: files[0]
         });
@@ -59,7 +58,6 @@ class Film extends Component {
     }
     uploadImage(file){
         var that = this;
-        console.log(file);
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
